@@ -1,0 +1,64 @@
+1º
+La orquesta y el coro están formados por diferentes músicos. Estos vienen identificados por su nombre,
+apellidos, dni, y su vinculación a la Escuela (Puede ser Estudiante de Grado, Estudiante de Máster,
+Profesor, Personal de Administración y Servicios. Se determina que sólo tendrá una vinculación el músico
+en un momento del tiempo). También su edad, sexo y fecha de nacimiento son atributos que le identifican. 
+
+Comentario:La parte de estudiante, profesor, etc, no se muy bien como ponerla
+		tengo 2 opciones
+			1 crear una clase para cada uno que herede de musico o de corista e intrumentista
+			2 crear un campo string en musico que se llame vinculacion con la universidad o algo asi
+
+2º			
+El músico será asignado a la orquesta o al coro según sea su especialidad musical que puede ser
+instrumento o voz.No tendremos músicos que estén a la vez en el coro y en la orquesta.
+
+Comentarios: esto creo que esta bien, 2 clases que heredan de musico.
+
+3º
+La orquesta y el coro tienen un Director Musical, un Director Escénico y un Secretario, que pertenecen al
+grupo de los músicos. Estos cargos pueden ser también miembros de la orquesta o coro
+
+Comentario: este creo que esta tambien bien, basicamente crear clases.
+
+4º
+Para los músicos de la orquesta debemos identificar los instrumentos que tocan. Tenemos una lista de
+instrumentos musicales que pueden ser asignados a cada uno de los músicos. En determinados instrumentos
+como los de percusión, es admisible que un mismo músico pueda tocar varios instrumentos
+
+Comentarios: creo que esta, pero revisalo porque la relacion entre intrumentista e intrumento no se si esta del
+	 todo bien
+	 
+5º
+Los músicos que se ubiquen en el coro deben ubicarse en una de las cuerdas: Sopranos, Contraltos,
+Tenores, Bajos. Las cuerdas a su vez pueden subdividirse en primeros y segundos (por ejemplo Tenores
+Primeros o Sopranos Segundas) para determinados tipos de canciones. Un músico estará en una cuerda y en
+una subdivisión de la misma en un momento del tiempo.
+
+Comentarios: esto creo que hay que hacer una clase para cada uno Tenor, Soprano,etc.
+
+6º
+Se debe guardar registro de las obras que interpreta la orquesta y coro de la EPS, guardando el autor, el año,
+el nombre de la pieza y una URL al archivo en el que se guarda la partitura.
+
+Comentarios: Esto esta
+
+7º
+Se mantendrá una lista de conciertos, con lugar, día y hora
+
+Comentarios: Esto esta, basicamente es añadir atributos.
+
+
+8º
+A los conciertos se apuntarán los músicos que se requiera que asistan y puedan asistir (por ejemplo,
+para un concierto de cámara se requerirá un número menor que para uno sinfónico). 
+
+Comentario: Esto creo que esta, aqui he creado 2 clases mas para los tipos de conciertos.
+
+
+
+9º
+En los conciertos se sabrán las obras que se van a interpretar y su orden, de manera que para un concierto
+podremos sacar fácilmente el programa del mismo que facilitará a los músicos que lo ensayen previamente.
+
+Comentarios: Esto creo que esta, basicamente lo he puesto como un metodo de concierto.
