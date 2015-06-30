@@ -1,0 +1,20 @@
+.TH "enviar_datos__s_s_l" 3 "Mon Apr 27 2015" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+enviar_datos__s_s_l \- \fBenviar_datos_SSL\fP 
+envia un mensaje
+.SH "SYNOPSIS"
+.PP
+\fB#include\fP \fB'conexion\&.h'\fP 
+.PP
+\fBint\fP \fBenviar_datos_SSL\fP \fB\fP(\fBSSL*\fP ssl, \fBconst\fP coid * buf\fB\fP)
+.SH "DESCRIPCIÓN"
+.PP
+Esta función será el equivalente a la función de envío de mensajes que se realizó en la práctica 1, pero será utilizada para enviar datos a través del canal seguro\&. Es importante que sea genérica y pueda ser utilizada independientemente de los datos que se vayan a enviar\&.
+.SH "RETORNO"
+.PP
+Devuelve 0 en caso de error o el tamaño del mensaje enviado en caso exito\&.
+.SH "VER TAMBIÉN"
+.PP
+\fBfijar_contexto_SSL(3)\fP, \fBinicializar_nivel_SSL(3)\fP, \fBconectar_canal_seguro_SSL(3)\fP, \fBaceptar_canal_seguro_SSL(3)\fP, \fBevaluar_post_connectar_SSL(3)\fP, \fBenviar_datos_SSL(3)\fP, \fBrecibir_datos_SSL(3)\fP, \fBcerrar_canal_SSL(3)\fP \fB\fP  authors AUTOR Mario Valdemaro Garcia Roque (mariov.garcia@estudiante.uam.es) Roberto Garcia Teodoro (roberto.garciat@estudiante.uam.es) 

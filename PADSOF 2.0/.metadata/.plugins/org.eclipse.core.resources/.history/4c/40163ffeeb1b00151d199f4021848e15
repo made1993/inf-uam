@@ -1,0 +1,66 @@
+package grupo;
+
+
+import usuario.*;
+import mensaje.*;
+
+
+
+public class GrupoColaborativo extends Grupo{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+		
+	public GrupoColaborativo(int idGrupo, String nombre, boolean privado, Usuario moderado) {
+		super(idGrupo, nombre, privado, moderado);
+		setSubGrupos(null);
+		
+	}
+	
+	@Override
+	public boolean isGrupoColaborativo() {
+		return true;
+	}
+	
+	
+	/**
+	 * Termina la colaboracion de un mensaje
+	 * @param m mensaje para colaborar
+	 * @return
+	 */
+	public boolean terminarColaboracion(MensajeColaborativo m){
+		m.setCerrado(true);
+		return true;
+	}
+	
+	/**
+	 * Añade una respuesta a la lista de mensajes colaborativos de una mensaje dado
+	 * @param m
+	 * @param r
+	 * @return
+	 */
+	public boolean anadirRespuesta(MensajeColaborativo m,MensajeColaborativo r){
+		if(m.isCerrado()){
+			return false;
+		}else{
+			return m.addRespuesta(r);
+		}
+	}
+	
+	@Override
+	public MensajeColaborativo buscarMensaje(int id){
+		for(MensajeGrupo m:getListaMensajes()){
+			if(m.getIdMensaje()==id){
+				return (MensajeColaborativo)m;
+			}
+			MensajeColaborativo ms = ((MensajeColaborativo) m).buscarMensaje(id); 
+			if(ms!=null){
+				return ms;
+			}
+		}
+		return null;
+	}
+	
+}

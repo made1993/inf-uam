@@ -1,0 +1,252 @@
+--apartdo a)
+
+--tabla paises
+create table imdb_countries (id serial NOT NULL primary key, namecountry varchar NOT NULL);
+
+alter table imdb_moviecountries add column countryid integer;
+
+alter table imdb_moviecountries add foreign key(countryid) references imdb_countries(id) on update no action on delete no action;
+
+insert into imdb_moviecountries(countryid) select id from imdb_countries join imdb_moviecountries on imdb_countries.namecountry = imdb_moviecountries.country;
+
+UPDATE imdb_moviecountries
+	SET countryid=imdb_countries.id
+	FROM 
+		imdb_countries
+	WHERE
+		imdb_moviecountries.country=imdb_countries.namecountry;
+
+--tabla lenguajes
+
+create table imdb_languages (id serial NOT NULL primary key, lngname varchar NOT NULL);
+
+alter table imdb_movielanguages add column languageid integer;
+
+alter table imdb_movielanguages add foreign key(languageid) references imdb_languages(id) on update no action on delete no action;
+
+INSERT INTO imdb_languages (lngname)
+(SELECT language  FROM imdb_movielanguages group by language);
+
+UPDATE imdb_movielanguages
+	SET languageid=imdb_languages.id
+	FROM 
+		imdb_languages
+	WHERE
+		imdb_movielanguages.language=imdb_languages.lngname;
+
+--tabla generos
+
+create table imdb_genres (id serial NOT NULL primary key, gnrname varchar NOT NULL);
+
+alter table imdb_moviegenres add column genreid integer;
+
+alter table imdb_moviegenres add foreign key(genreid) references imdb_genres(id) on update no action on delete no action;
+
+update imdb_moviegenres 
+	set genreid=imdb_genres.id
+	from imdb_genres
+	where imdb_moviegenres.genre=imdb_genres.gnrname;
+
+--apartado b)
+
+select products.prod_id,products.price*
+power(0,980392157,extract(year from current_date)-extract(year from orders.orderdate))
+from products, orders, orderdetail
+where orderdetail.orderid=orders.orderid and orderdetail.prod_id=products.prod_id
+order by products.prod_id;
+
+update orderdetail set price=products.price*
+power(0,980392157,extract(year from current_date)-extract(year from orders.orderdate))
+from products, orders
+where orderdetail.orderid=orders.orderid and orderdetail.prod_id=products.prod_id;
+
+--apartado c)
+
+CREATE OR REPLACE FUNCTION setOrderAmount() returns int4
+language plpgsql
+as $$
+begin
+update orders set netamount=t.suma
+from (select orderid, sum(price*quantity) as suma from orderdetail group by orderid) as t
+where t.orderid=orders.orderid;
+update orders set totalamount=netamount+netamount*tax/100;
+return 0;
+end;
+$$;
+
+--apartado e)
+CREATE OR REPLACE FUNCTION getTopVentas(integer) returns TABLE(year int, pelicula text, sales bigint); 
+language plpgsql
+as $$
+year ALIAS FOR $1
+begin
+DROP TABLE topVentas;
+CREATE TABLE topVentas(year int, pelicula text, sales bigint);
+FOR contador in year >= extract(year from current_date)
+NSERT INTO topVentas (year, pelicua, sales)  select year,movietitle,suma from 
+(select movieid, sum(num)as suma from
+(select prod_id, sum(quantity) as num 
+from orders join orderdetail using (orderid)
+where  extract (year from orders.orderdate)=contador
+group by prod_id) as t join products using (prod_id)
+group by movieid)as top join imdb_movies using(movieid) order by suma desc;
+END LOOP; 
+return topVentas;
+end;
+$$;
+
+
+
+
+
+
+
+
+
+
+
+--funcion
+
+CREATE OR REPLACE FUNCTION getTopVentas(inicio integer) 
+RETURNS int4
+AS '
+DECLARE 
+año ALIAS FOR $1;
+BEGIN 
+DROP TABLE if exists topVentas;
+CREATE TABLE topVentas (year int, pelicula text, sales integer);
+WHILE año <= extract(year from current_date) LOOP
+
+INSERT INTO topVentas  select año,movietitle,suma from 
+(select movieid, sum(num)as suma from
+(select prod_id, sum(quantity) as num 
+from orders join orderdetail using (orderid)
+where  extract (year from orders.orderdate)=año
+group by prod_id) as t join products using (prod_id)
+group by movieid)as top join imdb_movies using(movieid) order by suma desc limit(1);
+
+año:=inicio+1;
+END LOOP;
+RETURN 0;
+END;
+'
+LANGUAGE 'plpgsql';
+--apartado f)
+
+--consulta
+select year,movietitle,suma from 
+(select movieid, sum(num)as suma from
+(select prod_id, sum(quantity) as num 
+from orders join orderdetail using (orderid)
+where  extract (year from orders.orderdate)=2006
+group by prod_id) as t join products using (prod_id)
+group by movieid)as top join imdb_movies using(movieid) order by suma desc;
+
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION getTopMonths(integer, integer) returns ¿?¿?; 
+language plpgsql
+as $$
+umbralArticulos ALIAS FOR $1
+umbralEuros ALIAS FOR $1
+begin
+if( productosQuery > umbralArticulos) then
+if ( eurosacumuladosQuery > umbralEuros) then 
+endif
+endif
+end;
+$$;
+gettopmonths recibe dos umbrales de productos y de importe acumulados y devuelva los meses en que se superan los umbrales. 19000 articulos y 320000 euros
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION getTopMonths  ( integer, integer) returns int4
+
+AS'
+DECLARE
+umb_art alias for $1;
+umb_prc alias for $2;
+BEGIN
+drop table if exists topMonths;
+create table topMonths(year integer, month integer);
+insert into topMonths select year, mes
+from
+(select extract (year from orderdate) as year, extract (month from orderdate) as mes, sum(t.cantidad)as cantidad,sum(totalamount)as suma  from
+(select orderid,sum(quantity)as  cantidad from orderdetail group by orderid)as t
+join orders using (orderid) 
+group by mes, year)as topMonths
+where topMonths.cantidad >= umb_art or suma >= umb_prc
+order by year, mes;
+return 0;
+END
+'
+LANGUAGE 'plpgsql';
+
+
+
+--g)
+
+
+create or replace function updateOrders() returns TRIGGER
+LANGUAGE 'plpgsql'
+as $$
+DECLARE
+BEGIN 
+
+update orders set netamount=a.suma
+from (select orderid,sum(price*quantity)as suma 
+from orderdetail 
+join orders using (orderid) 
+where status like 'noPaid' group by orderid)as a
+where a.orderid=orders.orderid;
+RETURN new;
+END
+$$
+
+
+create trigger updOrders after update or insert on orderdetail
+for each row execute procedure updateOrders();
+
+--h)
+
+
+CREATE OR REPLACE FUNCTION updateinventory()
+  RETURNS trigger AS
+$$
+DECLARE 
+BEGIN 
+create table if not exists alert_inventory(
+	alertid serial NOT NULL,
+	prod_id integer NOT NULL,
+	alertdate date,
+	PRIMARY KEY (alertid),
+	FOREIGN KEY (prod_id) references products (prod_id) MATCH SIMPLE
+	ON UPDATE NO ACTION ON DELETE NO ACTION
+	);
+
+update inventory set stock= stock- quantity, sales= sales + quantity
+from (select prod_id, quantity from orderdetail where orderid =NEW.orderid 
+	and NEW.status ='Paid' and OLD.status = 'NoPaid') as a
+where inventory.prod_id=a.prod_id;
+
+
+INSERT INTO alert_inventory (prod_id, alertdate) select a.prod_id, current_date 
+from (select prod_id, quantity from orderdetail where orderid =NEW.orderid 
+	and NEW.status ='Paid' and OLD.status = 'NoPaid') as a, inventory 
+where inventory.prod_id=a.prod_id and stock=0  ;
+return new;
+END
+$$
+  LANGUAGE plpgsql;
+
+
+create trigger updInventory after update on orders for each row execute procedure updateInventory();
+

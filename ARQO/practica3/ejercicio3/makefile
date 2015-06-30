@@ -1,0 +1,6 @@
+all:
+	gcc -o trasp trasp.c arqo3.c p3ej3.c
+	gcc -o mult mult.c arqo3.c p3ej3.c
+clean:
+	rm mult trasp *.dat
+

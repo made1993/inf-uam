@@ -1,0 +1,6 @@
+vhdl work "UnidadControl.vhd"
+vhdl work "RegsMIPS.vhd"
+vhdl work "ALUMIPS.vhd"
+vhdl work "procesador.vhd"
+vhdl work "memoria.vhd"
+vhdl work "procesador_TB.vhd"

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		
+		<style>
+			body{background-color:red}
+			#login{
+				text-align:center;
+				width:10%;
+				float:right;
+				height:45px;
+				background-color:red;
+				
+			}
+			#cabecera{
+				text-align:center;
+				width:90%;
+				float:left;
+				height:45px;
+				background-color:yellow;
+			}
+			#mlateral{
+				text-align:center;
+				background-color:green;
+				width:20%;
+				height:500px;
+				float:left;
+				clear:both;			
+			}
+			#contenido{
+				text-align:center;
+				width:80%;
+				height:500px;
+				float:right;
+				background-color:purple;
+			}
+			#ppagina{
+				width:100%;
+				float:bottom;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="login"><a href="index.html">Login</a></div>
+		<div id="cabecera">cabecera</div>	
+		<div id="mlateral""><h2>menu lateral</h2></div> 
+		<div id="contenido">contenidos</div>
+		<div id="ppagina">pie de pagina</div>
+	</body>
+</html>

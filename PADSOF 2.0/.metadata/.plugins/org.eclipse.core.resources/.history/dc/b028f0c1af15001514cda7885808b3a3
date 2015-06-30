@@ -1,0 +1,53 @@
+package gui;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import mailUam.MailUam;
+
+public class GUIExpulsarUsuario extends GUIMenu{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JButton buttonExpulsar;
+	private JComboBox Participantes;
+	public GUIExpulsarUsuario(MailUam app) {
+		super(app);
+		buttonExpulsar= new JButton("Expulsar usuarios seleccionados");
+		Participantes= new JComboBox(); 
+		JPanel p1= new JPanel();
+		p1.add(Participantes);
+		p1.add(buttonExpulsar);
+		add(p1);
+	}
+	/**
+	 * @return the buttonExpulsar
+	 */
+	public JButton getButtonExpulsar() {
+		return buttonExpulsar;
+	}
+	/**
+	 * @param buttonExpulsar the buttonExpulsar to set
+	 */
+	public void setButtonExpulsar(JButton buttonExpulsar) {
+		this.buttonExpulsar = buttonExpulsar;
+	}
+	/**
+	 * @return the participantes
+	 */
+	public JComboBox getParticipantes() {
+		return Participantes;
+	}
+	/**
+	 * @param participantes the participantes to set
+	 */
+	public void setParticipantes(JComboBox participantes) {
+		Participantes = participantes;
+	}
+
+
+}

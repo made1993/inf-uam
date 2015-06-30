@@ -1,0 +1,20 @@
+.TH "aceptar_canal_seguro__s_s_l" 3 "Mon Apr 27 2015" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+aceptar_canal_seguro__s_s_l \- \fBaceptar_canal_seguro_SSL\fP 
+monta un servidor TCP con conexion SSL
+.SH "SYNOPSIS"
+.PP
+\fB#include\fP \fB'conexion\&.h'\fP 
+.PP
+\fBSSL*\fP \fBaceptar_canal_seguro_SSL\fP \fB\fP(\fBSSL_CTX*\fP ctx, \fBcint\fP sockfd, \fBint\fP puerto, \fBint\fP tam, \fBstruct\fP sockaddr_in ip4addr\fB\fP)
+.SH "DESCRIPCIÓN"
+.PP
+Dado un contexto SSL y un descriptor de socket esta función se encargará de bloquear la aplicación, que se quedará esperando hasta recibir un handshake por parte del cliente\&.
+.SH "RETORNO"
+.PP
+Devuelve NULL en caso de error o la estructura SSL* inicializada en caso de exito\&.
+.SH "VER TAMBIÉN"
+.PP
+\fBinicializar_nivel_SSL(3)\fP, \fBfijar_contexto_SSL(3)\fP, (3), \fBevaluar_post_connectar_SSL(3)\fP, \fBenviar_datos_SSL(3)\fP, \fBrecibir_datos_SSL(3)\fP, \fBcerrar_canal_SSL(3)\fP \fB\fP  authors AUTOR Mario Valdemaro Garcia Roque (mariov.garcia@estudiante.uam.es) Roberto Garcia Teodoro (roberto.garciat@estudiante.uam.es) 

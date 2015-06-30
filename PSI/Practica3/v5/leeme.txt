@@ -1,0 +1,1 @@
+Version con el Minimax del año pasado, parece que tira bien, pero tarda más.

@@ -1,0 +1,3 @@
+Hemos tenido que modificar el archivo de intruccion para añadir la siguiente linea:
+00000054    00000000
+ya que era necesario hacer un NOP para la instruccion precedente.

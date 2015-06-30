@@ -1,0 +1,19 @@
+package test;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import usuario.*;
+import mailUam.*;
+import mensaje.MensajeGrupo;
+import grupo.*;
+import mailUam.MailUam;
+public class testUsuario {
+	public static void main(String[] args) {
+		MailUam m= new MailUam();
+		m.cargarDatos("alumnos.txt", "PROFESORES.TXT");
+		m.crearDirectorios();
+		Usuario usr = new Estudiante("carlos", "el de los mocos largos", "adrian.gabilondo@aus.net", "hola");
+			
+	}
+}

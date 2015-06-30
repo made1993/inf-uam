@@ -1,0 +1,5 @@
+set -tmpdir "C:/Users/eps/Desktop/arqo1/xst/projnav.tmp"
+set -xsthdpdir "C:/Users/eps/Desktop/arqo1/xst"
+elaborate
+-ifn procesador.prj
+-ifmt mixed

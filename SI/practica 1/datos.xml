@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="novedade.xsl" ?>
+<datos>
+<peliculas>
+	<pelicula>
+		<titulo>Dos colgaos muy fumaos.</titulo>
+		<id>1</id>
+		<precio>5</precio>
+		<categoria>Comedia</categoria>
+		<fecha>1955</fecha>
+		<art>1</art>
+	</pelicula>
+
+	<pelicula>
+		<titulo>Colega, ¿dónde está mi coche?</titulo>
+		<id>2</id>
+		<precio>6</precio>
+		<categoria>Comedia</categoria>
+		<fecha>1985</fecha>
+		<art>2</art>
+	</pelicula>
+
+	<pelicula>
+		<titulo>Braindead: Tu madre se ha comido a mi perro.</titulo>
+		<id>3</id>
+		<precio>8</precio>
+		<categoria>Batiburrillo de ideas.</categoria>
+		<fecha>2015</fecha>
+		<art>0</art>
+	</pelicula>
+</peliculas>
+<usuarios>
+	<usuario>
+		<nombre>jorgePuta69
+		</nombre>
+	</usuario>
+</usuarios>
+</datos>

@@ -1,0 +1,20 @@
+.TH "cerrar_canal__s_s_l" 3 "Mon Apr 27 2015" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cerrar_canal__s_s_l \- \fBcerrar_canal_SSL\fP 
+cierra la conexion\&.
+.SH "SYNOPSIS"
+.PP
+\fB#include\fP \fB'conexion\&.h'\fP 
+.PP
+\fBvoid\fP \fBcerrar_canal_SSL\fP \fB\fP(\fBSSL\fP * ssl, \fBSSL_CTX*\fP ctx, \fBint\fP sockfd\fB\fP)
+.SH "DESCRIPCIÓN"
+.PP
+Esta función liberará todos los recursos y cerrará el canal de comunicación seguro creado previamente\&.
+.SH "RETORNO"
+.PP
+No devuelve nada\&.
+.SH "VER TAMBIÉN"
+.PP
+\fBinicializar_nivel_SSL(3)\fP, \fBfijar_contexto_SSL(3)\fP, \fBconectar_canal_seguro_SSL(3)\fP, \fBaceptar_canal_seguro_SSL(3)\fP, \fBevaluar_post_connectar_SSL(3)\fP, \fBenviar_datos_SSL(3)\fP, \fBrecibir_datos_SSL(3)\fP \fB\fP  authors AUTOR Mario Valdemaro Garcia Roque (mariov.garcia@estudiante.uam.es) Roberto Garcia Teodoro (roberto.garciat@estudiante.uam.es) 

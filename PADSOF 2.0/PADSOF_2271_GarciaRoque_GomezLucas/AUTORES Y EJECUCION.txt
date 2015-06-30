@@ -1,0 +1,27 @@
+Gomez Lucas,Antonio 
+Garcia Roque, Mario Valdemaro
+
+¡¡¡¡¡¡ATENCION!!!!!!
+¡¡¡¡¡¡ATENCION!!!!!!
+¡¡¡¡¡¡ATENCION!!!!!!
+¡¡¡¡¡¡ATENCION!!!!!!
+
+Tienes que meter el (puto) piechart que nos peta el tamaño y se nos pasa de los 5mb, hay que meterlo en la carpeta estadisticas dentro de src
+
+
+Se entrega el codigo del proyecto, es necesario insertarlo en un proyecto
+Ademas se necesitan insertar en ese poyecto los ficehros ALUMNOS.TXT PROFESORES.TXT que se suministran en el proyecto ambos con el nombre que se epecifica, se puede usar otros ficheros si se desea pero deben tener los nombres indicados y ademas tener el formato de correo y contraseña que se nos ha suministrado en los archivo, sino no funcionara.
+
+El proyecto debera quedar tal que asi:
+
+carpeta_proyecto:
+	src:
+	PROFESORES.TXT
+	ALUMNOS.TXT
+	etc.
+es decir los fichero deben estar en el mismo sitio donde se ejecuta eclipse o javac o el programa que se este uasndo, SINO  NO FUNCIONARA
+
+Cualquier duda o fallo contactar con mariov.garcia@estudiante.uam.es
+y antonio.gomezlucas@estudiante.uam.es
+
+Hay creado un usuario profesor a.a@mail.gob con contraseña a, si no recuerdo mal esta hecho para que nada mas iniciar se rellene la informacion correo y contraseña con estos campos, esta hecho para darle mas rapidez a la hora de hacer las pruebas, en ningun caso hace loguin con esto, eso debera hacerl en profesor.

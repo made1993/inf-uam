@@ -1,0 +1,319 @@
+package test;
+
+import grupo.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Date;
+import java.util.Calendar;
+
+import mailUam.MailUam;
+import mensaje.Mensaje;
+import mensaje.MensajeUsuario;
+import usuario.*;
+/** 
+ * @author Antonio Gomez lucas, Mario Valdemaro Garcia Roque
+ * 
+ * Clase de pruebas de mail Uam
+ */
+public class pruebaMailUam {
+	
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
+		MailUam app= new MailUam();
+		if(!app.existeDir("aplicacion")){
+			app.cargarDatos("alumnos.txt", "profesores.txt");
+			app.crearDirectorios();
+		}
+		int status;
+		String correo = null;
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+		String tusr="a";
+		while(!tusr.equals("P")&&!tusr.equals("E")){
+	        System.out.println("Porfesor (P) o Estudiante (E): ");
+	        tusr = bufferRead.readLine();
+		}
+        
+        if (tusr.equals("E")){
+        	Estudiante usr = new Estudiante(null, null, null, null);
+         	while((usr=app.loginEstudiante())==null);
+         	System.out.println("Binvenido/a:"+usr.getNombre()+" "+usr.getApellido());
+         	while (true){
+	         	listarOpcionesUsurio();
+	         	switch(retOpcion()){
+	        	case 1:
+	         		System.out.println(usr.verPerfil());
+	         		break;
+	         	case 2:
+	         		int i;
+	         		while (true){
+		         		i=1;
+		         		usr=(Estudiante)usr.cargarUsuario(usr.getCorreo());
+		         		for(MensajeUsuario m:usr.getBuzon().getMensajesNoLeidos()){
+		         			System.out.println("Mensaje:"+ i++);
+		         			System.out.println("Autor:"+m.getRemitente());
+		         			System.out.println("Ausnto:"+m.getCuerpo());
+		         		}
+		         		System.out.println();
+		         		System.out.println("Ver mensaje (escriba el numero del mensaje que quiere ver o 0 para salir):");
+		         		i=retOpcion();
+		         		if (i==0){
+		         			break;
+		         		}
+		         		else if(usr.getBuzon().getMensajesNoLeidos().size()>=i){
+		         			System.out.println(usr.getBuzon().getMensajesNoLeidos().get(i-1));
+		         		}
+	         		}
+	         		break;
+	         	case 3:
+	         		usr=(Estudiante)usr.cargarUsuario(usr.getCorreo());
+	         		while(true){
+	         			i=1;
+	         			for(Grupo g: usr.getListaGrupos()){
+	         				System.out.println("Numero:"+i);
+	         				System.out.println("Nombre:"+g.getNombre());
+	         			}
+	         			System.out.println("Para entrar a ver un grupo pulse su numero o 0 para salir:");
+	         			i= retOpcion();
+	         			if (i==0)
+	         				break;
+	         			else if(usr.getListaGrupos().size()>=i){
+	         				System.out.println(usr.getListaGrupos().get(i-1).getListaMensajes());
+	         			}
+	         			System.out.println("ELija 1 si quiere escribir un mensaje 0 si quiere salir:");
+	         			i= retOpcion();
+	         			if (i==1){
+	         				/*TODO crear el mensaje*/
+	         			}
+	         		}
+	             	break;
+	         	case 4:
+	         		usr=(Estudiante) usr.cargarUsuario(usr.getCorreo());
+         			for(Usuario u: usr.getContactos()){
+         				System.out.println(u.getNombre()+" "+u.getApellido()+" "+u.getCorreo());
+         			}
+	             	break;
+	         	case 5:
+	         		System.out.println("Nuevo mensaje");
+	         		correo= null;
+	         	
+	         			System.out.println("Destinatario:");
+	         			correo= retString();	         			         			
+	         		if(!app.existeDir("aplicaion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+	         			System.out.println("No existe el usuario");
+	         			break;
+	         		}
+	         		Usuario dst= new Estudiante(null, null, null, null);
+	         		dst= dst.cargarUsuario(correo);
+	         		System.out.println("Asunto:");
+         			String asunto= retString();
+         			System.out.println("Mensaje, si escribes salto de linea significa que terminas el mensaje:");
+         			String mensaje= retString();
+         			System.out.println("¿Quieres mandar este mensaje? si(0 enter) no (1):");
+         			if(retOpcion()==1){
+         				break;
+         			}
+         			MensajeUsuario m= new MensajeUsuario(0, dst, mensaje, Calendar.getInstance(), asunto, usr);
+         			dst.addMensajeBuzon(m);
+         			break;
+	         	case 6:
+	         		/*TODO*/
+	             	break;
+	         	case 7:
+	         		System.out.println("Escriba el nombre del grupo que desea buscar:");
+	         		String str = retString();
+	         		Path dir = Paths.get("aplicacion"+app.getBarra()+"grupo");
+
+	         		try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*"+str+"*")) {
+	         		    for (Path file : stream) {
+	         		       System.out.println(file);
+	         		    }
+	         		}
+	             	break;
+	         	case 8:
+	         		System.out.println("Nombre del grupo:");
+	         		String strgrupo =retString();
+	         		if(app.existeDir("aplicacion"+app.getBarra()+"grupo"+app.getBarra()+strgrupo)){
+	         			/*TODO cargar el grupo y añadir el usuario a ese grupo no es moderado*/
+	         			/*TODO añadir ese grupo a la lista de grupos del usuario*/
+	         		}
+	         		else{
+	         			System.out.println("No existe el grupo:"+strgrupo);
+	         		}
+	             	break;
+	         	case 9:
+	         		usr=(Estudiante)usr.cargarUsuario(usr.getCorreo());
+         			i=1;
+         			for(Grupo g: usr.getListaGrupos()){
+         				System.out.println("Numero:"+i);
+         				System.out.println("Nombre:"+g.getNombre());
+         			}
+         			System.out.println("Grupo del que quiere salir (numero 0 o enter si no quiere salir)");
+         			i=retOpcion();
+         			if(i==0){
+         			}
+         			else if(i>= usr.getListaGrupos().size()){
+         				usr.getListaGrupos().remove(i-1);
+         				/*TODO quitar el usuario de la lista del grupo*/
+         			}
+	             	break;
+	         	case 10:
+	         		System.out.println("Correo Usuario:");
+	         		correo=retString();
+	         		if(app.existeDir(correo)){
+	         			Usuario cnt= new Estudiante(null,null,null,null);
+						cnt=cnt.cargarUsuario(correo);
+						usr.addContacto(cnt);
+	         		}
+	             	break;
+	         	case 11:
+	         		usr=(Estudiante) usr.cargarUsuario(usr.getCorreo());
+	         		i=1;
+         			for(Usuario u: usr.getContactos()){
+         				System.out.println("Numero:"+i++);
+         				System.out.println(u.getNombre()+" "+u.getApellido()+" "+u.getCorreo());
+         			}
+	             	break;
+	         	case 12:
+	             	break;
+	         	case 13:
+	         		opcionSalir();
+	             	return;
+	             default:
+	            	 opcionInvalida();
+	            	 break;
+	             		
+	         	}
+         	}
+        }
+        else{
+        	Profesor usr = new Profesor(null, null, null, null);
+         	while((usr=app.loginProfesor())==null);
+         	System.out.println("Binvenido/a:"+usr.getNombre()+" "+usr.getApellido());
+         	while (true){
+	         	listarOpcionesUsurio();
+	         	listarOpcionesProfesor();
+	         	switch(retOpcion()){
+	         	case 1:
+	         		System.out.println(usr.verPerfil());
+	         		break;
+	         	case 2:
+	         		int i;
+	         		usr=(Profesor) usr.cargarUsuario(usr.getCorreo());
+	         		while (true){
+		         		i=1;
+		         		for(MensajeUsuario m:usr.getBuzon().getMensajesNoLeidos()){
+		         			System.out.println("Mensaje:"+ i++);
+		         			System.out.println("Autor:"+m.getRemitente());
+		         			System.out.println("Ausnto:"+m.getCuerpo());
+		         		}
+		         		System.out.println();
+		         		System.out.println("Ver mensaje (escriba el numero del mensaje que quiere ver o 0 para salir):");
+		         		i=retOpcion();
+		         		if (i==0){
+		         			break;
+		         		}
+		         		if(usr.getBuzon().getMensajesNoLeidos().size()>=i){
+		         			System.out.println(usr.getBuzon().getMensajesNoLeidos().get(i-1));
+		         		}
+	         		}
+	         		
+	             	break;
+	         	case 3:
+	         		
+	             	break;
+	         	case 4:
+	             	break;
+	         	case 5:
+	             	break;
+	         	case 6:
+	             	break;
+	         	case 7:
+	             	break;
+	         	case 8:
+	             	break;
+	         	case 9:
+	             	break;
+	         	case 10:
+	             	break;
+	         	case 11:
+	             	break;
+	         	case 12:
+	             	break;
+	         	case 13:
+	         		opcionSalir();
+	             	return;
+	         	case 14:
+	             	break;
+	         	case 15:
+	             	break;
+	             default:
+	            	 opcionInvalida();
+	            	 break;
+	             		
+	         	}
+         	}
+        }
+      
+
+	       	
+	}
+	public static void opcionSalir(){
+		System.out.println("Adios.");
+	}
+	public static void opcionInvalida(){
+		System.out.println("Opcion no valida.");
+	}
+	public static String retString(){
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+		String str;
+		try {
+			str = bufferRead.readLine();
+			return str;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public static int retOpcion(){
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+		 System.out.println("Introduzca una opcion:");
+	     try {
+			String str = bufferRead.readLine();
+			if(str.isEmpty())
+				return 0;
+			int i= Integer.parseInt(str);
+			return i;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			
+			return 0;
+		}
+	}
+	  public static void listarOpcionesUsurio(){
+		  System.out.println("Elija una opcion(para ello intoroduzca el numero correspondiente):");
+		  System.out.println("1.Ver Perfil");
+		  System.out.println("2.Listar mensajes no leidos");
+		  System.out.println("3.Listar mis grupos");
+		  System.out.println("4.Listar contactos");
+		  System.out.println("5.Enviar mensaje a un usuario");
+		  System.out.println("6.Enviar mensaje a un Grupo");
+		  System.out.println("7.Buscar un grupo");
+		  System.out.println("8.Unirse a un grupo");
+		  System.out.println("9.Salir de un grupo");
+		  System.out.println("10.Añadir un contacto");
+		  System.out.println("11.Quitar un contacto");
+		  System.out.println("12.Crear grupo");
+		  System.out.println("13.Salir");
+	  }
+	  public static void listarOpcionesProfesor(){
+		 System.out.println("14.Crear Grupo de estudio");
+		 System.out.println("15.Enviar mensaje alumnos");
+	  }
+}

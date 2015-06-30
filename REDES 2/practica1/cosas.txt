@@ -1,0 +1,15 @@
+ar rv -a libprueba.a prueba1.o
+ar t libprueba.a 
+ar x libprueba.a prueba1.o
+ar d libprueba.a prueba1.o
+gcc main.c -L . -lprueba -o main
+
+
+doxywizard - para crear los man
+mandb
+
+
+dos librerias una con -g y otra sin
+-g para desarrollo, con simbolos de depuracion
+
+

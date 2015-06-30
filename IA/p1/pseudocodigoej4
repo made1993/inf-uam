@@ -1,0 +1,22 @@
+Funcion: genera-lista-interpretaciones (lst)
+Entrada: una lista
+Salida: una lista de listas con las psoibles combinaciones
+	con T y NIL en grupos de n, donde n es el numero de
+	elementos de la lista.
+	
+Pseudocodigo:
+	Si lst es NULL
+		Devuelve NIL
+	En caso contrario
+		Generamos en una lista de listas con 2 sublistas una 
+		con la vaiable y el valor T y otra con la variable
+		y el valor NIL.Siendo el numero de listas de lisatas 
+		el total de elementos de lst.
+		Con estos valores generamos las ditintas combinaciones
+		llamando a la funcion combine-list-of-lsts que nos mezclara
+		las dintintas posibles combinaciones de lo valores de verdad.
+
+Comentarios: para dejarlo mas claro la salida seria como
+	si la parte izquierda fuese la posicion de un bit y la
+	parte derecha un bit de 0 o 1 y se tuviese que sacar una lista 
+	decremental de valores en binario.

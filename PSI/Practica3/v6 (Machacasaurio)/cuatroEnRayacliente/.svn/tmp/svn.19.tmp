@@ -1,0 +1,101 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 17, 2014, 5:10:28 PM
+    Author     : roberto
+*/
+/* Top navigation CSS Style Rule */  
+
+/* html body tag style */  
+body {  
+    margin: 0px;  
+    padding: 0px;  
+}  
+
+/* h1 tag style */  
+h1 {  
+    margin: 0px;  
+    padding: 0px;  
+    font-family: arial;  
+    font-size: 140%;  
+    color: #ffffff;  
+}  
+
+/* CSS Style Rule for Div having id="outer-container" */  
+/* outer-container will hold the whole assembly of  
+   nested div overlays. */  
+/* It will also center align the design */  
+#outer-container {  
+    width: 770px;  
+    margin: 0 auto;  
+}  
+
+/* header CSS Style Rule */  
+#header {  
+    width: 770px;  
+    height: 90px;  
+    background-color: blue;  
+}  
+
+/* footer CSS Style Rule */  
+#footer {  
+    width: 770px;  
+    background-color: black;  
+}  
+
+#top-Nav ul {
+    list-style-type: none;
+    width: 770px;  
+    background-color: black;  
+    margin: 0;
+    padding: 0;
+    margin: 2px 0px 2px 0px;  
+}
+
+#top-Nav li
+{
+    float:left;
+}
+#top-Nav li:focus
+{
+    float:left;
+    color:#0687ff;
+}
+#top-Nav li:hover a { color: #fff; background: #111;  }
+/* content-container CSS Style Rule */  
+/* It will hold the main content of the page. */  
+#content-container {  
+    width: 770px;  
+    height: 450px;  
+    background-color: green;  
+    margin: 2px 0px 2px 0px;  
+}  
+
+a:hover {
+  color: black ;
+  background-color: #def ;
+}
+
+.red {
+    width: 60px;
+    height:60px;
+    background-repeat: no-repeat;
+    background-image: url('../Images/connect4Red.jpg')
+}
+.yellow {
+    width: 60px;
+    height:60px;
+    background-repeat: no-repeat;
+    background-image: url('../Images/connect4Yellow.jpg')
+}
+.empty {
+    width: 60px;
+    height:60px;
+    background-repeat: no-repeat;
+    background-image: url('../Images/connect4Empty.jpg')
+}
+
+/////////////////7

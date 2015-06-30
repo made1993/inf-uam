@@ -1,0 +1,62 @@
+%{
+#include <stdio.h> 
+#include "types.h"
+#include "y.tab.h"
+extern FILE * yyout;
+int ln=1;
+int col=0;
+int err=0;
+%}
+
+%option noyywrap
+
+%%
+
+"//".* {ln++;col=0;}
+"main" { fprintf(yyout, ";D:\tmain\n");col += yyleng;return TOK_MAIN; }
+"int" { yylval.atributos.tipo = INT;fprintf(yyout, ";D:\tint\n");col += yyleng;return TOK_INT; }
+"boolean" { yylval.atributos.tipo = BOOL;fprintf(yyout, ";D:\tboolean\n");col += yyleng;return TOK_BOOLEAN; }
+"array" { fprintf(yyout, ";D:\tarray\n");col += yyleng;return TOK_ARRAY; }
+"function" { fprintf(yyout, ";D:\tfunction\n");col += yyleng;return TOK_FUNCTION; } 
+"if" { fprintf(yyout, ";D:\tif\n");col += yyleng;return TOK_IF;}
+"else" { fprintf(yyout, ";D:\telse\n");col += yyleng;return TOK_ELSE;}
+"while" { fprintf(yyout, ";D:\twhile\n");col += yyleng;return TOK_WHILE;}
+"scanf" { fprintf(yyout, ";D:\tscanf\n");col += yyleng;return TOK_SCANF;}
+"printf" { fprintf(yyout, ";D:\tprintf\n");col += yyleng;return TOK_PRINTF;}
+"return" { fprintf(yyout, ";D:\treturn\n");col += yyleng;return TOK_RETURN;}
+
+
+";" { fprintf(yyout, ";D:\t;\n");col += yyleng;return TOK_PUNTOYCOMA;}
+"," { fprintf(yyout, ";D:\t,\n");col += yyleng;return TOK_COMA;}
+"("	{ fprintf(yyout, ";D:\t(\n");col += yyleng;return TOK_PARENTESISIZQUIERDO;}
+")"	{ fprintf(yyout, ";D:\t)\n");col += yyleng;return TOK_PARENTESISDERECHO;}
+"["	{ fprintf(yyout, ";D:\t[\n");col += yyleng;return TOK_CORCHETEIZQUIERDO;}
+"]"	{ fprintf(yyout, ";D:\t]\n");col += yyleng;return TOK_CORCHETEDERECHO;}
+"{"	{ fprintf(yyout, ";D:\t{\n");col += yyleng;return TOK_LLAVEIZQUIERDA;}
+"}"	{ fprintf(yyout, ";D:\t}\n");col += yyleng;return TOK_LLAVEDERECHA;}
+"="	{ fprintf(yyout, ";D:\t=\n");col += yyleng;return TOK_ASIGNACION;}
+"+"	{ fprintf(yyout, ";D:\t+\n");col += yyleng;return TOK_MAS;}
+"-"	{ fprintf(yyout, ";D:\t-\n");col += yyleng;return TOK_MENOS;}
+"/"	{ fprintf(yyout, ";D:\t/\n");col += yyleng;return TOK_DIVISION;}
+"*"	{ fprintf(yyout, ";D:\t*\n");col += yyleng;return TOK_ASTERISCO;}
+"&&" { fprintf(yyout, ";D:\t&&\n");col += yyleng;return TOK_AND;}
+"||" { fprintf(yyout, ";D:\t||\n");col += yyleng;return TOK_OR;}
+"!"	 { fprintf(yyout, ";D:\t!\n");col += yyleng;return TOK_NOT;}
+"==" { fprintf(yyout, ";D:\t==\n");col += yyleng;return TOK_IGUAL;}
+"!=" { fprintf(yyout, ";D:\t!=\n");col += yyleng;return TOK_DISTINTO;}
+"<=" { fprintf(yyout, ";D:\t<=\n");col += yyleng;return TOK_MENORIGUAL;}
+">=" { fprintf(yyout, ";D:\t>=\n");col += yyleng;return TOK_MAYORIGUAL;}
+"<"	{ fprintf(yyout, ";D:\t<\n");col += yyleng;return TOK_MENOR;}
+">"	{ fprintf(yyout, ";D:\t>\n");col += yyleng;return TOK_MAYOR;}
+
+[0-9]+ { yylval.atributos.valor_entero=atoi(yytext); fprintf(yyout, ";D:\t%s\n",yytext);col += yyleng;return TOK_CONSTANTE_ENTERA;}
+"true" { fprintf(yyout, ";D:\ttrue\n");col += yyleng;return TOK_TRUE;}
+"false" { fprintf(yyout, ";D:\tfalse\n");col += yyleng;return TOK_FALSE;}
+[a-zA-Z][a-zA-Z0-9]* if(yyleng<101) { yylval.atributos.lexema=malloc(sizeof(char)*strlen(yytext));
+									strcpy(yylval.atributos.lexema,yytext);	fprintf(yyout, ";D:\t%s\n",yytext);col += yyleng;return TOK_IDENTIFICADOR;} else {return TOK_ERROR;}
+[\n] {ln++;col=0;}
+[ \t\r] {col += yyleng;}
+. { col += yyleng;err=1;printf("****Error en [lin %d, col %d]: simbolo no permitido (%s)\n",ln,col,yytext);return TOK_ERROR;}
+
+%%
+

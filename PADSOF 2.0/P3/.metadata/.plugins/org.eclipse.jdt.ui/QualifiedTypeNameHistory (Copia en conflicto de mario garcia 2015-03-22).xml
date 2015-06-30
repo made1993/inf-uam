@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="Grupo"/>
+<fullyQualifiedTypeName name="Usuario"/>
+<fullyQualifiedTypeName name="GrupoEstudio"/>
+<fullyQualifiedTypeName name="MensajeGrupo"/>
+<fullyQualifiedTypeName name="Pregunta"/>
+<fullyQualifiedTypeName name="Profesor"/>
+<fullyQualifiedTypeName name="java.lang.Readable"/>
+<fullyQualifiedTypeName name="Respuesta"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="MensajeUsuario"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
+<fullyQualifiedTypeName name="java.io.FileOutputStream"/>
+<fullyQualifiedTypeName name="mailUam.MailUam"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="mensaje.Mensaje"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="grupo.Grupo"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="mensaje.MensajeUsuario"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.nio.file.Path"/>
+<fullyQualifiedTypeName name="java.nio.file.Paths"/>
+<fullyQualifiedTypeName name="java.nio.file.Files"/>
+<fullyQualifiedTypeName name="java.nio.file.DirectoryStream"/>
+<fullyQualifiedTypeName name="usuario.Estudiante"/>
+<fullyQualifiedTypeName name="usuario.Usuario"/>
+<fullyQualifiedTypeName name="usuario.Profesor"/>
+</qualifiedTypeNameHistroy>

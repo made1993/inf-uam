@@ -1,0 +1,37 @@
+<style>
+	body{background-color:red}
+	#login{
+		text-align:center;
+		width:10%;
+		float:right;
+		height:75px;
+		background-color:red;
+		
+	}
+	#cabecera{
+		text-align:center;
+		width:90%;
+		float:left;
+		height:75px;
+		background-color:yellow;
+	}
+	#mlateral{
+		text-align:center;
+		background-color:green;
+		width:20%;
+		height:500px;
+		float:left;
+		clear:both;			
+	}
+	#contenido{
+		width:80%;
+		height:500px;
+		float:right;
+		background-color:orange;
+	}
+	#ppagina{
+		text-align:center;
+		width:100%;
+		float:bottom;
+	}
+</style>

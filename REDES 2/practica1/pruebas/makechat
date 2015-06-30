@@ -1,0 +1,17 @@
+CC=gcc
+CCFLAGS = -Wall --pedantic -g
+ADDLIB=ar
+LIB=sound
+FLAGS=`pkg-config --cflags gtk+-2.0 --libs gtk+-2.0` 
+
+all: chat clear
+
+chat: chat.c chat_funcs.c funciones.c
+	@echo "\n\t\033[31mCompiling and creating chat interface example\033[00m"
+	@$(CC) $(CCFLAGS) chat.c chat_funcs.c funciones.c `pkg-config --cflags gtk+-2.0` `pkg-config --libs gtk+-2.0` -o chat  -lircredes -pthread
+	@echo "\t\033[32mCompiled and created chat interface example\033[00m"
+
+clean: clear
+
+clear:
+	@rm -f *~ >/dev/null 2> /dev/null

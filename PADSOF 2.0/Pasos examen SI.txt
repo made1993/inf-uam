@@ -1,0 +1,182 @@
+Pasos examen SI
+
+--------------------------
+ 1 - SQL:
+--------------------------
+
+CREATE TABLE cliente (
+	cid serial PRIMARY KEY,
+	nombreC text
+);
+CREATE TABLE prenda (
+	pid serial PRIMARY KEY,
+	nombreP text
+);
+CREATE TABLE venta (
+	vid serial PRIMARY KEY,
+	cid serial references cliente(cid),
+	pid serial references prenda(pid)
+);
+
+
+insert into cliente values(default, 'cliente2');
+insert into prenda values (default, 'prenda2');
+insert into prenda values (default, 'prenda3');
+insert into prenda values (default, 'prenda4');
+
+insert into venta values(default, 1, 1);
+insert into venta values(default, 1, 2);
+insert into venta values(default, 2, 1);
+insert into venta values(default, 2, 2);
+insert into venta values(default, 2, 3);
+
+--------------------------
+ 2 - JPA 
+--------------------------
+
+New project --> Java web --> web application (glassfish server /usr/local/glassfish)
+
+Conectar a la base de datos, crear modelo y controlador:
+	Services --> Databases --> new connection (meter los datos de postgres host localhost; port 5432; database examen; alumnodb; alumnodb) schema public.
+JPA entities:
+New File --> Persistence --> Entity classes from Database.
+	Data source --> New Data source. Data base connection examen
+add all
+añadir al paquete model. finish.
+
+
+
+Uso de serial en postgres
+La generacion autom´atica de “entities” a partir de tablas en la base de datos no
+implementa de forma adecuada las claves primarias autoincrementales.
+Tras crear la entidad habr´ıa que a˜nadir a mano:
+
+@SequenceGenerator(name="artist_artistid_seq", allocationSize=1)
+@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="artist_artistid_seq")
+justo despu´es de la linea
+
+@Id
+
+Tened en cuenta que artist artistid seq no es un nombre arbitrario sino el nombre
+que tenga la variable que usa postgres. Se puede sacar conectandose a la base de
+datos y usando el comando
+
+\d artist
+
+JPA CONTROLLER:
+
+new --> persistence --> create JPA class controlers from entity classes
+
+--------------------------
+ 3 - SERVLET
+--------------------------
+
+Crear paquete y servlet.
+
+Añadir a servlet: 
+@PersistenceUnit
+private EntityManagerFactory emf ;
+@Resource
+private UserTransaction utx;
+
+
+
+			/*
+			UsuarioJpaController usuarioJpaController = new UsuarioJpaController(utx, emf);
+            List<Usuario> findUsuarioEntities = usuarioJpaController.findUsuarioEntities();
+            /*Lista usuarios & contrasenas*/
+            out.println("<h2>listado de jugadores y passwords</h2>");
+            for(Usuario u : findUsuarioEntities){
+                out.println("Jugador: " + u.getUsuarioNombre() + " password: " + u.getPasswd() + "<br>");
+            }
+            */
+
+ClienteJpaController clienteJpaController = new ClienteJpaController(utx, emf);
+            PrendaJpaController prendaJpaController = new PrendaJpaController(utx, emf);
+            VentaJpaController ventaJpaController = new VentaJpaController(utx, emf);
+            
+            Cliente cliente = new Cliente();
+            cliente.setNombrec("Cliente1");
+            Prenda prenda = new Prenda();
+            prenda.setNombrep("Prenda1");
+            Venta venta = new Venta();
+            venta.setPid(prenda);
+            venta.setCid(cliente);
+            
+            try {
+                clienteJpaController.create(cliente);
+                prendaJpaController.create(prenda);
+                ventaJpaController.create(venta);
+            } catch (Exception ex) {
+                Logger.getLogger(ExamenServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            out.println("Datos insertados con exito");
+
+
+QUERY JPA (Controller)
+
+        /*Listado de prendas vendidas al c1*/
+    public List<Prenda> prendasCliente1() {
+        EntityManager em = getEntityManager();
+        
+        try {
+            String sqlCommand = "SELECT v FROM Venta v WHERE v.cid.cid = 1";
+            /*String sqlCommand = "SELECT u FROM Usuario u WHERE u.usuarioNombre = :nombre";
+            String sqlCommand = "SELECT m FROM Movimientos m WHERE m.idPartida.idPartida = 2 order by m.idMovimiento desc";
+          WHERE v.cid.cid = 1
+            Query q = em.createQuery(sqlCommand).setParameter("nombre", s);*/
+
+            Query q = em.createQuery(sqlCommand);
+            List<Venta> list = new ArrayList<Venta>();
+            List<Prenda> prendas = new ArrayList<Prenda>();
+            list = q.getResultList();
+            for (Venta v : list) {
+                prendas.add(v.getPid());
+            }
+            return prendas;
+        } finally {
+            
+            em.close();
+        }
+    }
+
+QUERY 2 JPA (Controller)
+
+public List<Cliente> clientesConPrendaQuery(int pid) {
+        EntityManager em = getEntityManager();
+        
+        try {
+            String sqlCommand = "SELECT v FROM Venta v WHERE v.pid.pid = :pid";
+            /*String sqlCommand = "SELECT u FROM Usuario u WHERE u.usuarioNombre = :nombre";
+            String sqlCommand = "SELECT m FROM Movimientos m WHERE m.idPartida.idPartida = 2 order by m.idMovimiento desc";
+          WHERE v.cid.cid = 1
+            Query q = em.createQuery(sqlCommand).setParameter("nombre", s);*/
+            Query q = em.createQuery(sqlCommand).setParameter("pid", pid);
+            List<Venta> list = new ArrayList<Venta>();
+            List<Cliente> clientes = new ArrayList<Cliente>();
+            list = q.getResultList();
+            for (Venta v : list) {
+                clientes.add(v.getCid());
+            }
+            return clientes;
+        } finally {
+            
+            em.close();
+        }
+    }
+
+--------------------------
+ 4 - WEB SERVICE
+--------------------------
+Dentro de una web application:
+file --> new file --> web services --> web service.
+Indicar paquete.
+Add operation...
+Cliente: crear proyecto java app o web service.
+new file --> web services --> web service client.
+Tick project √
+Seleccionar proyecto.
+
+Desde web service references en el client, desplegar y arrastrar métodos.
+Usar ports con sesiones y eso si es necesario
+...

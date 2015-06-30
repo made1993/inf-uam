@@ -1,0 +1,57 @@
+package gui;
+
+import java.awt.Label;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+import mailUam.*;
+
+public class GUICrearMensaje extends GUIMenu {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JLabel labelCorreo;
+	private JLabel labelAsunto;
+	private JLabel labelMensaje;
+	private JLabel labelContactos;
+	private JTextField textCorreo;
+	private JTextField textAsunto;
+	private JTextArea textMensaje;
+	private JList listContactos;
+	private JButton botonEnviar;
+
+	public GUICrearMensaje(MailUam modelo) {
+		super(modelo);
+		labelCorreo= new JLabel("Correo:");
+		labelAsunto= new JLabel("Asunto:");
+		labelMensaje= new JLabel("Mensaje:");
+		labelContactos= new JLabel("Contactos:");
+		textCorreo= new JTextField(15);
+		textAsunto= new JTextField(15);
+		textMensaje= new JTextArea(20, 20);
+		listContactos = new JList();
+		botonEnviar= new JButton("Enviar");
+		
+		JPanel p1= new JPanel();
+		p1.add(labelCorreo);
+		p1.add(textCorreo);
+		p1.add(listContactos);
+		p1.add(labelAsunto);
+		p1.add(textAsunto);
+		p1.add(labelMensaje);
+		p1.add(textMensaje);
+		p1.add(botonEnviar);
+		
+		
+	}
+	
+	@Override
+	public void setControlador(ActionListener c) {
+		//TODO Auto-generated method stub
+		super.setControlador(c);
+	}
+
+}

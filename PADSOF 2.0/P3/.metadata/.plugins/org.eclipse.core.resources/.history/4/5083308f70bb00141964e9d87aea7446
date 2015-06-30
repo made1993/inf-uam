@@ -1,0 +1,37 @@
+import java.util.*;
+
+public class MailUam {
+	private ArrayList<Usuario> listaUsuarios;
+	private ArrayList<Grupo> listaGrupos;
+	private ArrayList<Mensaje> listaMensajes;
+	
+	public boolean login(String correo, String password){
+		return false;//TODO
+		
+	}
+	public void logout(String correo){
+	//TODO
+		
+	}
+	public boolean crearGrupo(String nombre, boolean privado,int idModerador){
+		return false; //TODO
+	}
+	public boolean crearSubGrupo(String nombre, boolean privado,int idModerador, Grupo grupo){
+		return false; //TODO
+	}
+	public boolean enviarMensaje(Usuario usuario, String cuerpo, String sujeto){
+		return false; //TODO
+	}
+	public boolean entrarGrupo(Grupo grupo){
+		return false; //TODO
+	}
+	public boolean salirGrupo(Grupo grupo){
+		return false; //TODO
+	}
+	public Usuario buscarUsuario(String usuario){
+		return null; //TODO
+	}
+	public Grupo buscarGrupo(String grupo){
+		return null; //TODO
+	}
+}

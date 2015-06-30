@@ -1,0 +1,20 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="Grupo"><rhs name\="GrupoEstudio"/></lhs><lhs name\="GrupoEstudio"><rhs name\="GrupoEstudio"/></lhs><lhs name\="java.util.List"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.RandomAccess"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.lang.Cloneable"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.Collection"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.AbstractList"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.AbstractCollection"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.ArrayList"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="Mensaje"><rhs name\="Pregunta"/><rhs name\="MensajeUsuario"/></lhs><lhs name\="Pregunta"><rhs name\="Pregunta"/></lhs><lhs name\="MensajeUsuario"><rhs name\="MensajeUsuario"/></lhs><lhs name\="java.io.ObjectOutput"><rhs name\="java.io.ObjectOutputStream"/></lhs><lhs name\="java.io.ObjectStreamConstants"><rhs name\="java.io.ObjectOutputStream"/></lhs><lhs name\="java.io.DataOutput"><rhs name\="java.io.ObjectOutputStream"/></lhs><lhs name\="java.lang.AutoCloseable"><rhs name\="java.io.ObjectOutputStream"/><rhs name\="java.io.FileOutputStream"/></lhs><lhs name\="java.io.OutputStream"><rhs name\="java.io.ObjectOutputStream"/><rhs name\="java.io.FileOutputStream"/></lhs><lhs name\="java.io.Closeable"><rhs name\="java.io.ObjectOutputStream"/><rhs name\="java.io.FileOutputStream"/></lhs><lhs name\="java.io.Flushable"><rhs name\="java.io.ObjectOutputStream"/><rhs name\="java.io.FileOutputStream"/></lhs><lhs name\="java.io.ObjectOutputStream"><rhs name\="java.io.ObjectOutputStream"/></lhs><lhs name\="java.io.FileOutputStream"><rhs name\="java.io.FileOutputStream"/></lhs><lhs name\="mensaje.Mensaje"><rhs name\="mensaje.MensajeUsuario"/></lhs><lhs name\="mensaje.MensajeUsuario"><rhs name\="mensaje.MensajeUsuario"/></lhs><lhs name\="mailUam.MailUam"><rhs name\="mailUam.MailUam"/></lhs><lhs name\="usuario.Usuario"><rhs name\="usuario.Estudiante"/><rhs name\="usuario.Profesor"/></lhs><lhs name\="usuario.Estudiante"><rhs name\="usuario.Estudiante"/></lhs><lhs name\="usuario.Profesor"><rhs name\="usuario.Profesor"/></lhs></history>
+content_assist_number_of_computers=13
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=60,60,60
+eclipse.preferences.version=1
+fontPropagated=true
+org.eclipse.jdt.internal.ui.navigator.layout=2
+org.eclipse.jdt.ui.editor.tab.width=
+org.eclipse.jdt.ui.formatterprofiles.version=12
+org.eclipse.jdt.ui.javadoclocations.migrated=true
+org.eclipse.jdt.ui.text.code_templates_migrated=true
+org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.templates_migrated=true
+org.eclipse.jface.textfont=1|Monospace|10.0|0|GTK|1|;
+proposalOrderMigrated=true
+spelling_locale_initialized=true
+tabWidthPropagated=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

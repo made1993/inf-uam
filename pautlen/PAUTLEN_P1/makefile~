@@ -1,0 +1,10 @@
+CC = gcc -ansi -pedantic
+CFLAGS = 
+EXE = main
+
+all : $(EXE)
+
+clean :
+	rm -f *.o core $(EXE)
+
+$(EXE) : % : %.o tabsim.o hash.o

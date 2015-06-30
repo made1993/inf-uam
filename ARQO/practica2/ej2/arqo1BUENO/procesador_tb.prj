@@ -1,0 +1,6 @@
+vhdl work "registros.vhd"
+vhdl work "control.vhd"
+vhdl work "ALU.vhd"
+vhdl work "procesador.vhd"
+vhdl work "memoria.vhd"
+vhdl work "procesador_TB.vhd"

@@ -1,0 +1,6 @@
+make alldb -f makefile.server
+make createdomain -f makefile.server
+(En algunos casos falta el archivo postgresql-9.2-1002.jdbc4.jar en $(ASPATH)/glassfish/domains/$(DOMAIN)/lib y es necesario copiarlo)
+
+make startall -f makefile.server
+make deploy -f makefile.client

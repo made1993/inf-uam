@@ -1,0 +1,156 @@
+package gui;
+
+import grupo.*;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Panel;
+import java.awt.TextArea;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.*;
+
+import usuario.Usuario;
+import mailUam.*;
+
+/**
+ * @author Antonio Gomez lucas, Mario Valdemaro Garcia Roque
+ * 
+ *         Clase ControlBuscarGrupo
+ */
+public class GUIBuscarUsuario extends GUIMenu {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField textBuscar;
+	private JButton buttonBuscar;
+	private JButton buttonAnadir;
+	private JPanel panelResultados;
+	private Grupo grupo;
+
+	public GUIBuscarUsuario(MailUam modelo) {
+		super(modelo);
+		setLabelTituloText("Buscar Usuario");
+		textBuscar = new JTextField(20);
+		buttonBuscar = new JButton("Buscar");
+		panelResultados = new JPanel();
+		buttonAnadir = new JButton("Anadir");
+
+		JPanel p1 = new JPanel();
+		p1 = new JPanel(new GridBagLayout());
+		GridBagConstraints c= new GridBagConstraints();
+		
+		p1.add(textBuscar,c);
+		p1.add(buttonBuscar,c);
+		p1.add(buttonAnadir,c);
+
+		p1.add(panelResultados,c);
+		add(p1);
+		repaint();
+
+	}
+
+	/**
+	 * @return the textBuscar
+	 */
+	public JTextField getTextBuscar() {
+		return textBuscar;
+	}
+
+	/**
+	 * @return the textBuscar
+	 */
+	public String getTextBuscarText() {
+		return textBuscar.getText();
+	}
+
+	/**
+	 * @param textBuscar
+	 *            the textBuscar to set
+	 */
+	public void setTextBuscar(JTextField textBuscar) {
+		this.textBuscar = textBuscar;
+	}
+
+	/**
+	 * @return the buttonBuscar
+	 */
+	public JButton getButtonBuscar() {
+		return buttonBuscar;
+	}
+
+	/**
+	 * @param buttonBuscar
+	 *            the buttonBuscar to set
+	 */
+	public void setButtonBuscar(JButton buttonBuscar) {
+		this.buttonBuscar = buttonBuscar;
+	}
+
+	/**
+	 * @return the buttonFinalizar
+	 */
+	public JButton getButtonAnadir() {
+		return buttonAnadir;
+	}
+
+	/**
+	 * @param buttonFinalizar
+	 *            the buttonFinalizar to set
+	 */
+	public void setButtonAnadir(JButton buttonAnadir) {
+		this.buttonAnadir = buttonAnadir;
+	}
+
+	/**
+	 * @return the grupo
+	 */
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	/**
+	 * @param grupo
+	 *            the grupo to set
+	 */
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+
+	/**
+	 * @return the panelResultados
+	 */
+	public JPanel getPanelResultados() {
+		return panelResultados;
+	}
+
+	/**
+	 * @param panelResultados
+	 *            the panelResultados to set
+	 */
+	public void setPanelResultados(JPanel panelResultados) {
+		this.panelResultados = panelResultados;
+	}
+
+	public void setValores(ArrayList<Usuario> resultados, Grupo grupo) {
+		this.grupo = grupo;
+		panelResultados.removeAll();
+		for (Usuario u : resultados) {
+			System.out.println("+" + u.getCorreo() + "+");
+			panelResultados.add(new JCheckBox(u.getCorreo()));
+		}
+		System.out.println("size:" + resultados.size());
+		validate();
+	}
+
+	@Override
+	public void setControlador(ActionListener c) {
+		super.setControlador(c);
+		buttonBuscar.addActionListener(c);
+		buttonAnadir.addActionListener(c);
+	}
+
+}

@@ -1,0 +1,20 @@
+.TH "fijar_contexto__s_s_l" 3 "Mon Apr 27 2015" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+fijar_contexto__s_s_l \- \fBfijar_contexto_SSL\fP 
+fija el contexto de una conexion SSL
+.SH "SYNOPSIS"
+.PP
+\fB#include\fP \fB'conexion\&.h'\fP 
+.PP
+\fBint\fP \fBfijar_contexto_SSL\fP \fB\fP(\fBSSL_CTX*\fP ctx, \fBconst\fP char* CAfile, \fBconst\fP char* prvKeyFile, \fBconst\fP char* certFile\fB\fP)
+.SH "DESCRIPCIÓN"
+.PP
+Esta función se encargará de inicializar correctamente el contexto que será utilizado para la creación de canales seguros mediante SSL\&. Deberá recibir información sobre las rutas a los certificados y claves con los que vaya a trabajar la aplicación\&.
+.SH "RETORNO"
+.PP
+Devuelve 0 en caso de error o 1 en caso de exito \&.
+.SH "VER TAMBIÉN"
+.PP
+\fBinicializar_nivel_SSL(3)\fP, \fBconectar_canal_seguro_SSL(3)\fP, \fBaceptar_canal_seguro_SSL(3)\fP, \fBevaluar_post_connectar_SSL(3)\fP, \fBenviar_datos_SSL(3)\fP, \fBrecibir_datos_SSL(3)\fP, \fBcerrar_canal_SSL(3)\fP \fB\fP  authors AUTOR Mario Valdemaro Garcia Roque (mariov.garcia@estudiante.uam.es) Roberto Garcia Teodoro (roberto.garciat@estudiante.uam.es) 

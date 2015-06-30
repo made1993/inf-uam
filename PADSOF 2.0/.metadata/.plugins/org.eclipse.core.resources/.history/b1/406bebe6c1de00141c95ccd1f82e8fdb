@@ -1,0 +1,605 @@
+package mailUam;
+
+import grupo.Grupo;
+import grupo.GrupoEstudio;
+
+import java.io.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+
+import mensaje.*;
+import usuario.Estudiante;
+import usuario.Profesor;
+import usuario.Usuario;
+
+public class MailUam {
+	private static final String ficheroAlumnos = "ALUMNOS.TXT";
+	private static final String ficheroProfesores = "PROFESORES.TXT";
+	private static final String nmAplicacion = "aplicacion";
+	private static final String nmUsuario = "grupo";
+	private static final String nmGrupo = "usuario";
+	private static final String nmDatos= "datos.obj";
+	
+	private static final String barraLinuxMAC = "/";
+	private static final String barraWindows = "\\";
+	private String barra;
+	private ArrayList<Usuario> listaUsuarios;
+	private ArrayList<Grupo> listaGrupos;
+	private Usuario logged;
+
+	/**
+	 * Constructor mailUam
+	 */
+	public MailUam() {
+		listaGrupos = new ArrayList<Grupo>();
+		listaUsuarios = new ArrayList<Usuario>();
+		if (getOS().equals("Windows 7")) {
+			barra = barraWindows;
+		} else {
+			barra = barraLinuxMAC;
+		}
+		logged = null;
+	}
+
+	/**
+	 * @return the listaUsuarios
+	 */
+	public ArrayList<Usuario> getListaUsuarios() {
+		return listaUsuarios;
+	}
+
+	/**
+	 * @param listaUsuarios
+	 *            the listaUsuarios to set
+	 */
+	public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+		this.listaUsuarios = listaUsuarios;
+	}
+
+	/**
+	 * @return the listaGrupos
+	 */
+	public ArrayList<Grupo> getListaGrupos() {
+		return listaGrupos;
+	}
+
+	/**
+	 * @param listaGrupos
+	 *            the listaGrupos to set
+	 */
+	public void setListaGrupos(ArrayList<Grupo> listaGrupos) {
+		this.listaGrupos = listaGrupos;
+	}
+
+	/**
+	 * @param barra
+	 *            the barra to set
+	 */
+	public void setBarra(String barra) {
+		this.barra = barra;
+	}
+	
+	/**
+	 * @return the logged
+	 */
+	public Usuario getLogged(){
+		return logged;
+	}
+	
+	/**
+	 * @param logged the logged to set
+	 */
+	public void setLogged(Usuario logged){
+		this.logged=logged;
+	}
+
+	/**
+	 * Realiza el login si el usuario es un profesor 
+	 * @return El profesor con el que ha hecho login
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public Profesor loginProfesor() throws ClassNotFoundException, IOException {
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(
+				System.in));
+		System.out.println("Correo: ");
+		String correo = bufferRead.readLine();
+		System.out.println("Password: ");
+		String pass = bufferRead.readLine();
+
+		if (existeDir("aplicacion" + getBarra() + "usuario" + getBarra()
+				+ correo)) {
+			Profesor usr = new Profesor(null, null, null, null);
+			usr = (Profesor) cargarUsuario(correo);
+			if (usr.getPassword().equals(pass)) {
+				return usr;
+			}
+		}
+		System.out.println("Usuario o Password incorrectos");
+		return null;
+
+	}
+
+	/**
+	 * Realiza el login si el usuario es un Estudiante
+	 * @return El estudiante que ha hecho login
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public Estudiante loginEstudiante() throws ClassNotFoundException,
+			IOException {
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(
+				System.in));
+		System.out.println("Correo: ");
+		String correo = bufferRead.readLine();
+		System.out.println("Password: ");
+		String pass = bufferRead.readLine();
+
+		if (existeDir("aplicacion" + getBarra() + "usuario" + getBarra()
+				+ correo)) {
+			Estudiante usr = new Estudiante(null, null, null, null);
+			usr = (Estudiante) cargarUsuario(correo);
+			if (usr.getPassword().equals(pass)) {
+				return usr;
+			}
+		}
+		System.out.println("Usuario o Password incorrectos");
+		return null;
+
+	}
+	
+	/**
+	 * Login de un usuario
+	 * @param correo
+	 * @param password
+	 * @return true si se ha podido loguear
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
+	 */
+	public Usuario login(String correo,String password) throws ClassNotFoundException, IOException{
+	
+		if (existeDir("aplicacion" + getBarra() + "usuario" + getBarra() + correo) && !correo.equals("") && !password.equals("")) {
+			Usuario usr = cargarUsuario(correo);
+			if (usr.getPassword().equals(password)) {
+				setLogged(usr);
+				return usr;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Se desconecta el usuario del sistema
+	 * @param usuario
+	 */
+	public void logout(Usuario usuario) {
+		usuario.setLastLogin(Calendar.getInstance());
+	}
+
+	/**
+	 * Crea un grupo en la aplicacion
+	 * @param nombre nombre del grupo
+	 * @param privado si es privado o no
+	 * @param moderador si el usuario es moderador, null si no quieres que el grupo sea moderado
+	 * @param profesor si el grupo es de estudio le pasas el profesor de ese grupo sino null
+	 * @return true si ha conseguido crear el grupo, false si no
+	 */
+	public boolean crearGrupo(String nombre, boolean privado,
+			Usuario moderador, Profesor profesor) {
+		File fg = new File("aplicacion" + getBarra() + "grupo" + getBarra()
+				+ nombre);
+		if (fg.mkdir()) {
+			if (profesor == null)
+				return listaGrupos.add(new Grupo(listaGrupos.size(), nombre,
+						privado, moderador));
+			else
+				return listaGrupos.add(new GrupoEstudio(listaGrupos.size(),
+						nombre, privado, moderador, profesor));
+		}
+		return false;
+	}
+
+	/**
+	 * Crea un subgrupo en la aplicacion
+	 * @param nombre nombre del grupo
+	 * @param privado si es privado o no
+	 * @param moderador si el usuario es moderador, null si no quieres que el grupo sea moderado
+	 * @param profesor si el grupo es de estudio le pasas el profesor de ese grupo sino null
+	 * @return true si ha conseguido crear el grupo, false si no
+	 */
+	public boolean crearSubGrupo(String nombre, boolean privado,
+			Usuario moderador, Grupo grupo, Profesor profesor) {
+		String fileGroup = "aplicacion" + getBarra() + "grupo" + getBarra()
+				+ grupo.getNombre() + getBarra() + nombre;
+		File fg = new File(fileGroup);
+		if (fg.mkdir()) {
+
+			return grupo.addSubgrupo(nombre, privado, moderador,
+					grupo.getIdGrupo());
+
+		}
+		return false;
+	}
+	
+
+	/**
+	 * Envia un mensaje a un usuario
+	 * @param usuario
+	 * @param cuerpo
+	 * @param sujeto
+	 * @return treu si se ha podido enviar el mensaje, false si no
+	 */
+	public boolean enviarMensaje(Usuario usuario, String cuerpo, String sujeto) {
+		return false; 
+	}
+
+	/**
+	 * Entra un usuario en un grupo
+	 * @param grupo
+	 * @param usuario
+	 * @return true si el usuario puede false si no
+	 */
+	public boolean entrarGrupo(Grupo grupo, Usuario usuario) {
+
+		return false; 
+	}
+
+	/**
+	 * Buscar un usuario que tenga un cierto nombre 
+	 * @param nombre
+	 * @return lista de usuarios con el nombre identico
+	 */
+	public ArrayList<Usuario> buscarUsuarios(String nombre) {
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		for (Usuario u : listaUsuarios) {
+			if (u.getNombre().equals(nombre)) {
+				usuarios.add(u);
+			}
+		}
+		return usuarios; 
+	}
+
+	/**
+	 * Busca un usuario que tenga un cierto correo
+	 * @param correo
+	 * @return Usuario que tenga el correo identico
+	 */
+	public Usuario buscarUsuario(String correo) {
+		for (Usuario u : listaUsuarios) {
+			if (u.getCorreo().equals(correo)) {
+				return u;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Busca un grupo pasandole un nombre para el grupo 
+	 * @param nombreGrupo
+	 * @return lista de grupos con el nombre nombreGrupo
+	 */
+	public ArrayList<Grupo> buscarGrupo(String nombreGrupo) {
+		ArrayList<Grupo> grupo = new ArrayList<Grupo>();
+		for (Grupo g : listaGrupos) {
+			if (g.getNombre().equals(nombreGrupo)) {
+				grupo.add(g);
+			}
+		}
+		return grupo; 
+	}
+
+	/**
+	 * Sirve para cargar los datos de los usuario de la aplicacion
+	 * 
+	 * @param fAlumnos
+	 *            contiene el fichero de los alumnos
+	 * @param fPprofesores
+	 *            contiene el fichero de los profesoroes
+	 * @return true si los carga, false si no
+	 */
+	public boolean cargarDatos(String fAlumnos, String fPprofesores) {
+		File archivo = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+
+		try {
+			// Apertura del fichero y creacion de BufferedReader para poder
+			// hacer una lectura comoda (disponer del metodo readLine()).
+			archivo = new File(fAlumnos);
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+
+			// Lectura del fichero
+			String linea;
+			String[] ss, ss2, ss3;
+			String correo, password, nombre, apellido;
+			while ((linea = br.readLine()) != null) {
+				// maria.martin@ddm.es:mamnds455
+				if (linea.length() > 1) {
+					ss = linea.split(":");
+					ss2 = ss[0].split("@");
+					ss3 = ss2[0].replace(".", " ").split(" ");// Si haces split
+																// con '.' no
+																// funciona
+					correo = ss[0];
+					password = ss[1];
+					nombre = ss3[0];
+					apellido = ss3[1];
+					this.listaUsuarios.add(new Estudiante(nombre, apellido,
+							correo, password));
+				}
+			}
+
+			// Apertura del fichero y creacion de BufferedReader para poder
+			// hacer una lectura comoda (disponer del metodo readLine()).
+			archivo = new File(fPprofesores);
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+
+			// Lectura del fichero
+			while ((linea = br.readLine()) != null) {
+				// maria.martin@ddm.es:mamnds455
+				if (linea.length() > 1) {
+					ss = linea.split(":");
+					ss2 = ss[0].split("@");
+					ss3 = ss2[0].replace(".", " ").split(" ");// Si haces split
+																// con '.' no
+																// funciona
+					correo = ss[0];
+					password = ss[1];
+					nombre = ss3[0];
+					apellido = ss3[1];
+					this.listaUsuarios.add(new Profesor(nombre, apellido,
+							correo, password));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			// En el finally cerramos el fichero, para asegurarnos
+			// que se cierra tanto si todo va bien como si salta
+			// una excepcion.
+			try {
+				if (null != fr) {
+					fr.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return true; 
+	}
+
+	/**
+	 * @return el sistema operativo del ordenador actual
+	 */
+	public String getOS() {
+		return System.getProperty("os.name");
+	}
+
+	/**
+	 * Crea los directorios de aplicacion, usuarios y grupos
+	 * @return true si los puede crear, false si no ha podido
+	 */
+	public boolean crearDirectorios() {
+		File f = new File("aplicacion");
+		f.mkdir();
+		File fg = new File("aplicacion" + getBarra() + "grupo");
+		fg.mkdir();
+		File fu = new File("aplicacion" + getBarra() + "usuario");
+		fu.mkdir();
+		for (Usuario u : listaUsuarios) {
+			File fusr = new File(fu.getPath() + barra + u.getCorreo());
+			fusr.mkdir();
+			try {
+				u.guardarUsuario(getBarra());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		for (Grupo g : listaGrupos) {//Sobra  TODO
+			File fgr = new File(fg.getPath() + barra + g.getNombre());
+			try {
+				g.guardarGrupo(barra);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			fgr.mkdir();
+		}
+		return true;
+
+	}
+
+	/**
+	 * @return la barra que utiliza el sistema operativo 
+	 */
+	public String getBarra() {
+		return barra;
+	}
+
+
+	/**
+	 * anade un grupo a la aplicacion
+	 * @param grupo
+	 * @return true si ha podido false si no
+	 */
+	public boolean addGrupo(Grupo grupo) {
+		return listaGrupos.add(grupo);
+	}
+
+	/**
+	 * Anade un usuario a la aplicacion 
+	 * @param u
+	 * @return true si lo anade, false si no
+	 */
+	public boolean addUsuario(Usuario u) {
+		return listaUsuarios.add(u);
+	}
+
+	/**
+	 * anade un usuario a un grupo
+	 * @param usuario
+	 * @param grupo
+	 * @return true si lo ha anadido, false si no
+	 */
+	public boolean addUsuarioGrupo(Usuario usuario, Grupo grupo) {
+		if (!grupo.contieneUsuario(usuario))
+			return grupo.addUsuario(usuario);
+		return false;
+	}
+
+	/**
+	 * Anade un mensaje a un grupo
+	 * @param mensaje
+	 * @param grupo
+	 * @return true si lo anade, false si no
+	 */
+	public boolean addMensajeGrupo(MensajeGrupo mensaje, Grupo grupo) {
+		if (grupo.contieneUsuario(mensaje.getRemitente())) {
+			return grupo.addMensaje(mensaje.getIdMensaje(),
+					mensaje.getCuerpo(), mensaje.getRemitente());
+		}
+		return false;
+	}
+
+	/**
+	 * Comprueba si existe un directorio
+	 * @param dir
+	 * @return true si existe el directorio, false si no
+	 */
+	public boolean existeDir(String dir) {
+		if (dir == null)
+			return false;
+		File folder = new File(dir);
+		if (folder.exists())
+			return true;
+		return false;
+	}
+
+	/**
+	 * Imprime los usuarios en un direcorio que coincida con usr
+	 * @param usr usuario que tiene que coincidir
+	 * @throws IOException
+	 */
+	public void buscarUsuarioDir(String usr) throws IOException {
+		Path dir = Paths.get("aplicacion" + getBarra() + "usuario");
+
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*"
+				+ usr + "*")) {
+			for (Path file : stream) {
+				System.out.println(file);
+			}
+		}
+	}
+
+	/**
+	 * Imprime los grupos que coincidan en un directorio
+	 * @param grupo
+	 * @throws IOException
+	 */
+	public void buscarGrupoDir(String grupo) throws IOException {
+		Path dir = Paths.get("aplicacion" + getBarra() + "grupo");
+
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*"
+				+ grupo + "*")) {
+			for (Path file : stream) {
+				System.out.println(file);
+			}
+		}
+	}
+	
+	/**
+	 * carga un usuario a la aplicacion
+	 * @param correo del usuario para cargar
+	 * @return Usuario que quiere cargar.
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public Usuario cargarUsuario(String correo) throws IOException, ClassNotFoundException{
+		if(correo==null)
+			return null;
+		FileInputStream fis = new FileInputStream(nmAplicacion+barra+nmUsuario+
+										barra+correo+barra+nmDatos);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		Usuario usr =(Usuario)ois.readObject();
+		ois.close();
+		return  usr;
+	}
+	
+	/**
+	 * Carga un grupo
+	 * @param nombre del grupo que quiere cargar
+	 * @return Grupo que ha cargado
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+
+	public boolean cargarGrupo(String nombre, boolean padre){
+		Grupo grupo=null;
+		if(nombre==null)
+			return false;
+		
+		try{
+			FileInputStream fis = new FileInputStream(nmAplicacion+barra+nmGrupo+
+					barra+nombre+barra+nmDatos);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			
+			grupo =(Grupo)ois.readObject();
+			File f= new File(nmAplicacion+barra+nmGrupo+barra+"subgrupo");
+			/*TODO buscar subgrupos*/
+			for(String g :f.list()){
+				if(!g.equals(nmDatos))
+					cargarGrupo(nombre+barra+g, false);
+			}
+			ois.close();
+		}catch (ClassNotFoundException | IOException e) {
+			return false;
+		}
+		finally{
+			this.listaGrupos.add(grupo);
+		}
+
+		return true;
+	
+		
+		
+		
+		
+	}
+	public void cargarGrupos(){
+		File f= new File(nmAplicacion+barra+nmGrupo);
+		
+		for(String g :f.list()){
+			cargarGrupo(g,true);
+		}
+	}
+	public void cargarUsuarios(){
+		
+	}
+	public MailUam cargarSistema(){
+		MailUam app= new MailUam();
+		if(!app.existeDir("aplicacion")){
+			app.cargarDatos(ficheroAlumnos, ficheroProfesores);
+			app.crearDirectorios();
+		}
+		app.cargarGrupos();
+		app.cargarUsuarios();
+		
+		return app;
+		
+	}
+	@Override
+	public String toString() {
+		String imp = "";
+		for (Grupo g : listaGrupos) {
+			imp += g.toString() + "\n";
+		}
+		return imp;
+	}
+
+}

@@ -1,0 +1,48 @@
+--b)
+--lenguajes
+CREATE TABLE imdb_genres
+(
+  genreid integer NOT NULL,
+  gnrname character varying NOT NULL
+);
+
+alter table imdb_movielanguages add column languageid integer;
+
+alter table imdb_movielanguages add foreign key(languageid) references imdb_languages(id) on update no action on delete no action;
+
+INSERT INTO imdb_languages (lngname)
+(SELECT language  FROM imdb_movielanguages group by language);
+
+UPDATE imdb_movielanguages
+	SET languageid=imdb_languages.id
+	FROM 
+		imdb_languages
+	WHERE
+		imdb_movielanguages.language=imdb_languages.lngname;
+		
+--paises
+CREATE TABLE imdb_countries
+(
+  id serial NOT NULL,
+  namecountry character varying NOT NULL,
+);
+alter table imdb_moviecountries add column countryid integer;
+alter table imdb_moviecountries add foreign key(countryid) references imdb_countries(id) on update no action on delete no action;
+
+insert into imdb_moviecountries(countryid) select id from imdb_countries join imdb_moviecountries on imdb_countries.namecountry = imdb_moviecountries.country;
+
+UPDATE imdb_moviecountries
+	SET countryid=imdb_countries.id
+	FROM 
+		imdb_countries
+	WHERE
+		imdb_moviecountries.country=imdb_countries.namecountry;
+
+
+
+CREATE TABLE imdb_languages
+(
+  id serial NOT NULL,
+  lngname character varying NOT NULL
+);
+

@@ -1,0 +1,107 @@
+/***************************************************************************
+ practica1.c
+ Muestra el tiempo de llegada de los primeros 1000 paquetes a la interface eth0
+ 
+ Compila: gcc -Wall -o practica1 practica1.c -lpcap
+ Autores: Mario Garcia Roque & Daniel Garduno Hernandez
+ 2014 EPS-UAM 
+***************************************************************************/
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pcap.h>
+#include <string.h>
+#include <netinet/in.h>
+#include <linux/udp.h>
+#include <linux/tcp.h>
+#include <signal.h>
+#include <time.h>
+#define OK 0
+#define ERROR 1
+
+pcap_t *descr;
+int contador;
+//Hacer funcion que imprima los bytes
+
+void handle(int nsignal){
+	printf("Control C pulsado\nNumero de paquetes: %d\n", contador);
+	pcap_close(descr);
+	exit(OK);
+ }
+
+void imprimir (uint8_t * paquete){
+	int i;
+	for (i=0;i<11;i++){
+		//printf("%d\n", i);
+		printf("%x",paquete[i]);
+		if(i<10)
+			printf(":");
+	}
+	printf("\n");
+}
+int main(int argc, char **argv)
+{
+	int retorno=0;
+	char errbuf[PCAP_ERRBUF_SIZE];
+	uint8_t *paquete;
+	struct pcap_pkthdr *cabecera;
+	contador=0;
+	if(argc>1){
+		if((descr = pcap_open_offline(argv[1], errbuf))==NULL){
+			printf("%s\n", errbuf);
+			exit(ERROR);
+		}	
+		
+		while (1){
+			retorno = pcap_next_ex(descr,&cabecera,(const u_char **)&paquete);
+			if(retorno == -1){ 		//En caso de error
+				printf("Error al capturar un paquete %s, %s %d.\n",pcap_geterr(descr),__FILE__,__LINE__);
+				pcap_close(descr);
+				exit(ERROR);
+			}
+			else if(retorno == 0){
+				continue;
+			}
+			else if(retorno==-2){
+				break;
+			}
+			imprimir(paquete);
+			contador++;
+		}
+	}
+
+	else {//capturar de interfaz
+		if(signal(SIGINT,handle)==SIG_ERR){
+			printf("Error: Fallo al capturar la senal SIGINT.\n");
+			exit(ERROR);
+		}	
+	   	if ((descr = pcap_open_live("wlan0",11,0,100, errbuf)) == NULL){
+			printf("Error: pcap_open_live(): %s, %s %d.\n",errbuf,__FILE__,__LINE__);
+			exit(ERROR);
+		}
+		while (1){
+			retorno = pcap_next_ex(descr,&cabecera,(const u_char **)&paquete);
+			if(retorno == -1){ 		
+				printf("Error al capturar un paquete %s, %s %d.\n",pcap_geterr(descr),__FILE__,__LINE__);
+				pcap_close(descr);
+				exit(ERROR);
+			}
+			else if(retorno == 0){
+				continue;
+			}
+			else if(retorno==-2){
+				break;
+			}
+			contador++;
+			imprimir(paquete);
+		}
+	}
+	printf("Numero de paquetes: %d\n",contador);	
+	pcap_close(descr);
+	return OK;
+}
+

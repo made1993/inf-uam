@@ -1,0 +1,24 @@
+package gui;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import mailUam.MailUam;
+
+public class GUIExpulsarUsuario extends GUIMenu{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JButton expulsar;
+	private JPanel panelParticipantes;
+	private JLabel labelParticipantes;
+	public GUIExpulsarUsuario(MailUam app) {
+		super(app);
+		// TODO Auto-generated constructor stub
+	}
+
+
+}

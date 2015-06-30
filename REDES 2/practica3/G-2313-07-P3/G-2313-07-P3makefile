@@ -1,0 +1,40 @@
+CERT=$(shell echo ~/.cert) 
+PREF=G-2313-07-P3
+all: 
+	$(MAKE) -C clienteirc all
+	$(MAKE) -C servereco all
+	$(MAKE) -C serverirc all
+	cp serverirc/server .
+	mv server G-2313-07-P3server
+	cp servereco/eco .
+	mv eco G-2313-07-P3eco
+	cp clienteirc/client .
+	mv client G-2313-07-P3client
+
+ $(CERT):
+	mkdir -p $(CERT)
+
+certifricados:  $(CERT)
+	echo certificado
+	@openssl genrsa -out ~/.cert/rootkey.pem 2048
+	@openssl req -new -x509 -key ~/.cert/rootkey.pem -out ~/.cert/rootcert.pem -subj "/C=ES/ST=Madrid/L=Madrid/O=UAM/CN=CERTIFICATE"
+	@cat ~/.cert/rootkey.pem ~/.cert/rootcert.pem > ~/.cert/root.pem
+
+claves: certifricados
+	echo server  
+	@openssl req -nodes -newkey rsa:2048 -keyout ~/.cert/clientkey.pem -out ~/.cert/clientreq.pem -subj "/C=ES/ST=Madrid/L=Madrid/O=UAM/CN=CLIENT"
+	@openssl x509 -req -in ~/.cert/clientreq.pem  -CA ~/.cert/root.pem -CAkey ~/.cert/root.pem -CAcreateserial -out ~/.cert/clientcert.pem 
+	@cat ~/.cert/clientcert.pem ~/.cert/clientkey.pem ~/.cert/rootcert.pem > ~/.cert/client.pem
+	echo cliente
+	@openssl req -nodes -newkey rsa:2048 -keyout ~/.cert/serverkey.pem -out ~/.cert/serverreq.pem -subj "/C=ES/ST=Madrid/L=Madrid/O=UAM/CN=SERVER"
+	@openssl x509 -req -in ~/.cert/serverreq.pem -CA ~/.cert/root.pem -CAkey ~/.cert/root.pem -CAcreateserial -out ~/.cert/servercert.pem
+	@cat ~/.cert/servercert.pem ~/.cert/serverkey.pem ~/.cert/rootcert.pem > ~/.cert/server.pem
+	
+comprimir:
+	tar -cvzf ../$(PREF).tgz ../$(PREF)
+	
+mrProper: 
+	rm -f  G-2313-07-P3client G-2313-07-P3server G-2313-07-P3eco
+	$(MAKE) -C clienteirc mrProper
+	$(MAKE) -C servereco mrProper
+	$(MAKE) -C serverirc mrProper

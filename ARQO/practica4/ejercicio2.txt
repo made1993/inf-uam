@@ -1,0 +1,5 @@
+1.El resultado no es correcto para pescala_par1
+
+2.Se debe al reduction (+:sum) esto lo que hace es que una vez ha terminado de ejecutarse la region paralela se
+	se van sumando el valor de sum de todas las regiones paralelas en una 
+

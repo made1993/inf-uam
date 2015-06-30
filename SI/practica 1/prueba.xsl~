@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<html xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+	<title>
+	Ejemplo de transformacion - Texto de plantilla
+	</title>
+</head>
+<body>
+	<h1>pene</h1>
+	<ul>
+	<xsl:for-each select="helloworld/person">
+	<li>Hello <xsl:value-of select="name"/> </li>
+	</xsl:for-each>
+	</ul>
+</body>
+

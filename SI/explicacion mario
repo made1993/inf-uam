@@ -1,0 +1,9 @@
+descripcion del funcionamiento e implemntacion:
+
+registro de un usuario: para registrar a un usuaraio lo que hemos hecho es un vez pasados todos los datos y validados con funcinones javascript, lo que hemos hecho es comprobar si existe la carpeta usuarios y si existe que no exista el usuario con el que vamos a registrarnos. Basicamente hemos creado las carpetas oportunas, usuarios (si no existe) y una carpeta para el nuevo usuario. Dentro de la carpeta del nuevos usuario, que llevara su nombre existen 2 archivos, datos.dat e hitorial.xml (no se crea aqui). En datos.dat guardaremos toda la informacion correspondiente al nuevo usuario, id, contraseña (cifrada en md5), correo y tarjeta de credito.
+
+En caso de que no se halla creado el usuario mandaremos un mensaje especial a la pagina de error.php que indicara que el usuario ya existe.
+
+Busqueda de una pelicula y compra: La busqueda de una pelicula se hace mediante el paso de parametros que llega desde el fichero busquedap.php. Si no llegan parametros se muestra todo el catalogo, si llega un parametro se muestran los articulos que encajen con la descripcion y si llegan varios parametros se muestran los articulos que encajen con todas las descripciones.
+
+Para comprar se ha implementado la pagina add_carrito.php, que el articulo especificado a la sesion, por lo que si se cambia de pagina seguira estando en el carrito. Para quitarlo se ha implementado una pagina, rm_carrito.php que borra un articulo con exactamente la misma descripcion. Se podra pagar solo si hay al menos un articulo en el carrito.

@@ -1,0 +1,33 @@
+V3 23
+FL C:/Users/eps/Desktop/arqo1/ALU.vhd 2014/10/07.15:54:30 P.20131013
+FL C:/Users/eps/Desktop/arqo1/control.vhd 2014/10/07.15:21:17 P.20131013
+FL C:/Users/eps/Desktop/arqo1/procesador.vhd 2014/10/07.19:35:14 P.20131013
+FL C:/Users/eps/Desktop/arqo1/registros.vhd 2014/10/06.17:15:06 P.20131013
+FL C:/Users/eps/Desktop/arqo1BUENO/ALU.vhd 2014/10/07.17:38:42 P.20131013
+EN work/ALU 1412761319 FL C:/Users/eps/Desktop/arqo1BUENO/ALU.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/std_logic_arith 1381692177 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/ALU/Compleja 1412761320 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/ALU.vhd EN work/ALU 1412761319
+FL C:/Users/eps/Desktop/arqo1BUENO/control.vhd 2014/10/07.17:38:36 P.20131013
+EN work/control 1412761321 FL C:/Users/eps/Desktop/arqo1BUENO/control.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/control/UC 1412761322 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/control.vhd EN work/control 1412761321
+FL C:/Users/eps/Desktop/arqo1BUENO/procesador.vhd 2014/10/08.11:41:40 P.20131013
+EN work/procesador 1412761323 FL C:/Users/eps/Desktop/arqo1BUENO/procesador.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/std_logic_arith 1381692177 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/procesador/procesador_arq 1412761324 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/procesador.vhd EN work/procesador 1412761323 \
+      CP registros CP ALU CP control
+FL C:/Users/eps/Desktop/arqo1BUENO/registros.vhd 2014/10/07.17:38:14 P.20131013
+EN work/registros 1412761317 FL C:/Users/eps/Desktop/arqo1BUENO/registros.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179 \
+      PB ieee/std_logic_arith 1381692177
+AR work/registros/Practica 1412761318 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/registros.vhd EN work/registros 1412761317
+FL C:/Users/eps/Desktop/Practica1/arqo1/ALU.vhd 2014/10/06.16:56:37 P.20131013
+FL C:/Users/eps/Desktop/Practica1/arqo1/control.vhd 2014/10/06.16:45:51 P.20131013
+FL C:/Users/eps/Desktop/Practica1/arqo1/procesador.vhd 2014/10/06.17:07:31 P.20131013
+FL C:/Users/eps/Desktop/Practica1/arqo1/registros.vhd 2014/10/06.16:47:34 P.20131013

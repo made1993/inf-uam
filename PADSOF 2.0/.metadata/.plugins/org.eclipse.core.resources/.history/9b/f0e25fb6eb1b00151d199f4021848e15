@@ -1,0 +1,422 @@
+package grupo;
+
+import java.io.IOException;
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import mensaje.*;
+import usuario.Usuario;
+import mailUam.*;
+
+/**
+ * @author Antonio Gomez lucas, Mario Valdemaro Garcia Roque
+ * 
+ *         Clase Grupo
+ */
+
+public class Grupo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public static final String SUJETOMODERAR = "Para moderar grupo: ";
+
+	private int idGrupo;
+	private String nombre;
+	private boolean privado;
+	private Usuario moderador;
+	private ArrayList<Usuario> listaUsuarios;
+	private ArrayList<MensajeGrupo> listaMensajes;
+	private ArrayList<Grupo> subGrupos;
+
+	/**
+	 * Constructor de grupo
+	 * 
+	 * @param idGrupo
+	 * @param nombre
+	 * @param privado
+	 * @param moderador
+	 */
+	public Grupo(int idGrupo, String nombre, boolean privado, Usuario moderador) {
+		this.idGrupo = idGrupo;
+		this.nombre = nombre;
+		this.privado = privado;
+		this.moderador = moderador;
+		this.listaUsuarios = new ArrayList<>();
+		if (moderador != null)
+			listaUsuarios.add(moderador);
+		this.listaMensajes = new ArrayList<>();
+		this.subGrupos = new ArrayList<>();
+	}
+
+	// GETTER AND SETTERS
+
+	/**
+	 * @return the listaUsuarios
+	 */
+	public ArrayList<Usuario> getListaUsuarios() {
+		return listaUsuarios;
+	}
+
+	/**
+	 * @param listaUsuarios
+	 *            the listaUsuarios to set
+	 */
+	public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+		this.listaUsuarios = listaUsuarios;
+	}
+
+	/**
+	 * @return the listaMensajes
+	 */
+	public ArrayList<MensajeGrupo> getListaMensajes() {
+		return listaMensajes;
+	}
+
+	/**
+	 * @param listaMensajes
+	 *            the listaMensajes to set
+	 */
+	public void setListaMensajes(ArrayList<MensajeGrupo> listaMensajes) {
+		this.listaMensajes = listaMensajes;
+	}
+
+	/**
+	 * @return the subGrupos
+	 */
+	public ArrayList<Grupo> getSubGrupos() {
+		return subGrupos;
+	}
+
+	/**
+	 * @return the subGrupos
+	 */
+	public ArrayList<Grupo> getTodosSubGrupos() {
+		
+		ArrayList<Grupo> lista = new ArrayList<>();
+		if (isGrupoColaborativo())
+			return lista;
+		for (Grupo g : subGrupos) {
+			lista.add(g);
+			lista.addAll(g.getTodosSubGrupos());
+		}
+		return lista;
+	}
+
+	/**
+	 * @param subGrupos
+	 *            the subGrupos to set
+	 */
+	public void setSubGrupos(ArrayList<Grupo> subGrupos) {
+		this.subGrupos = subGrupos;
+	}
+
+	/**
+	 * @return the idGrupo
+	 */
+	public int getIdGrupo() {
+		return idGrupo;
+	}
+
+	/**
+	 * @param idGrupo
+	 *            the idGrupo to set
+	 */
+	public void setIdGrupo(int idGrupo) {
+		this.idGrupo = idGrupo;
+	}
+
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre
+	 *            the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * @return the privado
+	 */
+	public boolean isPrivado() {
+		return privado;
+	}
+
+	/**
+	 * @param privado
+	 *            the privado to set
+	 */
+	public void setPrivado(boolean privado) {
+		this.privado = privado;
+	}
+
+	/**
+	 * @return the moderador
+	 */
+	public Usuario getModerador() {
+		return moderador;
+	}
+
+	/**
+	 * @param moderador
+	 *            the moderador to set
+	 */
+	public void setModerador(Usuario moderador) {
+		this.moderador = moderador;
+	}
+
+	// METODOSS
+
+	/**
+	 * Anade un subgrupo
+	 * 
+	 * @param subgrupo
+	 * @return true si anade el subgrupo false si no
+	 */
+	public boolean addSubGrupo(Grupo subgrupo) {
+		for (Grupo g : subGrupos) {
+			if (g.nombre.equals(subgrupo.getNombre()))
+				return false;
+		}
+		return subGrupos.add(subgrupo);
+	}
+
+	/**
+	 * Anade un usuario a un grupo
+	 * 
+	 * @param usuario
+	 * @return true si anade a un usuario false si no
+	 */
+	public boolean addUsuario(Usuario usuario) {
+		for (Usuario u : listaUsuarios){
+			if (u.getCorreo().equals(usuario.getCorreo()))
+				return true;
+		}
+		if (!isGrupoColaborativo()) {
+			for (Grupo g : getTodosSubGrupos()) {
+				g.addUsuario(usuario);
+			}
+		}
+		return listaUsuarios.add(usuario);
+	}
+
+	/**
+	 * Elimina a un usuario de un grupo
+	 * 
+	 * @param usuario
+	 * @return true si lo elimina false si no
+	 */
+	public boolean removeUsuario(Usuario usuario) {
+		for (Usuario u : listaUsuarios)
+			if (u.getCorreo().equals(usuario.getCorreo())){
+				System.out.println("Encontrado u");
+				return listaUsuarios.remove(u);
+			}
+		return false;
+	}
+
+	/**
+	 * Solo para cargarGrupo
+	 * 
+	 * @param men
+	 * @return true si lo crea, false si no puede
+	 */
+	public boolean addMensaje(MensajeGrupo men) {
+		
+		if (moderador == null )
+			return listaMensajes.add(men);
+		else if(men.getRemitente().getCorreo().equals(moderador.getCorreo())){
+			return listaMensajes.add(men);
+		}else{
+			System.out.println(moderador.getListaGrupos().size());
+			moderador =moderador.cargarUsuario();
+			System.out.println(moderador.getListaGrupos().size());
+			Boolean b= moderador.addMensajeBuzon(
+					new MensajeUsuario(moderador, men
+							.getCuerpo(), SUJETOMODERAR + getNombre(), men
+							.getRemitente()));
+			try {
+				moderador.guardarUsuario(MailUam.getBarraSup());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			return b;
+		}
+	}
+	
+	
+
+	/**
+	 * 
+	 * @param men
+	 * @return
+	 */
+	public boolean addMensajeModerado(MensajeGrupo men) {
+		return listaMensajes.add(men);
+	}
+
+	/**
+	 * @return true si lo es false si no
+	 */
+	public boolean isGrupoEstudio() {
+		return false;
+	}
+
+	/**
+	 * 
+	 * @return true si lo es false si no
+	 */
+	public boolean isGrupoColaborativo() {
+		return false;
+	}
+
+	/**
+	 * Guarda un grupo en la aplicacion
+	 * 
+	 * @return true si lo ha guardado, false si no lo ha podido guardar
+	 * @throws IOException
+	 */
+	public void guardarGrupo(String barra, String nmAplicacion, String nmGrupo,
+			String nmDatos) throws IOException {
+		FileOutputStream fos = new FileOutputStream(nmAplicacion + barra
+				+ nmGrupo + barra + getNombre() + barra + nmDatos);
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(this);
+		oos.close();
+	}
+
+	/**
+	 * comprueba si contiene usuario en la lista de usuarios
+	 * 
+	 * @param usuario
+	 * @return true si lo encuentra, false si no
+	 */
+	public boolean contieneUsuario(Usuario usuario) {
+		for (Usuario u : listaUsuarios) {
+			if (u.equals(usuario)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * buscar un grupo en la base de datos
+	 * 
+	 * @param nombreGrupo
+	 * @return
+	 */
+	public Grupo buscarGrupo(String nombreGrupo) {
+		Grupo g = null;
+		if (!isGrupoColaborativo()) {
+			for (Grupo sg : subGrupos) {
+				if (sg.getNombre().equals(nombreGrupo)) {
+					return sg;
+				}
+				g = sg.buscarGrupo(nombreGrupo);
+				if (g != null) {
+					return g;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * buscar un grupo en la base de datos
+	 * 
+	 * @param nombreGrupo
+	 * @return
+	 */
+	public ArrayList<Grupo> buscarGrupoLista(String nombreGrupo) {
+		ArrayList<Grupo> grupo = new ArrayList<Grupo>();
+		if (!isGrupoColaborativo()) {
+			for (Grupo sg : subGrupos) {
+				grupo.addAll(sg.buscarGrupoLista(nombreGrupo));
+				if (StringSimilarity.similarity(nombreGrupo, sg.getNombre()) >= 0.5
+						|| sg.getNombre().equalsIgnoreCase(nombreGrupo)) {
+					grupo.add(sg);
+				}
+			}
+		}
+		return grupo;
+	}
+
+	/**
+	 * 
+	 * @return Devuelve el tipo de grupo en un string para la interfaz
+	 */
+	public String getTipoGrupo() {
+		String imp = "";
+		if (isPrivado()) {
+			imp += "Privado";
+		} else {
+			imp += "Publico";
+		}
+		if (isGrupoEstudio()) {
+			imp += " GE";
+		}
+		if (isGrupoColaborativo()) {
+			imp += " GC";
+		}
+		if (moderador != null) {
+			imp += " Moderado";
+		}
+		return imp;
+	}
+
+	/**
+	 * 
+	 * @param mensaje
+	 */
+	public void notificarUsuarios(String mensaje){
+		for(Usuario u: listaUsuarios){
+			u.addMensajeBuzon(new MensajeUsuario(u, mensaje, this.nombre, u));
+		}
+	}
+	
+	/**
+	 * Busca un mensaje en un grupo
+	 * @param id
+	 * @return
+	 */
+	public Mensaje buscarMensaje(int id){
+		for(Mensaje m:listaMensajes){
+			if(m.getIdMensaje()==id)
+				return m;
+		}
+		for(Grupo g:subGrupos){
+			return g.buscarMensaje(id);
+		}
+		return null;
+	}
+	
+	@Override
+	public String toString() {
+		String imp = "";
+		imp += "Nombre: " + getNombre() + "\n";
+
+		imp += "Mensajes: \n";
+		for (MensajeGrupo m : listaMensajes) {
+			imp += "\t" + m.getRemitente().getNombre() + ":" + m.getCuerpo()
+					+ "\n";
+		}
+		imp += "subgrupos: \n";
+		for (Grupo g : subGrupos) {
+			imp += "\t" + g.toString() + "\n";
+		}
+
+		return imp;
+	}
+
+}

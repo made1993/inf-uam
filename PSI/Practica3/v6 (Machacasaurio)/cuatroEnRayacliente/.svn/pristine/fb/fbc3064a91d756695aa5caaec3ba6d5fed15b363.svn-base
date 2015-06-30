@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:39851/CuatroEnRayaServer/WebServiceServer?wsdl" uri="src/conf/xml-resources/web-service-references/WebServiceServer/wsdl/localhost_39851/CuatroEnRayaServer/WebServiceServer.wsdl"/>
+    <system systemId="http://localhost:39851/CuatroEnRayaServer/WebServiceServer?xsd=1" uri="src/conf/xml-resources/web-service-references/WebServiceServer/wsdl/localhost_39851/CuatroEnRayaServer/WebServiceServer.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/CuatroEnRayaServer/WebServiceServer?wsdl" uri="src/conf/xml-resources/web-service-references/WebServiceServer/wsdl/localhost_8080/CuatroEnRayaServer/WebServiceServer.wsdl"/>
+    <system systemId="http://localhost:8080/CuatroEnRayaServer/WebServiceServer?xsd=1" uri="src/conf/xml-resources/web-service-references/WebServiceServer/wsdl/localhost_8080/CuatroEnRayaServer/WebServiceServer.xsd_1.xsd"/>
+</catalog>

@@ -1,0 +1,64 @@
+// Esto es un comentario que lo unico que deberia hacer es sumar lineas
+
+
+
+// Vamos por la linea 5, en la siguiente vamos a meter un error y ver como se cuentan los tabuladores
+		$ // Dos tabuladores, saldrá 2?
+^ ¿ ? % # @
+intmain
+scanfprintf
+identificadormaximoidentificadormaximoidentificadormaximoidentificad
+
+main
+{
+// Declaraciones
+    boolean identificador1, identificador2, identificadormuymuymuymuymuymuymuymuuuuuyyyyyylaaaaaaaaaaaaaaaaaaaaaaaaaaaaargoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo;
+    array int [20] array1;
+    int x;
+    int i;
+
+// Funciones
+function boolean fprueba (int numero)
+{
+
+	if((numero!=13)) 
+        {
+	   return true;
+	}
+        else
+        {
+	   return false;
+	}
+}
+
+// Sentencias
+
+	i=1;
+	while((i<10))
+    {
+	   scanf x;
+	   array1[i] = x-15+2/2*7;
+	   identificador1 = fprueba(array1[i]);
+	   if(identificador1)
+        {
+	       printf identificador1;	
+	     }
+	   i = i+1;
+    }
+
+   if ( (array1[2] != 20) &&
+        (array1[5] == 42) ||
+        (array1[3] <= 20) ||
+        (array1[7] >= 3 ) ||
+        !(array1[5] < 90 ) ||
+        (array1[20] > 21789 ) )
+   {
+      printf array1[9];
+   }
+
+}
+
+
+
+
+

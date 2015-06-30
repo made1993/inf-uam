@@ -1,0 +1,32 @@
+slib= srclib/
+sr=src/
+ob= obj/
+pref=G-2313-07-P2
+lib= `pkg-config --cflags gtk+-2.0` `pkg-config --libs gtk+-2.0` -lircredes
+usrlib= -Llib -l$(pref)conexion -Llib -l$(pref)lista -Llib -l$(pref)semaforos
+all: libreria
+	gcc -o server src/$(pref)serverIRC.c $(ob)* $(lib) $(usrlib)
+
+objetos:
+	gcc -c -o $(ob)$(pref)demoniochat.o $(sr)$(pref)demoniochat.c $(lib)
+	gcc -c -o $(ob)$(pref)linkedList.o $(slib)$(pref)linkedList.c
+	gcc -c -o $(ob)$(pref)conexion.o $(slib)$(pref)conexion.c
+	gcc -c -o $(ob)$(pref)semaforos.o $(slib)$(pref)semaforos.c
+	gcc -c -o $(ob)$(pref)client.o $(sr)$(pref)client.c $(lib) 
+	gcc -c -o $(ob)$(pref)channeluser.o $(sr)$(pref)channeluser.c $(ob)$(pref)client.o $(lib) 
+	gcc -c -o $(ob)$(pref)channel.o $(sr)$(pref)channel.c $(ob)$(pref)channeluser.o $(lib) 
+	gcc -c -o $(ob)$(pref)parser.o $(sr)$(pref)parser.c $(ob)$(pref)channel.o $(lib) $(usrlib)
+
+libreria: objetos
+	ar r lib/lib$(pref)conexion.a $(ob)$(pref)conexion.o
+	ar r lib/lib$(pref)lista.a $(ob)$(pref)linkedList.o
+	ar r lib/lib$(pref)semaforos.a $(ob)$(pref)semaforos.o
+	rm $(ob)$(pref)conexion.o $(ob)$(pref)linkedList.o $(ob)$(pref)semaforos.o
+comprimir:
+	tar -cvf ../$(pref).tar ../$(pref)
+	
+
+mrProper:
+	rm -f obj/*.o
+	rm -f obj/*.a
+	rm -f server

@@ -1,0 +1,11 @@
+EN regsmips NULL D:/arqo_p1_ise/RegsMIPS.vhd sub00/vhpl00 1412246135
+EN alumips NULL D:/arqo_p1_ise/ALUMIPS.vhd sub00/vhpl02 1412246137
+AR alumips compleja D:/arqo_p1_ise/ALUMIPS.vhd sub00/vhpl03 1412246138
+AR unidadcontrolmips uc D:/arqo_p1_ise/UnidadControl.vhd sub00/vhpl05 1412246140
+EN unidadcontrolmips NULL D:/arqo_p1_ise/UnidadControl.vhd sub00/vhpl04 1412246139
+EN procesador NULL D:/arqo_p1_ise/procesador.vhd sub00/vhpl06 1412246141
+EN procesador_tb NULL D:/arqo_p1_ise/procesador_TB.vhd sub00/vhpl10 1412246145
+AR procesador procesador_arq D:/arqo_p1_ise/procesador.vhd sub00/vhpl07 1412246142
+AR regsmips practica D:/arqo_p1_ise/RegsMIPS.vhd sub00/vhpl01 1412246136
+EN memoria NULL D:/arqo_p1_ise/memoria.vhd sub00/vhpl08 1412246143
+AR memoria behavioral D:/arqo_p1_ise/memoria.vhd sub00/vhpl09 1412246144

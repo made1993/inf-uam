@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+	
+	<div id="login">
+		<?php 
+			session_start();
+			$usuario=$_SESSION['usuario'];
+			if($usuario != null) echo '<br>'.$usuario.'<form action="logout.php"><input type="submit" value="Salir"></form>';
+			else{
+				echo '<form action="login.php"><input type="submit" value="Login"></form>';
+				echo '<form action="registro.html"><input type="submit" value="Registrarse"></form>';
+			}
+		?>
+		</div>
+	<div id="cabecera"><h1>Alquiler</h1></div>	
+	<div id="mlateral"><h2><form action="index.php" id="form1">
+	Pelicula<input type="text" name="titulo"><br>
+	<input type="submit" value="Submit"></h2></form>
+	<h2><a href="datos.xml">Novedades</a></h2></div> 
+
+	<div id="contenido">
+	<?php 
+		session_start();
+		$usuario=$_SESSION['usuario'];
+		$carr = $_SESSION['carr'];
+		$count = $_SESSION['count'];
+		$ruta=$_SERVER['DOCUMENT_ROOT']. '/usuarios/' . $usuario."/historial.xml";
+		echo $ruta;
+		if($usuario == null){
+			echo "Necesitas iniciar sesion o registrarte en caso de que no tengas cuenta";
+			echo '<form action="login.php"><input type="submit" value="Login"></form>';
+			echo '<form action="registro.html"><input type="submit" value="Registrarse"></form>';
+		}
+		else{
+			if (!(file_exists($ruta))){//existe file se modifica si no pues se crea
+				echo 'fichero no existe';
+				echo '<br>'.$ruta;
+				$xml = new DOMDocument('1.0', 'UTF-8');
+
+				$xml_peliculas = $xml->createElement("peliculas");
+				$xml->appendChild( $xml_peliculas );
+				for($i=0; $i<$count;$i++){
+					$xml_pelicula = $xml->createElement("pelicula",$carr[$i][0]); 
+					$xml_peliculas->appendChild( $xml_pelicula );
+				}
+
+			}
+			//aqui si existe
+			else{
+				echo 'fichero existe';
+				$xml = new DOMDocument('1.0', 'UTF-8');
+				$xml->load($ruta);
+				foreach($xml->getElementsByTagName ('peliculas') as $xml_pelis){
+					for($i=0; $i<$count;$i++){
+						$xml_pelicula = $xml->createElement("pelicula",$carr[$i][0]); 
+						$xml_pelis->appendChild( $xml_pelicula );
+				}
+			}
+		}
+			$xml->save($ruta);
+			chmod($ruta,0777);
+		}
+		$_SESSION['carr']=null;
+		$_SESSION['count']=null;
+	?>
+	</div>
+
+	<div id="ppagina">pie de pagina</div>
+</body>
+</html>

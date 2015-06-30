@@ -1,0 +1,6 @@
+abrimos
+fopen
+fseek
+ftell
+
+calcular ip, con: wget -q0- http://ipecho.net/plain

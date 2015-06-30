@@ -1,0 +1,16 @@
+; GWNPG8M4ZS
+; WiceBrullis
+
+(defun mi-f-ev (estado)
+  (print 'asdsa)
+  (print (get-fichas (estado-tablero estado) (estado-lado-sgte-jugador estado) 6))
+
+ 
+  (if (juego-terminado-p estado)
+      (if (< (get-pts (estado-lado-sgte-jugador estado)) (get-pts (lado-contrario (estado-lado-sgte-jugador estado))))
+          -50
+          50
+          )
+  (- (+(get-pts (estado-lado-sgte-jugador estado)) (get-fichas (estado-tablero estado) (estado-lado-sgte-jugador estado) 6))
+     (+(get-pts (lado-contrario (estado-lado-sgte-jugador estado))) 
+        (get-fichas (estado-tablero estado) (lado-contrario (estado-lado-sgte-jugador estado)) 6)))))

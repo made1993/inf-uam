@@ -1,0 +1,41 @@
+Release 14.7 - xst P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to C:/Users/eps/Desktop/arqo1BUENO/xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.09 secs
+ 
+--> Parameter xsthdpdir set to C:/Users/eps/Desktop/arqo1BUENO/xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.09 secs
+ 
+--> WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Users/eps/Desktop/arqo1BUENO/registros.vhd" in Library work.
+Architecture practica of Entity registros is up to date.
+Compiling vhdl file "C:/Users/eps/Desktop/arqo1BUENO/ALU.vhd" in Library work.
+Architecture compleja of Entity alu is up to date.
+Compiling vhdl file "C:/Users/eps/Desktop/arqo1BUENO/control.vhd" in Library work.
+Architecture uc of Entity control is up to date.
+Compiling vhdl file "C:/Users/eps/Desktop/arqo1BUENO/procesador.vhd" in Library work.
+Entity <procesador> compiled.
+Entity <procesador> (Architecture <procesador_arq>) compiled.
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.20 secs
+ 
+--> 
+
+Total memory usage is 214348 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

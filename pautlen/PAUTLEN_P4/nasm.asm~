@@ -1,0 +1,12 @@
+segment .data
+	prueba db 42	
+segment .txt
+
+global main 	
+extern print_int, print_endofline
+main:
+	push dword 0
+	call print_int
+	add esp, 4
+	call print_endofline
+ret	

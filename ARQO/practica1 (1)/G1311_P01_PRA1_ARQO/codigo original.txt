@@ -1,0 +1,3 @@
+Los autores del MIPS  de EC son Luis Cayola y Roberto Garcia.
+
+Roberto esta en el mismo grupo que nosotros (1311) junto a Alberto Cabello.

@@ -1,0 +1,24 @@
+package gui;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import mailUam.MailUam;
+
+public class GUIExpulsarUsuario extends GUIMenu{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JButton buttonExpulsar;
+	private JComboBox panelParticipantes;
+	public GUIExpulsarUsuario(MailUam app) {
+		super(app);
+		new J
+	}
+
+
+}

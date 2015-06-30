@@ -1,0 +1,28 @@
+package gui;
+
+import java.awt.*;
+import java.util.*;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import mailUam.MailUam;
+public class GUIMenuGrupos extends JPanel{
+	private static final long serialVersionUID = 1L;
+	private JLabel labelNombre;
+	private JButton botonMensajes;
+	private JButton botonGrupos;
+	private JButton botonVerPrefil;
+	private JButton botonSalir;
+	private MailUam m;
+	
+	private JButton crearGrupo;
+	private JButton ok;
+	private ArrayList<JButton> salirGrupo;
+	private ArrayList<JButton> entrarGrupo;
+	
+	public GUIMenuGrupos (MailUam app){
+		
+	}
+}

@@ -1,0 +1,48 @@
+function negamax(node, depth, α, β, color)
+    if depth = 0 or node is a terminal node
+        return color * the heuristic value of node
+    bestValue := -∞
+    childNodes := GenerateMoves(node)
+    childNodes := OrderMoves(childNodes)
+    foreach child in childNodes
+        val := -negamax(child, depth - 1, -β, -α, -color)
+        bestValue := max( bestValue, val )
+        α := max( α, val )
+        if α ≥ β
+            break
+    return bestValue
+
+Initial call for Player A's root node
+rootNegamaxValue := negamax( rootNode, depth, -∞, +∞, 1)
+
+public ArrayList<Integer> negamax(int[][] tablero, int profundidad, int jugador, int alpha, int beta){
+	List<Integer> retorno = new ArrayList<Integer>();
+
+	if(profundidad == 0 || gameover() == true){
+		retorno.add(jugador * evalua_jugada());
+		retorno.add(mejor_jugada);
+		return retorno;
+	}
+	
+	
+	int mejor_jugada = 3;
+	bestValue = Integer.MIN_VALUE;
+	
+	for(int jugada = 0; jugada < 7; jugada++){
+		val = -negamax(tableroaux, profundidad-1, -beta, -alpha, -jugador).get(0);
+		
+		if(val > bestValue){
+			bestValue = val;
+			mejor_jugada = jugada;
+		}
+		if(val > alpha){
+			alpha = val;
+		}
+		if(alpha >= beta){
+			break;
+		}
+	}
+	
+	this.jmax = mejor_jugada;
+	return bestValue;
+}

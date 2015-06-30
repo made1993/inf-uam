@@ -1,0 +1,27 @@
+CREATE OR REPLACE FUNCTION pruebas(year integer) 
+RETURNS TABLE(id integer) 
+AS '
+DECLARE 
+inicio ALIAS FOR $1;
+BEGIN 
+drop table if exists prueba;
+create table prueba(year integer);
+insert into prueba (year)
+select customerid from orders where extract (year from orders.orderdate)=inicio;
+END;
+'
+LANGUAGE 'plpgsql';
+
+CREATE OR REPLACE FUNCTION pruebas(year integer) 
+RETURNS int4 
+AS '
+DECLARE 
+inicio ALIAS FOR $1;
+BEGIN 
+WHILE year <=10 LOOP
+inicio:=inicio+1;
+END LOOP;
+return inicio;
+END;
+'
+LANGUAGE 'plpgsql';

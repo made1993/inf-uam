@@ -1,0 +1,50 @@
+Release 14.7 - xst P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to D:/arqo_p1_ise/xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.10 secs
+ 
+--> Parameter xsthdpdir set to D:/arqo_p1_ise/xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.10 secs
+ 
+--> WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "D:/arqo_p1_ise/RegsMIPS.vhd" in Library work.
+Architecture practica of Entity regsmips is up to date.
+Compiling vhdl file "D:/arqo_p1_ise/ALUMIPS.vhd" in Library work.
+Architecture compleja of Entity alumips is up to date.
+Compiling vhdl file "D:/arqo_p1_ise/UnidadControl.vhd" in Library work.
+Architecture uc of Entity unidadcontrolmips is up to date.
+Compiling vhdl file "D:/arqo_p1_ise/procesador.vhd" in Library work.
+Architecture procesador_arq of Entity procesador is up to date.
+Compiling vhdl file "D:/arqo_p1_ise/memoria.vhd" in Library work.
+Architecture behavioral of Entity memoria is up to date.
+Compiling vhdl file "D:/arqo_p1_ise/procesador_TB.vhd" in Library work.
+Entity <procesador_tb> compiled.
+ERROR:HDLParsers:1015 - "D:/arqo_p1_ise/procesador_TB.vhd" Line 131. Wait for statement unsupported.
+ERROR:HDLParsers:1015 - "D:/arqo_p1_ise/procesador_TB.vhd" Line 133. Wait for statement unsupported.
+ERROR:HDLParsers:1015 - "D:/arqo_p1_ise/procesador_TB.vhd" Line 139. Wait for statement unsupported.
+ERROR:HDLParsers:3026 - "D:/arqo_p1_ise/procesador_TB.vhd" Line 147. Entity <procesador_tb> (Architecture <TB_ARCHITECTURE>) does not exist in library <work>.
+ERROR:HDLParsers:3312 - "D:/arqo_p1_ise/procesador_TB.vhd" Line 148. Undefined symbol 'procesador'.
+ERROR:HDLParsers:3281 - "D:/arqo_p1_ise/procesador_TB.vhd" Line 149. procesador is not an architecture body for procesador in library work.
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.22 secs
+ 
+--> 
+
+Total memory usage is 211164 kilobytes
+
+Number of errors   :    6 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

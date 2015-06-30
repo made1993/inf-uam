@@ -1,0 +1,3 @@
+El ganador del torneo con una lucha de 5 asaltos es Sarah
+El ganador del torneo con una lucha de 6 asaltos es Sarah
+El ganador del torneo con una lucha de 15 asaltos es Sarah

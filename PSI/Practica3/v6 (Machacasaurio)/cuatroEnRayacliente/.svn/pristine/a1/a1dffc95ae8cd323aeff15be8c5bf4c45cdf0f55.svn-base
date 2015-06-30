@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws/">
+
+<xs:element name="Exception" type="tns:Exception"/>
+
+<xs:element name="PreexistingEntityException" type="tns:PreexistingEntityException"/>
+
+<xs:element name="createGame" type="tns:createGame"/>
+
+<xs:element name="createGameResponse" type="tns:createGameResponse"/>
+
+<xs:element name="createUser" type="tns:createUser"/>
+
+<xs:element name="createUserResponse" type="tns:createUserResponse"/>
+
+<xs:element name="deleteGame" type="tns:deleteGame"/>
+
+<xs:element name="deleteGameResponse" type="tns:deleteGameResponse"/>
+
+<xs:element name="deleteUser" type="tns:deleteUser"/>
+
+<xs:element name="deleteUserResponse" type="tns:deleteUserResponse"/>
+
+<xs:element name="login" type="tns:login"/>
+
+<xs:element name="loginResponse" type="tns:loginResponse"/>
+
+<xs:element name="logout" type="tns:logout"/>
+
+<xs:element name="logoutResponse" type="tns:logoutResponse"/>
+
+<xs:element name="makeMove" type="tns:makeMove"/>
+
+<xs:element name="makeMoveResponse" type="tns:makeMoveResponse"/>
+
+<xs:element name="paintBoard" type="tns:paintBoard"/>
+
+<xs:element name="paintBoardResponse" type="tns:paintBoardResponse"/>
+
+<xs:element name="play" type="tns:play"/>
+
+<xs:element name="playResponse" type="tns:playResponse"/>
+
+<xs:element name="userName1" type="tns:userName1"/>
+
+<xs:element name="userName1Response" type="tns:userName1Response"/>
+
+<xs:element name="userName2" type="tns:userName2"/>
+
+<xs:element name="userName2Response" type="tns:userName2Response"/>
+
+<xs:complexType name="login">
+<xs:sequence>
+<xs:element name="userName" type="xs:string" minOccurs="0"/>
+<xs:element name="passwd" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loginResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="returnError">
+<xs:sequence>
+<xs:element name="errorCode" type="xs:int"/>
+<xs:element name="errorMessage" type="xs:string" minOccurs="0"/>
+<xs:element name="value" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteUser">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="deleteUserResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PreexistingEntityException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Exception">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="play">
+<xs:sequence>
+<xs:element name="computer" type="xs:boolean" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="playResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="paintBoard">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="paintBoardResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteGame">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="deleteGameResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createUser">
+<xs:sequence>
+<xs:element name="userName" type="xs:string" minOccurs="0"/>
+<xs:element name="passwd" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createUserResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="userName2">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="userName2Response">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="logout">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="logoutResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="makeMove">
+<xs:sequence>
+<xs:element name="column" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="makeMoveResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createGame">
+<xs:sequence>
+<xs:element name="firstPlayer" type="xs:boolean" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="createGameResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="userName1">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="userName1Response">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

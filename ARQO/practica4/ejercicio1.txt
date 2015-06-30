@@ -1,0 +1,7 @@
+Copia el espacio de memoria pero no le pasa valor, es decir si tenemos una variable a inicializada a 3 este valor no se va a mantener ene la ejecucuion del hilo, en su lugar pude meter cualquier cosa.
+
+El valor no que se tiene no es el que tenimas declarado, puede ser cualquier valor
+
+El valor de una funcion privada no se guarda una vez terminada la ejecucion.
+
+No.

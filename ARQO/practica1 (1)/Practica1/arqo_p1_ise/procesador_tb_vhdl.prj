@@ -1,0 +1,6 @@
+vhdl work "D:\arqo_p1_ise\UnidadControl.vhd"
+vhdl work "D:\arqo_p1_ise\RegsMIPS.vhd"
+vhdl work "D:\arqo_p1_ise\ALUMIPS.vhd"
+vhdl work "D:\arqo_p1_ise\procesador.vhd"
+vhdl work "D:\arqo_p1_ise\memoria.vhd"
+vhdl work "D:\arqo_p1_ise\procesador_TB.vhd"

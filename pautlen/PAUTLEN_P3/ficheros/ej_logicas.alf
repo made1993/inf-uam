@@ -1,0 +1,22 @@
+main
+{
+
+    boolean a, b, res;
+
+
+	scanf a;
+	scanf b;
+
+	res = a && b;
+	printf res;
+	res = a || b;
+	printf res;
+	res = !! a;
+	printf res;
+
+}
+
+
+
+
+

@@ -1,0 +1,88 @@
+/**
+ * 
+ */
+package pruebasJUnit;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+/**
+ * @author eps
+ *
+ */
+public class GrupoEstudio {
+
+	/**
+	 * Test method for {@link grupo.GrupoEstudio#isGrupoEstudio()}.
+	 */
+	@Test
+	public void testIsGrupoEstudio() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link grupo.GrupoEstudio#GrupoEstudio(int, java.lang.String, boolean, usuario.Usuario, usuario.Profesor)}.
+	 */
+	@Test
+	public void testGrupoEstudio() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link grupo.GrupoEstudio#getListaPreguntas()}.
+	 */
+	@Test
+	public void testGetListaPreguntas() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link grupo.GrupoEstudio#setListaPreguntas(java.util.ArrayList)}.
+	 */
+	@Test
+	public void testSetListaPreguntas() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link grupo.GrupoEstudio#getProfesor()}.
+	 */
+	@Test
+	public void testGetProfesor() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link grupo.GrupoEstudio#setProfesor(usuario.Profesor)}.
+	 */
+	@Test
+	public void testSetProfesor() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link grupo.GrupoEstudio#crearPregunta(java.lang.String, usuario.Profesor)}.
+	 */
+	@Test
+	public void testCrearPregunta() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link grupo.GrupoEstudio#listarPreguntas()}.
+	 */
+	@Test
+	public void testListarPreguntas() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link grupo.GrupoEstudio#buscarPregunta(java.lang.String)}.
+	 */
+	@Test
+	public void testBuscarPregunta() {
+		fail("Not yet implemented");
+	}
+
+}

@@ -1,0 +1,24 @@
+
+public class GrupoEstudio extends Grupo{
+	private int idProfesor;
+	private ArrayList<Pregunta> listaPreguntas;
+	
+	/**
+	 * @return the idProfesor
+	 */
+	public int getIdProfesor() {
+		return idProfesor;
+	}
+	/**
+	 * @param idProfesor the idProfesor to set
+	 */
+	public void setIdProfesor(int idProfesor) {
+		this.idProfesor = idProfesor;
+	}
+	public void crearPregunta(String Pregunta, int idProfesor){
+		/*TODO revisar por añadir pregunta*/
+	}
+	public void listarPreguntas(){
+		/*TODO*/
+	}
+}

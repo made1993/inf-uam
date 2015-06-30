@@ -1,0 +1,19 @@
+main
+{
+
+    array int[5] vector1;
+    int x, i, suma;
+
+	i=0;
+
+	while ((i<5))
+	{
+		scanf x;
+		vector1[i]=x;
+	}
+	while ((i<5))
+	{
+		suma= suma+ (vector1[i]);
+	}
+	printf suma;
+}

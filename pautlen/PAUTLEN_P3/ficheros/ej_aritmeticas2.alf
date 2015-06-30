@@ -1,0 +1,23 @@
+main
+{
+
+
+    int x, y, z;
+
+
+	scanf x;
+	scanf y;
+	scanf z;
+
+	printf x+y*z;
+
+	printf (x+y)*z;
+
+	printf -x*y*-z;
+
+}
+
+
+
+
+

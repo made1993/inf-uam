@@ -1,0 +1,5 @@
+set -tmpdir "D:/arqo_p1_ise/xst/projnav.tmp"
+set -xsthdpdir "D:/arqo_p1_ise/xst"
+elaborate
+-ifn RegsMIPS.prj
+-ifmt mixed

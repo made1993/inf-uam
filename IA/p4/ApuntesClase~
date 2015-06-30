@@ -1,0 +1,68 @@
+1.-
+(setq *nulo_lst*		(trace ...)
+(past ?y (2 1 3)) ((R1 (pertenece ?x	(?x . ?_) )
+					(R2 (pertenece ?x	(?_ . ?l))	:- ((pertenece ?x ?l))
+					
+2.-
+(R3 (concatenar () ?L2 ?L2)
+(R4 (concatenar ?L1 () ?L1)
+(R5 (concatenar (?x . ?L1) ?L2 (?x . ?L3))
+				:-((concatenar ?L1 ?L2 ?L3)))))
+				
+(setq *rule-list* '((R3 (concatenar () ?L1 ?L1))
+(R4 (concatenar ?L2 () ?L2))
+(R5 (concatenar (?x . ?L1) ?L2 (?x . ?L3)) :- ((concatenar ?L1 ?L2 ?L3)))))
+
+				
+3.-
+    1
+  2   5
+3   4    
+
+orden medio da: 3 2 4 1 5 ---> Explora izquierda, visita y vuelve a derecha.
+
+Tenemos definiciones: 	(t nodo arbol-izq arbol-der) [t es una constante]  
+						(inorder ?arbol ?lista)
+
+(t 1 (t 2 (t 3 nil nil) (t 4 nil nil)) (t 5 nil nil))
+
+[(t 3 nil nil)] indica que es una hoja (subarboles nil vacios)
+
+Diseño recursivo:
+Caso base es que estamos en una hoja. (inorder nil ())
+Caso recursivo: (preorder (t ?nodo ?izq ?der) (?nodo . ?l))
+					:-((preorder ?izq ?lizq)
+						(preorder ?der ?lder)
+						(concatenar (?nodo . ?lizq) ?lder ?l))	[Orden medio es concatenar (?nodo . ?lizq) en medio de ?lder]
+						
+							
+						
+(setq *rule-list* '((R3 (concatenar () ?L1 ?L1))
+(R4 (concatenar ?L2 () ?L2))
+(R5 (concatenar (?x . ?L1) ?L2 (?x . ?L3)) :- ((concatenar ?L1 ?L2 ?L3)))
+(R6  (inorder nil ()))
+(R7 (inorder (t ?nodo ?izq ?der) ?l) :- ((inorder ?izq ?lizq) (inorder ?der ?lder) (concatenar ?lizq (?nodo . ?lder) ?l)))))
+
+
+4.-
+(accept ?l) :- ((start ?q)
+				(accept ?q ?l))
+Hay que implementar el (accept ?q ?l)
+Caso base: (accept ?q ()) :- (final ?q)
+Caso recursivo: (accept ?q (?s . ?l)) :-
+						(arc ?q ?r ?s)
+						(acept ?r ?l))
+						
+Meter transiciones lambda
+						
+5.-
+R1 (ordenada ())
+R2 (ordenada (?))
+R3 (ordenada (?x ?y . ?z)):-
+	((?=t (?eval (<= ?x ?y)) ))  
+	(ordenada (?x . '?z)
+
+
+(?= ?a ?b) equivale (unify ?a ?b) 
+	
+	= significa que llama a unify
