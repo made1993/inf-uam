@@ -1,0 +1,23 @@
+Esto ademas cifra el archivo donde se guarda la clave
+
+
+
+ccpp@ccpp ~/Dropbox/cuarto/Criptografia/Grupo4Practica3/rsa$ openssl genrsa -out rsaprivatekey.pem -passout pass:trousers -des 1024
+Generating RSA private key, 1024 bit long modulus
+...............++++++
+...........................................................................++++++
+e is 65537 (0x10001)
+
+
+ccpp@ccpp ~/Dropbox/cuarto/Criptografia/Grupo4Practica3/rsa$ openssl rsa -in rsaprivatekey.pem -passin pass:trousers -pubout -out rsapublickey.pem
+writing RSA key
+
+
+ccpp@ccpp ~/Dropbox/cuarto/Criptografia/Grupo4Practica3/rsa$ openssl rsautl -encrypt -pubin -inkey rsapublickey.pem -in plaintext.txt -out cipher.txt
+
+
+ccpp@ccpp ~/Dropbox/cuarto/Criptografia/Grupo4Practica3/rsa$ openssl rsautl -decrypt -inkey rsaprivatekey.pem -in cipher.txt -out dechiper.txt
+Enter pass phrase for rsaprivatekey.pem:
+
+			
+			

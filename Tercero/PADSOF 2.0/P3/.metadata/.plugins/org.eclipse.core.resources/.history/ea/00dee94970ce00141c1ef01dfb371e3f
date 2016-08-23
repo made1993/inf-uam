@@ -1,0 +1,461 @@
+package mailUam;
+import grupo.Grupo;
+import grupo.GrupoEstudio;
+
+import java.io.*;
+import java.util.*;
+
+import buzon.Buzon;
+
+import mensaje.MensajeGrupo;
+import mensaje.MensajeUsuario;
+import usuario.Estudiante;
+import usuario.Profesor;
+import usuario.Usuario;
+
+public class MailUam {
+	private static final String ficheroAlumnos="alumnos.txt";
+	private static final String ficheroProfesores= "PROFESORES.TXT";
+	private static final String barraLinuxMAC="/";
+	private static final String barraWindows="\\";
+	private static final String NOMBREFICHEROGRUPO="info.tmp";
+	private static final String NOMBREFICHEROGRUPOUSUARIOS="usu.tmp";
+	private static final String NOMBREFICHEROGRUPOBUZON="buzon.tmp";
+	private String barra;
+	//TODO serializable 
+	//TODO objectinputstream
+	//TODO objectoutputstream
+	private ArrayList<Usuario> listaUsuarios;
+	private ArrayList<Grupo> listaGrupos;
+
+
+	public static void main(String[] args){
+		System.out.println(System.getProperty("os.name"));
+		System.out.println("\\");
+		MailUam m2,m = new MailUam();
+		m.cargarDatos(ficheroAlumnos,ficheroProfesores);
+		m.crearDirectorios();
+		m.cargarGrupos();
+		boolean bool = m.crearGrupo("adsof", false, null,null);
+		System.out.println("crear grupo adsof: "+bool + m.getListaGrupos().get(0).getNombre() );
+		bool = m.crearSubGrupo("java", false, null, m.listaGrupos.get(0),null);
+		System.out.println("crear subgrupo java: "+bool);
+		bool = m.crearGrupo("padsof", false, null,null);
+		System.out.println("crear grupo padsof: "+bool);
+		System.out.println(m);
+		System.out.println("guardando grupos");
+		m.guardarGrupos("aplicacion"+m.getBarra()+"grupo");
+		m2 = new MailUam();
+		m2.cargarGrupos();
+		
+		System.out.println(m2);
+	}
+		
+	public MailUam() {
+		listaGrupos = new ArrayList<Grupo>();
+		listaUsuarios = new ArrayList<Usuario>();
+		if(getOS().equals("Windows 7")){
+			barra=barraWindows;
+		}
+		else {
+			barra=barraLinuxMAC;
+		}
+	}
+
+	/**
+	 * @return the listaUsuarios
+	 */
+	public ArrayList<Usuario> getListaUsuarios() {
+		return listaUsuarios;
+	}
+
+	/**
+	 * @param listaUsuarios the listaUsuarios to set
+	 */
+	public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+		this.listaUsuarios = listaUsuarios;
+	}
+
+	/**
+	 * @return the listaGrupos
+	 */
+	public ArrayList<Grupo> getListaGrupos() {
+		return listaGrupos;
+	}
+
+	/**
+	 * @param listaGrupos the listaGrupos to set
+	 */
+	public void setListaGrupos(ArrayList<Grupo> listaGrupos) {
+		this.listaGrupos = listaGrupos;
+	}
+
+	/**
+	 * @param barra the barra to set
+	 */
+	public void setBarra(String barra) {
+		this.barra = barra;
+	}
+	
+	
+	public boolean login(String correo, String password) {
+		return false;// TODO
+
+	}
+
+	/**
+	 * Se desconecta el usuario del sistema
+	 * @param correo
+	 */
+	public void logout(Usuario usuario){
+		guardarDatos();
+		usuario.setLastLogin(Calendar.getInstance());
+	}
+	
+	//TODO
+	public boolean crearGrupo(String nombre, boolean privado, Usuario moderador, Profesor profesor) {
+		File fg=new File("aplicacion"+getBarra()+"grupo"+getBarra()+nombre);
+		if(fg.mkdir()){
+			if(profesor == null)
+				return listaGrupos.add(new Grupo(listaGrupos.size(), nombre, privado, moderador));
+			else
+				return listaGrupos.add(new GrupoEstudio(listaGrupos.size(),nombre,privado,moderador,profesor));
+		}
+		return false;
+	}
+
+	public boolean crearSubGrupo(String nombre, boolean privado,Usuario moderador, Grupo grupo,Profesor profesor) {
+		String fileGroup="aplicacion"+getBarra()+"grupo"+getBarra()+grupo.getNombre()+getBarra()+nombre;
+		File fg=new File(fileGroup);
+		if(fg.mkdir()){
+			
+			return grupo.addSubgrupo(nombre, privado, moderador, grupo.getIdGrupo());
+			
+		}
+		return false;
+	}
+
+	public boolean enviarMensaje(Usuario usuario, String cuerpo, String sujeto) {
+		return false; // TODO
+	}
+
+	public boolean entrarGrupo(Grupo grupo,Usuario usuario){
+		
+		return false; // TODO
+	}
+
+	/**
+	 * Buscar un usuario que tenga un cierto nombre
+	 * @param correo
+	 * @return
+	 */
+	public ArrayList<Usuario> buscarUsuarios(String nombre){
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		for(Usuario u:listaUsuarios){
+			if(u.getNombre().equals(nombre)){
+				usuarios.add(u);
+			}
+		}
+		return usuarios; // TODO
+	}
+	
+	/**
+	 * Busca un usuario que tenga un cierto correo
+	 * @param correo
+	 * @return
+	 */
+	public Usuario buscarUsuario(String correo) {
+		for(Usuario u:listaUsuarios){
+			if(u.getCorreo().equals(correo)){
+				return u;
+			}
+		}
+		return null; // TODO
+	}
+
+	/**
+	 * Busca un grupo pasandole un nombre para el grupo
+	 * @param nombreGrupo
+	 * @return
+	 */
+	public ArrayList<Grupo> buscarGrupo(String nombreGrupo){
+		ArrayList<Grupo> grupo = new ArrayList<Grupo>();
+		for(Grupo g:listaGrupos){
+			if(g.getNombre().equals(nombreGrupo)){
+				grupo.add(g);
+			}
+		}
+		return grupo; // TODO
+	}
+
+	/**
+	 * Sirve para cargar los datos de los usuario de la aplicacion
+	 * @param fAlumnos contiene el fichero de los alumnos
+	 * @param fPprofesores contiene el fichero de los profesoroes
+	 * @return
+	 */
+	public boolean cargarDatos(String fAlumnos, String fPprofesores) {
+		File archivo = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+
+		try {
+			// Apertura del fichero y creacion de BufferedReader para poder
+			// hacer una lectura comoda (disponer del metodo readLine()).
+			archivo = new File(fAlumnos);
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+
+			// Lectura del fichero
+			String linea;
+			String []ss,ss2,ss3;
+			String correo,password,nombre,apellido;
+			while ((linea = br.readLine()) != null){
+				//maria.martin@ddm.es:mamnds455
+				if(linea.length()>1){
+					ss = linea.split(":");
+					ss2 = ss[0].split("@");
+					ss3 = ss2[0].replace(".", " ").split(" ");//Si haces split con '.' no funciona
+					correo=ss[0];password=ss[1];nombre=ss3[0];apellido=ss3[1];
+					this.listaUsuarios.add(new Estudiante(nombre,apellido, correo, password));
+				}
+			}
+			
+			// Apertura del fichero y creacion de BufferedReader para poder
+			// hacer una lectura comoda (disponer del metodo readLine()).
+			archivo = new File(fPprofesores);
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+
+			// Lectura del fichero
+			while ((linea = br.readLine()) != null){
+				//maria.martin@ddm.es:mamnds455
+				if(linea.length()>1){
+					ss = linea.split(":");
+					ss2 = ss[0].split("@");
+					ss3 = ss2[0].replace(".", " ").split(" ");//Si haces split con '.' no funciona
+					correo=ss[0];password=ss[1];nombre=ss3[0];apellido=ss3[1];
+					this.listaUsuarios.add(new Profesor(nombre,apellido, correo, password));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			// En el finally cerramos el fichero, para asegurarnos
+			// que se cierra tanto si todo va bien como si salta
+			// una excepcion.
+			try {
+				if (null != fr) {
+					fr.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return true; // TODO
+	}
+	
+	public String getOS(){
+		return System.getProperty("os.name");
+	}
+	
+	public boolean crearDirectorios(){
+		File f = new File("aplicacion");
+		f.mkdir();		
+		File fg=new File("aplicacion"+getBarra()+"grupo");
+		fg.mkdir();
+		File fu=new File("aplicacion"+getBarra()+"usuario");
+		fu.mkdir();
+		for(Usuario u: listaUsuarios){
+			File fusr =new File(fu.getPath()+barra+u.getCorreo());
+			fusr.mkdir();
+		}
+		for(Grupo g: listaGrupos){
+			File fgr =new File(fg.getPath()+barra+g.getNombre());
+			fgr.mkdir();
+		}
+		return true;
+		
+	}
+	
+	
+	public String getBarra() {
+		return barra;
+	}
+
+	/**
+	 * Guarda los datos del sistema //TODO
+	 * @return
+	 */
+	public boolean guardarDatos(){
+		return false;
+	}
+	public Estudiante cargarUsuario(String correo) throws IOException, ClassNotFoundException{
+		if(correo==null)
+			return null;
+	
+		FileInputStream fis = new FileInputStream("aplicacion"+getBarra()+"usuario"+getBarra()+correo+getBarra()+"prueba");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		
+		Estudiante usr =null;
+
+		usr.setIdUsuario((int) ois.readObject());
+		usr.setNombre((String) ois.readObject());
+		usr.setApellido((String) ois.readObject());
+		usr.setCorreo((String) ois.readObject());
+		usr.setPassword((String) ois.readObject());
+		ois.close();
+		return  usr;
+	}
+	
+	public boolean guardarUsuario(Estudiante usr) throws IOException{
+		if(usr==null)
+			return false;
+		FileOutputStream fos = new FileOutputStream("aplicacion"+getBarra()+"usuario"+getBarra()+usr.getCorreo()+getBarra()+"prueba");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(usr.getIdUsuario());
+		oos.writeObject(usr.getNombre());
+		oos.writeObject(usr.getApellido());
+		oos.writeObject(usr.getCorreo());
+		oos.writeObject(usr.getPassword());
+		if(usr.getListaGrupos()!=null){
+			oos.writeObject(usr.getListaGrupos().size());
+			for(Grupo g: usr.getListaGrupos()){
+				oos.writeObject(g);
+			}
+		}
+		
+		if(usr.getContactos()!=null){
+			oos.writeObject(usr.getContactos().size());
+			for(Usuario u: usr.getContactos()){
+				oos.writeObject(u);
+			}
+		}
+		System.out.println(usr.getBuzon());
+		if(usr.getBuzon()!=null)
+			oos.writeObject(usr.getBuzon());
+		if(usr.getLastLogin()!=null)
+			oos.writeObject(usr.getLastLogin());
+		oos.close();
+		return false;
+	}
+	public boolean guardarUsuarios(){
+		/*String fichero = "aplicacion"+getBarra()+"grupo"+getBarra()+usr.getCorreo();
+		try {
+			
+		}
+		catch{
+			
+		}*/
+		return true;
+	}
+	
+	
+	public boolean guardarGrupos(String fichero){
+		try
+        {
+			for(Grupo g:listaGrupos){
+				g.guardarGrupo(fichero,getBarra(),NOMBREFICHEROGRUPO,NOMBREFICHEROGRUPOUSUARIOS,NOMBREFICHEROGRUPOBUZON);
+			}
+        } catch (Exception e)
+        {
+            //e.printStackTrace();
+            return false;
+        }	
+        return true;        
+	}
+	public boolean cargarUsuarios(){
+		return false;
+	}
+	
+	//TODO
+	public boolean cargarGrupos(){
+		String fichero = "aplicacion"+getBarra()+"grupo";
+		try
+        {
+			File dir = new File(fichero);
+			for(String nombreDirectorio:dir.list()){
+				cargarGrupo(fichero,nombreDirectorio,null);
+			}
+        }
+        catch (EOFException e1)
+        {
+            return true;
+        }
+        catch (Exception e2)
+        {
+            e2.printStackTrace();
+        }
+		return false;
+	}
+
+	public void cargarGrupo(String loc,String nombreDirectorio,Grupo grupo) throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream(loc+getBarra()+nombreDirectorio+getBarra()+NOMBREFICHEROGRUPO);
+        ObjectInputStream ois = new ObjectInputStream(fis);	            
+		int idGrupo = ois.readInt();
+		String nombre = (String) ois.readObject();
+		boolean privado = ois.readBoolean();
+		Usuario moderador = buscarUsuario((String) ois.readObject());
+		Grupo aux = new Grupo(idGrupo, nombre, privado, moderador);
+		if(grupo==null)
+			addGrupo(aux);
+		else
+			grupo.addSubGrupo(aux);
+		//cargar Usuarios
+        ObjectInputStream oisu = new ObjectInputStream(new FileInputStream(loc+getBarra()+nombreDirectorio+getBarra()+NOMBREFICHEROGRUPOUSUARIOS));
+        for (Usuario usu = (Usuario) oisu.readObject();usu != null;usu = (Usuario) oisu.readObject()){
+        	aux.addUsuario(usu);        	
+        }
+        oisu.close();
+        
+		//cargar Mensajes
+        ObjectInputStream oism = new ObjectInputStream(new FileInputStream(loc+getBarra()+nombreDirectorio+getBarra()+NOMBREFICHEROGRUPOBUZON));
+        for (MensajeGrupo men = (MensajeGrupo) oism.readObject();men != null;men = (MensajeGrupo) oism.readObject()){
+        	aux.addMensaje(men);        	
+        }
+        oism.close();	
+        
+		//Subgrupos
+        File subdir = new File(loc+getBarra()+nombreDirectorio);
+        for (String s:subdir.list()){
+        	if(!s.equals(NOMBREFICHEROGRUPO))
+        		cargarGrupo(loc+getBarra()+nombreDirectorio, s,aux);
+        }
+        ois.close();		
+	}
+
+	public boolean addGrupo(Grupo grupo) {
+		return listaGrupos.add(grupo);
+	}
+	
+	public boolean addUsuario(Usuario u){
+		return listaUsuarios.add(u);
+	}
+	
+	public boolean addUsuarioGrupo(Usuario usuario, Grupo grupo){
+		if(!grupo.contieneUsuario(usuario))
+			return grupo.addUsuario(usuario);
+		return false;
+	}
+	
+	public boolean addMensajeGrupo(MensajeGrupo mensaje, Grupo grupo){
+		if(grupo.contieneUsuario(mensaje.getRemitente())){
+				return grupo.addMensaje(mensaje.getIdMensaje(), mensaje.getCuerpo(), mensaje.getRemitente());//TODO cambiar
+		}
+		return false;
+	}
+	
+	
+	
+
+	@Override
+	public String toString() {
+		String imp="";
+		for(Grupo g: listaGrupos){
+			imp+=g.toString()+"\n";
+		}
+		return imp;
+	}
+	
+}

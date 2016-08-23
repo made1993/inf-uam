@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="clasificadores.Clasificador"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="redNeuronal.Neurona"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="clasesGeneticoNeuronal.IniPoblacionRN"/>
+<fullyQualifiedTypeName name="clasesGeneticoNeuronal.Individuo"/>
+<fullyQualifiedTypeName name="redNeuronal.RedNeuronal"/>
+<fullyQualifiedTypeName name="clasesGeneticoNeuronal2.Poblacion"/>
+<fullyQualifiedTypeName name="clasesGeneticoNeuronal2.Individuo"/>
+<fullyQualifiedTypeName name="java.lang.Double"/>
+</qualifiedTypeNameHistroy>

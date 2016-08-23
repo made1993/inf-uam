@@ -1,0 +1,64 @@
+package redNeuronal;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Neurona {
+
+	private ArrayList<Double> pesos;
+	private ArrayList<Neurona> entradas;
+	private double salida;
+	private double entrada;
+	public Neurona( ArrayList<Neurona> entradas, double salida) {
+		
+		this.entradas = entradas;
+		this.entrada=0;
+		this.salida = salida;
+		if(entradas!=null){
+			ArrayList<Double> pesos= new ArrayList<>();
+			Random r= new Random();
+			for(int i=0; i<entradas.size(); i++){
+				pesos.add(r.nextDouble()-0.5);
+			}
+			this.pesos=pesos;
+		}
+	}
+	
+	public void actualizaSalida(){
+		this.entrada=0;
+		for (int i=0; i<this.entradas.size();i++){
+			this.entrada+=this.pesos.get(i)
+		}
+	}	
+	public ArrayList<Double> getPesos() {
+		return pesos;
+	}
+
+
+	public void setPesos(ArrayList<Double> pesos) {
+		this.pesos = pesos;
+	}
+
+
+	public ArrayList<Neurona> getEntradas() {
+		return entradas;
+	}
+
+
+	public void setEntradas(ArrayList<Neurona> entradas) {
+		this.entradas = entradas;
+	}
+
+
+	public double getSalida() {
+		return salida;
+	}
+
+
+	public void setSalida(double salida) {
+		this.salida = salida;
+	}
+
+
+
+}

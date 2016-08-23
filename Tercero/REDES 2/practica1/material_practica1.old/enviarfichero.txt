@@ -1,0 +1,1 @@
+"ascii1"DCC SEND "nombre de archivo sin ruta" "mi ip en decimal" puertoaleatorio(+1000) tamanoArchivo(B)"ascii1"

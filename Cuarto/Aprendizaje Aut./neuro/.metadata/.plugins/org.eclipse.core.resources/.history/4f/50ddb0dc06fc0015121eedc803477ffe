@@ -1,0 +1,14 @@
+package clasesGeneticoNeuronal;
+
+import clasesAlgoritmoGentecio.Poblacion;
+import interfacesAlgoritmoGenetico.IniPoblacion;
+
+public class IniPoblacionRN implements IniPoblacion{
+
+	@Override
+	public Poblacion crearPoblacion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

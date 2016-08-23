@@ -1,0 +1,7 @@
+
+public class Profesor extends Usuario{
+	public boolean crearGrupoEstudio(String nombre, boolean privado, boolean moderado){
+		/*TODO*/
+		return false;
+	}
+}

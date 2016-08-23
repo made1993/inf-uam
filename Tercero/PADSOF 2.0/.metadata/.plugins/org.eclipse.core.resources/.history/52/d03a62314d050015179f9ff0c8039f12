@@ -1,0 +1,47 @@
+package control;
+
+import gui.*;
+
+import java.awt.event.*;
+
+import javax.swing.JOptionPane;
+
+import mailUam.*;
+
+public class ControlMenu implements ActionListener {
+	
+
+	private MailUam modelo;
+	private Ventana v;
+
+	public ControlMenu(MailUam modelo, Ventana v) {
+		this.modelo = modelo;
+		this.v = v;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		Object source = arg0.getSource();
+
+		GUIMenu menu = v.getMenu();
+		if(source.equals(menu.getBotonMensajes())){
+			GUIMensajes mensajes= v.getMenasjes(); 
+			mensajes.setValores(usu);
+			v.cambiarPanelMensajes();
+		}else if(source.equals(menu.getBotonGrupos())){
+			GUIGrupos grupos = v.getGrupos(); 
+			grupos.setValores(usu);
+			v.cambiarPanelPerfil();
+		}else if(source.equals(menu.getBotonVerPrefil())){
+			GUIVerPerfil perfil = v.getVerPerfil(); 
+			perfil.setValores(usu);
+			v.cambiarPanelPerfil();
+		}else if(source.equals(menu.getBotonSalir())){
+			JOptionPane.showMessageDialog(null, "Saliendo de la aplicacion");
+			// TODO guardar Datos
+			System.exit(0);
+		}
+		
+	}
+
+}

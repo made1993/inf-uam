@@ -1,0 +1,17 @@
+package grafo;
+
+
+public class Edge<E> {
+	private static int numEdges = 0;
+	private int id;
+	private E info;
+	private Graph<?,E> graph=null;
+	private Node<?> origen;
+	private Node<?> destino;
+	
+	public Edge(E i){
+		this.info=i;
+		this.id=Edge.numEdges++;
+	}
+
+}

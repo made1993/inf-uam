@@ -1,0 +1,73 @@
+package es.uam.eps.bmi.search.indexing;
+
+import java.io.FileInputStream;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import org.apache.lucene.document.Field;
+
+import es.uam.eps.bmi.search.*;
+import es.uam.eps.bmi.search.parsing.*;
+
+public class BasicIndexing implements Index{
+
+	@Override
+	public void build(String inputCollectionPath, String outputIndexPath, TextParser textParser) {
+		ZipInputStream zips=null;
+		try {
+			zips= new ZipInputStream(new FileInputStream(inputCollectionPath));
+			ZipEntry entrada = null;
+			while((entrada = zips.getNextEntry())!=null ){
+				entrada.getName();
+	            doc.add(new Field("content", textParser.parse(readZips(zips)), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.YES));
+
+	            zips.closeEntry();
+			}
+			this.iwriter.close();
+			zips.close();
+			load(outputIndexPath);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+	}
+
+	@Override
+	public void load(String indexPath) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getDocIds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TextDocument getDocument(String docId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getTerms() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Posting> getTermPostings(String term) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

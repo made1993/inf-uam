@@ -1,0 +1,241 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <gmp.h>
+#include <time.h>
+
+//COMPILAR: gcc potencia.c -lgmp -L.
+
+int testMillerRabin(mpz_t numero, mpz_t reps, gmp_randstate_t state; ){
+	
+	
+	mpz_t q, k, a, aux, exp, numeroMenos1;
+	
+	unsigned long int i ,  k2;
+	
+	mpz_init(q);
+	mpz_init_set_si(k, 0);
+	mpz_init(a);
+	mpz_init(aux);
+	//mpz_init(i);
+	mpz_init(exp);
+	mpz_init(numeroMenos1);
+	
+	
+	mpz_set(numeroMenos1, numero);
+	mpz_sub_ui(numeroMenos1, numeroMenos1, 1);
+	
+	mpz_set(q, numero);
+	mpz_sub_ui(q, q, 1);
+	
+	
+	while(mpz_even_p(q)){
+		mpz_cdiv_q_ui(k, k, 2);
+		mpz_add_ui(q,q, 1);
+	}
+	
+	mpz_urandomm(a, state, numero);
+	
+	if(mpz_cmp_ui(temp, 0) == 0) {
+		mpz_add_ui(a, a, 1);
+	}
+	
+	mpz_powm(aux, a, q, numero);
+	
+	if(mpz_cmp_ui(aux, 1) == 0){
+		printf("incierto\n");
+		return 0;
+	}
+	
+	/**
+	*	Se itrea hasta k-1
+	*	paso 4
+	**/
+	
+	k2=mpz_get_ui(k);
+	
+	for (i=0; i<k2-1; i++){
+	
+		mpz_set_ui(aux, 2**i);
+		mpz_mul(aux, aux, q);
+	
+		mpz_powm(aux, a, aux, numero);
+		
+		if(mpz_cmp(aux, numeroMenos1)==0){
+		
+			printf("incierto\n");
+			return 0;
+		
+		}
+	}
+	
+	printf("compuesto\n");
+	
+	return 1;
+	/*
+	mpz_sub_ui(k, k, 1);
+	for(mpz_set_ui(i,0); ,mpz_cmp(i, k)<0; mpz_add_ui(i, i, 1)){
+		
+		mpz_pow_ui(exp, 2, mpz_get_ui(i));
+		mpz_powm(aux, a, q, numero);
+	
+		if(mpz_cmp_ui(aux, 1) == 0){
+			printf("incierto\n");
+			return 0;
+		}	
+	
+	
+	}*/
+	
+	
+	
+	
+
+	
+
+}
+
+
+int testMillerRabinGMP(int numero, int reps) {
+	mpz_t n;
+	int result;
+	mpz_init_set_si(n, numero);
+
+	result = mpz_probab_prime_p(n, reps);
+	if(result == 2) {
+		printf("%d es primo\n", numero);
+	}
+	else if(result == 1) {
+		printf("%d es probablemente primo\n", numero);
+	}
+	else if(result == 0) {
+		printf("%d es compuesto\n", numero);
+	}
+	else {
+		printf("Algo raro ha pasado. ERROR en testMillerRabinGMP\n");
+	}
+	mpz_clear(n);
+
+	return 0;
+}
+// TODO: devolver resultado en return. 
+int exponenteGMP(int base_i, int exponente_i, int modulo_i) {
+
+	mpz_t x, base, exponente, modulo, mask;
+	mpz_t temp;
+	int i, longbits;
+	/*Inicializar valores*/
+	mpz_init_set_si(base, base_i);
+	mpz_init_set_si(exponente, exponente_i);
+	mpz_init_set_si(modulo, modulo_i);
+	mpz_init_set_si(mask, 1);
+	mpz_init(temp);
+
+
+	mpz_init_set_si(x, 1);
+
+	longbits = mpz_sizeinbase(exponente, 2);
+	for(i = longbits - 1; i >= 0; i--) {
+
+		mpz_mul(x, x, x);
+		mpz_mod(x, x, modulo); // x = x² mod n
+
+		//Equivalente a un shift right
+		mpz_fdiv_q_2exp(temp, exponente, i);
+		mpz_and(temp, temp, mask);			// temp = bit i de exponente
+
+		if(mpz_cmp(temp, mask) == 0) {		// bit i == 1
+			//printf("bit %d == 1\n", i);
+			mpz_mul(x, x, base);
+			mpz_mod(x, x, modulo);
+		}
+
+		//gmp_printf("%Zd\n", exponente);
+		//gmp_printf("%Zd\n", temp);
+		//gmp_printf("x == %Zd\n", x);
+	}
+
+	gmp_printf("Con nuesto algoritmo:\n%Zd elevado a %Zd mod %Zd  == %Zd\n", base, exponente, modulo, x);
+
+	mpz_clear(base);
+	mpz_clear(exponente);
+	mpz_clear(modulo);
+	mpz_clear(mask);
+	mpz_clear(temp);
+	mpz_clear(x);
+	return 0;
+}
+// Parametros: -b bits -t sec [-o fileout]
+/*
+Algoritmo:
+	1: Generar un N aleatorio 0-2^n-1 
+	2: Poner a 1 el bit mas significativo de n para asegurar que su tamano es de n bits
+	3: Poner a 1 el bit menos significativo para asegurar que es impar
+	4: dividir por la tabla de primos precalculados
+	5: test MR
+//*/
+
+int randomNBits(mpz_t value, int nbits, gmp_randstate_t state) {
+
+	mpz_urandomb(value, state, nbits);
+	//gmp_printf("Random pre fix: %Zd\n", value);
+	return 0;
+}
+/*Prepara el numero number tal que el primer y el ultimo bit son 1*/
+int fixRandomNBits(mpz_t number, int nbits) {
+
+	mpz_t mask, mask2;
+	mpz_init(mask2);
+	mpz_init_set_si(mask, 1);				// mask  =       1
+	mpz_mul_2exp(mask2, mask, nbits - 1);	// mask2 = 1______
+	mpz_ior(mask2, mask2, mask);			// mask2 = 1_____1
+
+	//gmp_printf("Mask: %Zd\n", mask2);
+	mpz_ior(number, number, mask2);
+	mpz_clear(mask);
+	mpz_clear(mask2);
+}
+int generadorPrimos(int nbits, int reps) {
+
+	int i;
+	int posiblePrimoEncontrado = 0;
+	mpz_t value;
+	gmp_randstate_t state;
+
+	mpz_init(value);
+	/*Inicializar semilla random equivalente srand en gmp*/
+	gmp_randinit_default(state);
+	gmp_randseed_ui(state, time(NULL));
+
+	while(!posiblePrimoEncontrado) {
+
+
+		randomNBits(value, nbits, state);
+		fixRandomNBits(value, nbits);
+		//gmp_printf("Value post mask: %Zd\n", value);
+		
+		/*Dividir por todos los primeros 2000 primos*/
+		for(i = 0; i < NUM_PRIMOS; i++) {
+			posiblePrimoEncontrado = 1;
+			if(mpz_divisible_ui_p(value, primos[i])) {
+				// value es divisible por un primo de los 2000 primeros.
+				if(mpz_cmp_ui(value, primos[i])) {
+					//Comprobar el caso en el que value == primos[i]
+					//gmp_printf("%Zd es divisible por %d\n", value, primos[i]);
+					posiblePrimoEncontrado = 0;
+					break;
+				}
+				
+			}
+			//printf("%d\n", primos[i]);
+		}
+	}
+
+	gmp_printf("Posible primo encontrado: %Zd\n", value);
+	testMillerRabinGMP(6920383, 100);
+}
+
+int main(int argc, char **argv) {
+	
+	generadorPrimos(10, 10);
+	return 0;
+}

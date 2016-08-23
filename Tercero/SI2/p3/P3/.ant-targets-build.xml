@@ -1,0 +1,16 @@
+compilar
+create-db
+create-jdbc-connection-pool
+create-jdbc-resource
+delete-db
+delete-jdbc-connection-pool
+delete-jdbc-resource
+desplegar
+empaquetar
+limpiar
+limpiar-todo
+montar-jerarquia
+preparar-web-inf
+redesplegar
+regenerar-bd
+replegar

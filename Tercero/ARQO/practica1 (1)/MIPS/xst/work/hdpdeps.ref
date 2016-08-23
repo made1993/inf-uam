@@ -1,0 +1,58 @@
+V3 31
+FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/ALUMIPS.vhd" 2013/03/01.18:29:36 P.15xf
+EN work/AluMIPS 1366007741 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/ALUMIPS.vhd" \
+      PB ieee/std_logic_1164 1335251622 PB ieee/std_logic_arith 1335251623 \
+      PB ieee/STD_LOGIC_UNSIGNED 1335251625
+AR work/AluMIPS/Compleja 1366007742 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/ALUMIPS.vhd" \
+      EN work/AluMIPS 1366007741
+FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemDataMIPS.vhd" 2013/03/18.13:26:28 P.15xf
+EN work/MemDataMIPS 1366007749 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemDataMIPS.vhd" \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625
+AR work/MemDataMIPS/Simple 1366007750 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemDataMIPS.vhd" \
+      EN work/MemDataMIPS 1366007749
+FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemProgMIPS.vhd" 2013/02/27.18:04:34 P.15xf
+EN work/MemProgMIPS 1366007747 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemProgMIPS.vhd" \
+      PB ieee/std_logic_1164 1335251622 PB ieee/std_logic_arith 1335251623 \
+      PB ieee/STD_LOGIC_UNSIGNED 1335251625
+AR work/MemProgMIPS/Simple 1366007748 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemProgMIPS.vhd" \
+      EN work/MemProgMIPS 1366007747
+FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/microMIPS.vhd" 2013/04/15.08:35:38 P.15xf
+EN work/microMIPS 1366007745 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/microMIPS.vhd" \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625 \
+      PB ieee/std_logic_arith 1335251623
+AR work/microMIPS/MIPS 1366007746 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/microMIPS.vhd" \
+      EN work/microMIPS 1366007745 CP RegsMIPS CP ALUMIPS CP UnidadControlMIPS
+EN work/MicroMIPSTb 0 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MicroMIPSTb.vhd" \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625 \
+      PB ieee/std_logic_arith 1335251623
+AR work/MicroMIPSTb/Test 0 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MicroMIPSTb.vhd" \
+      EN work/MicroMIPSTb 0 CP MicroMIPS CP MemProgMIPS CP MemDataMIPS
+FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/RegsMIPS.vhd" 2013/03/02.15:14:32 P.15xf
+EN work/RegsMIPS 1366007739 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/RegsMIPS.vhd" \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625 \
+      PB ieee/std_logic_arith 1335251623
+AR work/RegsMIPS/Practica 1366007740 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/RegsMIPS.vhd" \
+      EN work/RegsMIPS 1366007739
+FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/UnidadControl.vhd" 2013/04/15.08:13:34 P.15xf
+EN work/UnidadControlMIPS 1366007743 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/UnidadControl.vhd" \
+      PB ieee/std_logic_1164 1335251622 PB ieee/STD_LOGIC_UNSIGNED 1335251625
+AR work/UnidadControlMIPS/UC 1366007744 \
+      FL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/UnidadControl.vhd" \
+      EN work/UnidadControlMIPS 1366007743
+FL C:/Users/Franjo/Desktop/P5-EC/practica5/ALUMIPS.vhd 2013/03/01.18:29:36 P.15xf
+FL C:/Users/Franjo/Desktop/P5-EC/practica5/microMIPS.vhd 2013/04/14.20:38:45 P.15xf
+FL C:/Users/Franjo/Desktop/P5-EC/practica5/RegsMIPS.vhd 2013/03/02.15:14:32 P.15xf
+FL C:/Users/Franjo/Desktop/P5-EC/practica5/UnidadControl.vhd 2013/04/12.09:25:58 P.15xf

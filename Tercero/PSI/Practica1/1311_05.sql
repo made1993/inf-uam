@@ -1,0 +1,295 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: check_password(text, text); Type: FUNCTION; Schema: public; Owner: alumnodb
+--
+
+CREATE FUNCTION check_password(name text, password text) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+DECLARE passed BOOLEAN;
+BEGIN
+        SELECT  pass = md5(password) INTO passed
+        FROM    jugadores
+        WHERE  nombre = name;
+        IF passed  THEN
+  RETURN passed;
+END IF;
+RETURN 'f'::boolean;
+END;
+$$;
+
+
+ALTER FUNCTION public.check_password(name text, pass text) OWNER TO alumnodb;
+
+--
+-- Name: password2crypt(); Type: FUNCTION; Schema: public; Owner: alumnodb
+--
+
+CREATE FUNCTION password2crypt() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+--
+        -- encrypt password on insert
+        -- encrypt password on update if changed
+        --
+        IF (TG_OP = 'INSERT') THEN
+            NEW.pass=md5(NEW.pass);
+            RETURN NEW;
+        ELSIF (TG_OP = 'UPDATE') THEN
+            IF(NEW.pass <> OLD.pass) THEN
+                NEW.pass=md5(NEW.pass);
+            END IF;
+            RETURN NEW;
+        END IF;
+END;
+$$;
+
+
+ALTER FUNCTION public.password2crypt() OWNER TO alumnodb;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: jugadores; Type: TABLE; Schema: public; Owner: alumnodb; Tablespace: 
+--
+
+CREATE TABLE jugadores (
+    id integer NOT NULL,
+    nombre text,
+    pass text
+);
+
+
+ALTER TABLE public.jugadores OWNER TO alumnodb;
+
+--
+-- Name: jugadores_id_seq; Type: SEQUENCE; Schema: public; Owner: alumnodb
+--
+
+CREATE SEQUENCE jugadores_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.jugadores_id_seq OWNER TO alumnodb;
+
+--
+-- Name: jugadores_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: alumnodb
+--
+
+ALTER SEQUENCE jugadores_id_seq OWNED BY jugadores.id;
+
+
+--
+-- Name: movimientos; Type: TABLE; Schema: public; Owner: alumnodb; Tablespace: 
+--
+
+CREATE TABLE movimientos (
+    usuario integer NOT NULL,
+    partida integer NOT NULL,
+    fila integer NOT NULL,
+    columna integer NOT NULL
+);
+
+
+ALTER TABLE public.movimientos OWNER TO alumnodb;
+
+--
+-- Name: partidas; Type: TABLE; Schema: public; Owner: alumnodb; Tablespace: 
+--
+
+CREATE TABLE partidas (
+    id integer NOT NULL,
+    jugador1 integer,
+    terminada integer
+);
+
+
+ALTER TABLE public.partidas OWNER TO alumnodb;
+
+--
+-- Name: partidas_id_seq; Type: SEQUENCE; Schema: public; Owner: alumnodb
+--
+
+CREATE SEQUENCE partidas_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.partidas_id_seq OWNER TO alumnodb;
+
+--
+-- Name: partidas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: alumnodb
+--
+
+ALTER SEQUENCE partidas_id_seq OWNED BY partidas.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: alumnodb
+--
+
+ALTER TABLE ONLY jugadores ALTER COLUMN id SET DEFAULT nextval('jugadores_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: alumnodb
+--
+
+ALTER TABLE ONLY partidas ALTER COLUMN id SET DEFAULT nextval('partidas_id_seq'::regclass);
+
+
+--
+-- Data for Name: jugadores; Type: TABLE DATA; Schema: public; Owner: alumnodb
+--
+
+COPY jugadores (id, nombre, pass) FROM stdin;
+1	Dani	4d186321c1a7f0f354b297e8914ab240
+2	Mario	4d186321c1a7f0f354b297e8914ab240
+3	Roy	4d186321c1a7f0f354b297e8914ab240
+4	Batman	4d186321c1a7f0f354b297e8914ab240
+\.
+
+
+--
+-- Name: jugadores_id_seq; Type: SEQUENCE SET; Schema: public; Owner: alumnodb
+--
+
+SELECT pg_catalog.setval('jugadores_id_seq', 4, true);
+
+
+--
+-- Data for Name: movimientos; Type: TABLE DATA; Schema: public; Owner: alumnodb
+--
+
+COPY movimientos (usuario, partida, fila, columna) FROM stdin;
+1	2	1	1
+1	2	2	1
+1	2	3	1
+1	2	4	1
+2	3	1	1
+3	4	1	1
+\.
+
+
+--
+-- Data for Name: partidas; Type: TABLE DATA; Schema: public; Owner: alumnodb
+--
+
+COPY partidas (id, jugador1, terminada) FROM stdin;
+2	1	1
+3	2	0
+4	3	0
+\.
+
+
+--
+-- Name: partidas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: alumnodb
+--
+
+SELECT pg_catalog.setval('partidas_id_seq', 4, true);
+
+
+--
+-- Name: jugadores_pkey; Type: CONSTRAINT; Schema: public; Owner: alumnodb; Tablespace: 
+--
+
+ALTER TABLE ONLY jugadores
+    ADD CONSTRAINT jugadores_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: movimientos_pkey; Type: CONSTRAINT; Schema: public; Owner: alumnodb; Tablespace: 
+--
+
+ALTER TABLE ONLY movimientos
+    ADD CONSTRAINT movimientos_pkey PRIMARY KEY (usuario, partida, fila, columna);
+
+
+--
+-- Name: partidas_pkey; Type: CONSTRAINT; Schema: public; Owner: alumnodb; Tablespace: 
+--
+
+ALTER TABLE ONLY partidas
+    ADD CONSTRAINT partidas_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: encrypt_md5_password; Type: TRIGGER; Schema: public; Owner: alumnodb
+--
+
+CREATE TRIGGER encrypt_md5_password BEFORE INSERT OR UPDATE ON jugadores FOR EACH ROW EXECUTE PROCEDURE password2crypt();
+
+
+--
+-- Name: movimientos_partida_fkey; Type: FK CONSTRAINT; Schema: public; Owner: alumnodb
+--
+
+ALTER TABLE ONLY movimientos
+    ADD CONSTRAINT movimientos_partida_fkey FOREIGN KEY (partida) REFERENCES partidas(id);
+
+
+--
+-- Name: movimientos_usuario_fkey; Type: FK CONSTRAINT; Schema: public; Owner: alumnodb
+--
+
+ALTER TABLE ONLY movimientos
+    ADD CONSTRAINT movimientos_usuario_fkey FOREIGN KEY (usuario) REFERENCES jugadores(id);
+
+
+--
+-- Name: partidas_jugador1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: alumnodb
+--
+
+ALTER TABLE ONLY partidas
+    ADD CONSTRAINT partidas_jugador1_fkey FOREIGN KEY (jugador1) REFERENCES jugadores(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

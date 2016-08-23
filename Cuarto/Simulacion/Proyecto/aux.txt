@@ -1,0 +1,6 @@
+[1] "distancias entre individuos calculadas"
+[1] "epoca 1 de 50"
+[1] "epoca 2 de 50"
+[1] "epoca 3 de 50"
+[1] "epoca 4 de 50"
+[1] "epoca 5 de 50"

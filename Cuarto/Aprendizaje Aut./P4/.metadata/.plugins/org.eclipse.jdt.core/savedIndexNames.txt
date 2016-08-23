@@ -1,0 +1,2 @@
+INDEX VERSION 1.127+/home/tron/Dropbox/Aprendizaje Aut./P4/.metadata/.plugins/org.eclipse.jdt.core
+3700658872.index

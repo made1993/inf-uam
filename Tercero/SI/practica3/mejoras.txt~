@@ -1,0 +1,24 @@
+customers:
+products:
+inventory:
+orders: totalamount y netamount no tienen ningun dato;
+orderdetails:
+imdb_movies:
+imdb_movielanguages: habria que plantear si borrar la columna extrainformation, 
+ya que o no contiene informacion o la informacion que contiene no aporta niguna 
+informacion (que informacion aporta only a few words?).
+
+imdb_moviegenres:
+imdb_moviecountries:
+imdb_directors:
+
+imdb_directomovies: Muchas de las columnas (a parte de directorid y movieid) 
+estan sin rellenar, otras contienen el mismo dato simpre, otras contienen muy 
+pocos valores como para estar organizados en una columna. Todas las columnas que 
+no tienen valores o repiten el mismo valor simpre deben borrase, todas las 
+columnas que contienen unos poco valores o pocos valores distintos del mas comun 
+es planteable borrarlas. Otras columnas como iscodirector habria que plantear si 
+directamente borrar la tupla o no.
+imdb_actors:
+
+imdb_actormovies: Muchas de las columanas no tienen datos.

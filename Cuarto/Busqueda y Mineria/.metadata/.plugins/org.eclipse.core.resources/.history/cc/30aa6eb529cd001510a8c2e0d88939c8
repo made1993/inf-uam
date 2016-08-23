@@ -1,0 +1,13 @@
+package es.uam.eps.bmi.search.searching;
+
+import es.uam.eps.bmi.search.indexing.Index;
+import es.uam.eps.bmi.search.parsing.ScoredTextDocument;
+
+import java.util.*;
+public interface Searcher{
+	
+	public void build(Index index);
+	public List<ScoredTextDocument> search(String query);
+	
+}
+

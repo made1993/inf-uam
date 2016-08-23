@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="algoritmoGenetico.EndAlgGen"/>
+<fullyQualifiedTypeName name="algoritmoGenetico.Fitness"/>
+<fullyQualifiedTypeName name="algoritmoGenetico.IniPoblacion"/>
+<fullyQualifiedTypeName name="algoritmoGenetico.Mutacion"/>
+<fullyQualifiedTypeName name="algoritmoGenetico.Recombinar"/>
+<fullyQualifiedTypeName name="algoritmoGenetico.SelectPadres"/>
+<fullyQualifiedTypeName name="clasificadores.Clasificador"/>
+<fullyQualifiedTypeName name="java.lang.ArrayIndexOutOfBoundsException"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="org.w3c.dom.DOMConfiguration"/>
+<fullyQualifiedTypeName name="interfacesAlgoritmoGenetico.SelectPadres"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Array"/>
+<fullyQualifiedTypeName name="interfacesAlgoritmoGenetico.Recombinar"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="interfacesAlgoritmoGenetico.Mutacion"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="interfacesAlgoritmoGenetico.Seleccion"/>
+<fullyQualifiedTypeName name="clasesAlgoritmoGentecio.Regla"/>
+<fullyQualifiedTypeName name="interfacesAlgoritmoGenetico.EndAlgGen"/>
+<fullyQualifiedTypeName name="clasesAlgoritmoGentecio.EndAlgGenTopFit"/>
+<fullyQualifiedTypeName name="clasesAlgoritmoGentecio.Individuo"/>
+<fullyQualifiedTypeName name="clasesAlgoritmoGentecio.Poblacion"/>
+<fullyQualifiedTypeName name="java.lang.Double"/>
+<fullyQualifiedTypeName name="java.util.BitSet"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<xsd:element name="datos">
+  	<xsd:element name="peliculas" type="xsd:string"/>	
+		<xsd:element name="pelicula" type="xsd:string"/>
+			<xsd:element name="titulo" type="xsd:string"/>
+			</xsd:element>
+			<xsd:element name="id" type="xsd:int"/>
+			</xsd:element>
+			<xsd:element name="precio" type="xsd:int"/>
+			</xsd:element>
+			<xsd:element name="categoria" type="xsd:string"/>
+			</xsd:element>
+	  	</xsd:element>
+	</xsd:element>
+
+</xsd:schema>

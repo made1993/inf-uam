@@ -1,0 +1,9 @@
+package es.uam.eps.bmi.search;
+
+public class TextSearcher {
+
+	public static void main(String []args){
+		
+	}
+	
+}

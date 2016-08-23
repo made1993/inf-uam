@@ -1,0 +1,809 @@
+package test;
+
+import grupo.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import org.w3c.dom.ls.LSInput;
+
+import grupo.*;
+import mailUam.MailUam;
+import mensaje.Mensaje;
+import mensaje.MensajeGrupo;
+import mensaje.MensajeUsuario;
+import mensaje.Pregunta;
+import mensaje.Respuesta;
+import usuario.*;
+/** 
+ * @author Antonio Gomez lucas, Mario Valdemaro Garcia Roque
+ * 
+ * Clase de pruebas de mail Uam
+ */
+public class pruebaMailUam {
+	
+	public static void main(String[] args) throws IOException, ClassNotFoundException  {
+		MailUam app= new MailUam();
+		if(!app.existeDir("aplicacion")){
+			app.cargarDatos("alumnos.txt", "profesores.txt");
+			app.crearDirectorios();
+		}
+		int status;
+		String correo = null;
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+		String tusr="a";
+		while(!tusr.equals("P")&&!tusr.equals("E")){
+	        System.out.println("Porfesor (P) o Estudiante (E): ");
+	       
+			tusr = bufferRead.readLine();
+		}
+        
+        if (tusr.equals("E")){
+        	Estudiante usr = new Estudiante(null, null, null, null);
+         	
+			while((usr=app.loginEstudiante())==null);
+			
+         	System.out.println("Binvenido/a:"+usr.getNombre()+" "+usr.getApellido());
+         	while (true){
+	         	listarOpcionesUsurio();
+	         	switch(retOpcion()){
+	        	case 1:
+	         		System.out.println(usr.verPerfil());
+	         		break;
+	         	case 2:
+	         		int i;
+	         		while (true){
+		         		i=1;
+						usr=(Estudiante)usr.cargarUsuario(usr.getCorreo());
+						
+		         		for(MensajeUsuario m:usr.getBuzon().getMensajes()){
+		         			System.out.println("Mensaje:"+ i++);
+		         			System.out.println("Autor:"+m.getRemitente().getCorreo());
+		         			System.out.println("Ausnto:"+m.getCuerpo());
+		         		}
+		         		System.out.println();
+		         		System.out.println("Ver mensaje (escriba el numero del mensaje que quiere ver o 0 para salir):");
+		         		i=retOpcion();
+		         		if (i==0){
+		         			break;
+		         		}
+		         		else if(usr.getBuzon().getMensajesNoLeidos().size()>=i){
+		         			System.out.println(usr.getBuzon().getMensajes().get(i-1));
+		         		}
+	         		}
+	         		break;
+	         	case 3:
+					usr=(Estudiante)usr.cargarUsuario(usr.getCorreo());
+					
+	         		while(true){
+	         			i=1;
+	         			for(Grupo g: usr.getListaGrupos()){
+	         				System.out.println("Numero:"+i++);
+	         				System.out.println("Nombre:"+g.getNombre());
+	         			}
+	         			System.out.println("Para entrar a ver un grupo pulse su numero o 0 para salir:");
+	         			i= retOpcion();
+	         			if (i==0)
+	         				break;
+	         			else if(usr.getListaGrupos().size()>=i){
+	         				Grupo grupo= new Grupo(0, null, false, null);
+	         				
+							grupo=grupo.cargarGrupo(usr.getListaGrupos().get(i-1).getNombre());
+							System.out.println(grupo);
+	         				usr.getListaGrupos().set(i-1, grupo);
+	         				
+	         				
+		         			System.out.println("1.Escribir un mensaje:");
+		         			
+		         			if(grupo.getModerador()!=null&&grupo.getModerador().getCorreo().equals(usr.getCorreo())){
+	         					System.out.println("2.Añadir usuario");
+	         					System.out.println("3.Expulsar usuario");
+	         				}
+		         			if(grupo.isGrupoEstudio()){
+	         					System.out.println("4.Ver pregunta");
+	         				}
+		         			int j=retOpcion();
+		         			if (j==1){
+		         				System.out.println("Escriba su mensjae y pulse enter");
+		         				String msj=retString();
+		         				System.out.println("Quiere mandar este mensaje 1 si 0 o enter no:");
+		         				if(retOpcion()==1){
+		         					MensajeGrupo mensaje= new MensajeGrupo(0, msj, Calendar.getInstance(), usr.getListaGrupos().get(i-1), usr);
+			         				grupo=grupo.cargarGrupo(usr.getListaGrupos().get(i-1).getNombre());
+									usr.getListaGrupos().set(i-1, grupo);
+		         					usr.getListaGrupos().get(i-1).addMensaje(mensaje);
+		         					grupo=usr.getListaGrupos().get(i-1);
+		         					grupo.guardarGrupo();
+									usr.guardarUsuario();
+									
+		         				}
+		         			}
+		         			else if(j==2&&grupo.getModerador().getCorreo().equals(usr.getCorreo())){
+		         				System.out.println("Correo:");
+		         	    		correo= retString();
+		         	    		if(correo.isEmpty())
+		         	    			continue;
+		         	    		if(app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+		         	    			Usuario usr1 = new Estudiante(null, null,null,null);
+		         	    			
+									usr1= usr1.cargarUsuario(correo);
+									
+									grupo.addUsuario(usr1);
+		         	    			usr1.addGrupo(grupo);
+									usr1.guardarUsuario();
+		         	    		}
+		         			}
+		         			else if(j==3&&grupo.getModerador().getCorreo().equals(usr.getCorreo())){
+		         				for(Usuario u: grupo.getListaUsuarios()){
+		         					System.out.println(u.getCorreo());
+		         				}
+		         				System.out.println("Correo:");
+		         	    		correo= retString();
+		         	    		if(correo.isEmpty())
+		         	    			continue;
+		         	    		if(app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+		         	    			Usuario usr1 = new Estudiante(null, null,null,null);
+		         	    			
+									usr1= usr1.cargarUsuario(correo);
+									grupo.removeUsuario(usr1);
+									grupo.guardarGrupo();
+		         	    			usr1.removeGrupo(grupo);
+									usr1.guardarUsuario();
+		         	    		}
+		         			}
+		         			
+		         			else if(j==4&&grupo.isGrupoEstudio()){
+		         				GrupoEstudio gestudio= (GrupoEstudio) grupo.cargarGrupo(grupo.getNombre());
+		         				System.out.println(gestudio.listarPreguntas());
+		         				System.out.println("Responder a la pregunta (numero de la pregunta o 0):");
+		         				j= retOpcion();
+		         				if(j==0);
+		         				else{
+		         					System.out.println("Texto de la pregunta:");
+		         					String str=retString();
+		         					System.out.println("Desea enciar esta pregunta 1 si 0 no:");
+		         					if(retOpcion()==1){
+		         						gestudio= (GrupoEstudio) grupo.cargarGrupo(grupo.getNombre());
+		         						gestudio.getListaPreguntas().get(j-1).addRespuesta(str,usr);
+		         						gestudio.guardarGrupo();
+		         					}
+		         				}
+		         				
+		         			}
+	         			}
+	         		}
+	             	break;
+	         	case 4:
+					usr=(Estudiante) usr.cargarUsuario(usr.getCorreo());
+					
+         			for(Usuario u: usr.getContactos()){
+         				System.out.println(u.getNombre()+" "+u.getApellido()+" "+u.getCorreo());
+         			}
+	             	break;
+	         	case 5:
+	         		
+	         		System.out.println("Nuevo mensaje");
+	         		correo= null;
+         			System.out.println("Destinatario:");
+         			correo= retString();	
+	         		if(!app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+	         			System.out.println("No existe el usuario");
+	         			break;
+	         		}
+	         		Usuario dst= new Estudiante(null, null, null, null);
+	         		dst= dst.cargarUsuario(correo);
+					System.out.println(dst);
+	         		System.out.println("Asunto:");
+         			String asunto= retString();
+         			System.out.println("Mensaje, si escribes salto de linea significa que terminas el mensaje:");
+         			String mensaje= retString();
+         			System.out.println("¿Quieres mandar este mensaje? si(1 enter) no (0):");
+         			if(retOpcion()==0){
+         				break;
+         			}
+         			MensajeUsuario m= new MensajeUsuario(0, dst, mensaje, Calendar.getInstance(), asunto, usr);
+         			dst.addMensajeBuzon(m);
+         			
+					dst.guardarUsuario();
+					
+         			break;
+	         	case 6:
+	         		System.out.println("Escriba el nombre del usuario que desea buscar:");
+	         		String str1 = retString();
+					app.buscarUsuarioDir(str1);
+					
+	             	break;
+	         	case 7:
+	         		System.out.println("Escriba el nombre del grupo que desea buscar:");
+	         		String str = retString();
+					app.buscarGrupoDir(str);
+					
+	             	break;
+	         	case 8:
+	         		System.out.println("Nombre del grupo:");
+	         		String strgrupo =retString();
+	         		if(app.existeDir("aplicacion"+app.getBarra()+"grupo"+app.getBarra()+strgrupo)){
+	         			Grupo grupo = new Grupo(0, null, false, null);
+	         			grupo= grupo.cargarGrupo(strgrupo);
+	         			if(grupo.isPrivado()){
+	         				break;
+	         			}
+	         			grupo.addUsuario(usr);
+	         			grupo.guardarGrupo();
+	         			usr.addGrupo(grupo);
+	         			usr.guardarUsuario();
+	         			
+	         		}
+	         		else{
+	         			System.out.println("No existe el grupo:"+strgrupo);
+	         		}
+	             	break;
+	         	case 9:
+					usr=(Estudiante)usr.cargarUsuario(usr.getCorreo());
+					
+         			i=1;
+         			for(Grupo g: usr.getListaGrupos()){
+         				System.out.println("Numero:"+i++);
+         				System.out.println("Nombre:"+g.getNombre());
+         			}
+         			System.out.println("Grupo del que quiere salir (numero 0 o enter si no quiere salir)");
+         			i=retOpcion();
+         			if(i==0){
+         			}
+         			else if(i<= usr.getListaGrupos().size()){
+         				Grupo grupo= new Grupo(0, null, false, null);
+         				grupo=grupo.cargarGrupo(usr.getListaGrupos().get(i-1).getNombre());
+         				grupo.removeUsuario(usr);
+         				usr.getListaGrupos().remove(i-1);
+         				
+						usr.guardarUsuario();
+						grupo.guardarGrupo();
+						
+         			}
+	             	break;
+	         	case 10:
+					usr= (Estudiante) usr.cargarUsuario(usr.getCorreo());
+					
+	         		System.out.println("Correo Usuario:");
+	         		correo=retString();
+	         		if(app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+	         			Usuario cnt= new Estudiante(null,null,null,null);
+						
+						cnt=cnt.cargarUsuario(correo);
+						usr.addContacto(cnt);
+						
+							usr.guardarUsuario();
+						
+	         		}
+	         		else
+	         			System.out.println("No existe un usuario con ese correo");
+	         		break;
+	         	case 11:
+	         		
+					usr=(Estudiante) usr.cargarUsuario(usr.getCorreo());
+					
+	         		i=1;
+         			for(Usuario u: usr.getContactos()){
+         				System.out.println("Numero:"+i++);
+         				System.out.println(u.getNombre()+" "+u.getApellido()+" "+u.getCorreo());
+         			}
+         			System.out.println("Elija el usuario que quiere eliminar(escriba el numero o 0 o enter si quiere salir):");
+         			i=retOpcion();
+         			if(i==0){}
+         			else if(i<=usr.getContactos().size()){
+         				usr.getContactos().remove(i-1);
+         				usr.guardarUsuario();						
+         			}
+         			
+	             	break;
+	         	case 12://Crear Grupo
+	         	    System.out.println("Nombre de grupo ");
+	         	    String nombre=retString();
+	         	    System.out.println("Desea crear este grupo 1 si 0 o enter no:");
+	         	    if(retOpcion()!=1){
+	         	    	break;
+	         	    }
+	         	    System.out.println("Moderado 1 si 0 no donode usted sera el moderador:");
+	         	    int mod=retOpcion();
+	         	    System.out.println("Privado 1 si 0 no:");
+	         	    int prv=retOpcion();
+	         	    Grupo grupo= new Grupo(0, nombre, false, null);
+	         	    grupo.addUsuario(usr);
+	         	    usr.addGrupo(grupo);
+	         	    
+						usr.guardarUsuario();
+					
+	         	    if(mod==1)
+	         	    	grupo.setModerador(usr);
+	         	    if(prv==1)
+	         	    	grupo.setPrivado(true);
+	         	    
+	         	   while(true){
+	         	    	System.out.println("0.Terminar");
+	         	    	System.out.println("1.Añadir usuario");
+	         	    	System.out.println("2.Buscar usuario");
+	         	    	i= retOpcion();
+	         	    	if(i==0){
+	         	    		break;
+	         	    	}
+	         	    	else if(i==1){
+	         	    		System.out.println("Correo:");
+	         	    		correo= retString();
+	         	    		if(app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+	         	    			Usuario usr1 = new Estudiante(null, null,null,null);
+	         	    			
+								usr1= usr1.cargarUsuario(correo);
+								
+								grupo.addUsuario(usr1);
+	         	    			usr1.addGrupo(grupo);
+								usr1.guardarUsuario();
+								
+	         	    			
+	         	    		}
+	         	    		else{
+	         	    			System.out.println("No existe el usuario"+correo);
+	         	    		}
+	         	    	}
+	         	    	else if(i==2){
+	         	    		System.out.println("Parte del nombre del usuario:");
+							app.buscarUsuarioDir(retString());
+							
+	         	    	}
+	         	    	else;
+	         	    		
+	         	    }
+	         	   	File fu=new File("aplicacion"+app.getBarra()+"grupo"+app.getBarra()+grupo.getNombre());
+	         	   	fu.mkdir();
+						grupo.guardarGrupo();
+					
+	             	break;
+	         	case 13:
+	         		opcionSalir();
+	             	return;
+	             default:
+	            	 opcionInvalida();
+	            	 break;
+	             		
+	         	}
+         	}
+        }
+        else{
+        	Profesor usr = new Profesor(null, null, null, null);
+         	try {
+				while((usr=app.loginProfesor())==null);
+			} catch (ClassNotFoundException | IOException e) {
+				
+				e.printStackTrace();
+			}
+         	System.out.println("Binvenido/a:"+usr.getNombre()+" "+usr.getApellido());
+         	while (true){
+	         	listarOpcionesUsurio();
+	         	listarOpcionesProfesor();
+	         	switch(retOpcion()){
+	         	case 1:
+	         		System.out.println(usr.verPerfil());
+	         		break;
+	         	case 2:
+	         		int i;
+	         		while (true){
+		         		i=1;
+						usr=(Profesor)usr.cargarUsuario(usr.getCorreo());
+						
+		         		for(MensajeUsuario m:usr.getBuzon().getMensajes()){
+		         			System.out.println("Mensaje:"+ i++);
+		         			System.out.println("Autor:"+m.getRemitente().getCorreo());
+		         			System.out.println("Ausnto:"+m.getCuerpo());
+		         		}
+		         		System.out.println();
+		         		System.out.println("Ver mensaje (escriba el numero del mensaje que quiere ver o 0 para salir):");
+		         		i=retOpcion();
+		         		if (i==0){
+		         			break;
+		         		}
+		         		else if(usr.getBuzon().getMensajesNoLeidos().size()>=i){
+		         			System.out.println(usr.getBuzon().getMensajes().get(i-1));
+		         		}
+	         		}
+	         		break;
+	         	case 3:
+					usr=(Profesor)usr.cargarUsuario(usr.getCorreo());
+					
+	         		while(true){
+	         			i=1;
+	         			for(Grupo g: usr.getListaGrupos()){
+	         				System.out.println("Numero:"+i++);
+	         				System.out.println("Nombre:"+g.getNombre());
+	         			}
+	         			System.out.println("Para entrar a ver un grupo pulse su numero o 0 para salir:");
+	         			i= retOpcion();
+	         			if (i==0)
+	         				break;
+	         			else if(usr.getListaGrupos().size()>=i){
+	         				Grupo grupo= new Grupo(0, null, false, null);
+	         				System.out.println(grupo);
+							grupo=grupo.cargarGrupo(usr.getListaGrupos().get(i-1).getNombre());
+							
+	         				usr.getListaGrupos().set(i-1, grupo);
+	         				
+	         				
+		         			System.out.println("1.Escribir un mensaje:");
+		         			
+		         			if(grupo.getModerador()!=null&&grupo.getModerador().getCorreo().equals(usr.getCorreo())){
+	         					System.out.println("2.Añadir usuario");
+	         					System.out.println("3.Expulsar usuario");
+	         				}
+		         			if(grupo.isGrupoEstudio()){
+	         					System.out.println("4.Enviar pregunta");
+	         					System.out.println("5.Ver pregunta");
+	         				}
+		         			int j=retOpcion();
+		         			if (j==1){
+		         				System.out.println("Escriba su mensjae y pulse enter");
+		         				String msj=retString();
+		         				System.out.println("Quiere mandar este mensaje 1 si 0 o enter no:");
+		         				if(retOpcion()==1){
+		         					MensajeGrupo mensaje= new MensajeGrupo(0, msj, Calendar.getInstance(), usr.getListaGrupos().get(i-1), usr);
+			         				grupo=grupo.cargarGrupo(grupo.getNombre());
+									usr.getListaGrupos().set(i-1, grupo);
+		         					usr.getListaGrupos().get(i-1).addMensaje(mensaje);
+		         					grupo=usr.getListaGrupos().get(i-1);
+		         					grupo.guardarGrupo();
+									usr.guardarUsuario();
+									
+		         				}
+		         			}
+		         			else if(j==2&&grupo.getModerador().getCorreo().equals(usr.getCorreo())){
+		         				System.out.println("Correo:");
+		         	    		correo= retString();
+		         	    		if(correo.isEmpty())
+		         	    			continue;
+		         	    		if(app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+		         	    			Usuario usr1 = new Estudiante(null, null,null,null);
+		         	    			
+									usr1= usr1.cargarUsuario(correo);
+									
+									grupo.addUsuario(usr1);
+		         	    			usr1.addGrupo(grupo);
+									usr1.guardarUsuario();
+		         	    		}
+		         			}
+		         			else if(j==3&&grupo.getModerador().getCorreo().equals(usr.getCorreo())){
+		         				for(Usuario u: grupo.getListaUsuarios()){
+		         					System.out.println(u.getCorreo());
+		         				}
+		         				System.out.println("Correo:");
+		         	    		correo= retString();
+		         	    		if(correo.isEmpty())
+		         	    			continue;
+		         	    		if(app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+		         	    			Usuario usr1 = new Estudiante(null, null,null,null);
+		         	    			
+									usr1= usr1.cargarUsuario(correo);
+									grupo.removeUsuario(usr1);
+									grupo.guardarGrupo();
+		         	    			usr1.removeGrupo(grupo);
+									usr1.guardarUsuario();
+		         	    		}
+		         			}
+		         			else if(j==4&&grupo.isGrupoEstudio()){
+		         				System.out.println("Escriba el texto de la pregunta");
+		         				String msj=retString();
+		         				System.out.println("Quiere mandar este mensaje 1. si 0. no:");
+		         				if(retOpcion()==1){
+		         					GrupoEstudio gestudio= new GrupoEstudio(0, null, false, null, null); 
+		         					gestudio=(GrupoEstudio) grupo.cargarGrupo(usr.getListaGrupos().get(i-1).getNombre());
+		         					gestudio.crearPregunta(0, msj, usr);
+		         					usr.getListaGrupos().set(i-1, gestudio );
+		         					gestudio.guardarGrupo();
+									usr.guardarUsuario();
+									
+		         				}
+		         				
+		         			}
+		         			else if(j==5&&grupo.isGrupoEstudio()){
+		         				GrupoEstudio gestudio= (GrupoEstudio) grupo.cargarGrupo(grupo.getNombre());
+		         				System.out.println(gestudio.listarPreguntas());
+		         				System.out.println("Ver respuestas a la pregunta (numero de la pregunta):");
+		         				j= retOpcion();
+		         				if(j==0);
+		         				else{
+		         					System.out.println(gestudio.getListaPreguntas().get(j-1).listarRespuestas());
+		         				}
+		         				
+		         			}
+	         			}
+	         		}
+	             	break;
+	         	case 4:
+					usr=(Profesor) usr.cargarUsuario(usr.getCorreo());
+					
+         			for(Usuario u: usr.getContactos()){
+         				System.out.println(u.getNombre()+" "+u.getApellido()+" "+u.getCorreo());
+         			}
+	             	break;
+	         	case 5:
+	         		System.out.println("Nuevo mensaje");
+	         		correo= null;
+         			System.out.println("Destinatario:");
+         			correo= retString();	
+	         		if(!app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+	         			System.out.println("No existe el usuario");
+	         			break;
+	         		}
+	         		Usuario dst= new Estudiante(null, null, null, null);
+	         		dst= dst.cargarUsuario(correo);
+					System.out.println(dst);
+	         		System.out.println("Asunto:");
+         			String asunto= retString();
+         			System.out.println("Mensaje, si escribes salto de linea significa que terminas el mensaje:");
+         			String mensaje= retString();
+         			System.out.println("¿Quieres mandar este mensaje? si(1 enter) no (0):");
+         			if(retOpcion()==0){
+         				break;
+         			}
+         			MensajeUsuario m= new MensajeUsuario(0, dst, mensaje, Calendar.getInstance(), asunto, usr);
+         			dst.addMensajeBuzon(m);
+         			
+					dst.guardarUsuario();
+					
+         			break;
+	         	case 6:
+	         		System.out.println("Escriba el nombre del usuario que desea buscar:");
+	         		String str1 = retString();
+					app.buscarUsuarioDir(str1);
+					
+	             	break;
+	         	case 7:
+	         		System.out.println("Escriba el nombre del grupo que desea buscar:");
+	         		String str = retString();
+					app.buscarGrupoDir(str);
+					
+	             	break;
+	         	case 8:
+	         		System.out.println("Nombre del grupo:");
+	         		String strgrupo =retString();
+	         		if(app.existeDir("aplicacion"+app.getBarra()+"grupo"+app.getBarra()+strgrupo)){
+	         			Grupo grupo = new Grupo(0, null, false, null);
+	         			grupo= grupo.cargarGrupo(strgrupo);
+	         			if(grupo.isPrivado()){
+	         				break;
+	         			}
+	         			grupo.addUsuario(usr);
+	         			grupo.guardarGrupo();
+	         			usr.addGrupo(grupo);
+	         			usr.guardarUsuario();
+	         			
+	         		}
+	         		else{
+	         			System.out.println("No existe el grupo:"+strgrupo);
+	         		}
+	             	break;
+	         	case 9:
+					usr=(Profesor)usr.cargarUsuario(usr.getCorreo());
+					
+         			i=1;
+         			for(Grupo g: usr.getListaGrupos()){
+         				System.out.println("Numero:"+i++);
+         				System.out.println("Nombre:"+g.getNombre());
+         			}
+         			System.out.println("Grupo del que quiere salir (numero 0 o enter si no quiere salir)");
+         			i=retOpcion();
+         			if(i==0){
+         			}
+         			else if(i<= usr.getListaGrupos().size()){
+         				Grupo grupo= new Grupo(0, null, false, null);
+         				grupo=grupo.cargarGrupo(usr.getListaGrupos().get(i-1).getNombre());
+         				grupo.removeUsuario(usr);
+         				usr.getListaGrupos().remove(i-1);
+         				
+						usr.guardarUsuario();
+						grupo.guardarGrupo();
+						
+         			}
+	             	break;
+	         	case 10:
+					usr= (Profesor) usr.cargarUsuario(usr.getCorreo());
+					
+	         		System.out.println("Correo Usuario:");
+	         		correo=retString();
+	         		if(app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+	         			Usuario cnt= new Estudiante(null,null,null,null);
+						
+						cnt=cnt.cargarUsuario(correo);
+						usr.addContacto(cnt);
+						
+							usr.guardarUsuario();
+						
+	         		}
+	         		else
+	         			System.out.println("No existe un usuario con ese correo");
+	         		break;
+	         	case 11:
+	         		
+					usr=(Profesor) usr.cargarUsuario(usr.getCorreo());
+					
+	         		i=1;
+         			for(Usuario u: usr.getContactos()){
+         				System.out.println("Numero:"+i++);
+         				System.out.println(u.getNombre()+" "+u.getApellido()+" "+u.getCorreo());
+         			}
+         			System.out.println("Elija el usuario que quiere eliminar(escriba el numero o 0 o enter si quiere salir):");
+         			i=retOpcion();
+         			if(i==0){}
+         			else if(i<=usr.getContactos().size()){
+         				usr.getContactos().remove(i-1);
+         				usr.guardarUsuario();						
+         			}
+         			
+	             	break;
+	         	case 12://Crear Grupo
+	         	    System.out.println("Nombre de grupo ");
+	         	    String nombre=retString();
+	         	    System.out.println("Desea crear este grupo 1 si 0 o enter no:");
+	         	    if(retOpcion()!=1){
+	         	    	break;
+	         	    }
+	         	    System.out.println("Moderado 1 si 0 no donode usted sera el moderador:");
+	         	    int mod=retOpcion();
+	         	    System.out.println("Privado 1 si 0 no:");
+	         	    int prv=retOpcion();
+	         	    Grupo grupo= null;
+	         	    System.out.println("Grupo de estudio 1 si 0 no:");
+	         	    if(retOpcion()==1){
+	         	    	 grupo= new GrupoEstudio(0, nombre, false, null, usr);
+	         	    }
+	         	    else{
+	         	    	 grupo= new Grupo(0, nombre, false, null);
+	         	    }
+	         	    grupo.addUsuario(usr);
+	         	    usr.addGrupo(grupo);
+	         	    
+					usr.guardarUsuario();
+					
+	         	    if(mod==1)
+	         	    	grupo.setModerador(usr);
+	         	    if(prv==1)
+	         	    	grupo.setPrivado(true);
+	         	    
+	         	   while(true){
+	         	    	System.out.println("0.Terminar");
+	         	    	System.out.println("1.Añadir usuario");
+	         	    	System.out.println("2.Buscar usuario");
+	         	    	i= retOpcion();
+	         	    	if(i==0){
+	         	    		break;
+	         	    	}
+	         	    	else if(i==1){
+	         	    		System.out.println("Correo:");
+	         	    		correo= retString();
+	         	    		if(app.existeDir("aplicacion"+app.getBarra()+"usuario"+app.getBarra()+correo)){
+	         	    			Usuario usr1 = new Estudiante(null, null,null,null);
+	         	    			
+								usr1= usr1.cargarUsuario(correo);
+								
+								grupo.addUsuario(usr1);
+	         	    			usr1.addGrupo(grupo);
+								usr1.guardarUsuario();
+								
+	         	    			
+	         	    		}
+	         	    		else{
+	         	    			System.out.println("No existe el usuario"+correo);
+	         	    		}
+	         	    	}
+	         	    	else if(i==2){
+	         	    		System.out.println("Parte del nombre del usuario:");
+							app.buscarUsuarioDir(retString());
+							
+	         	    	}
+	         	    	else;
+	         	    		
+	         	    }
+	         	   	File fu=new File("aplicacion"+app.getBarra()+"grupo"+app.getBarra()+grupo.getNombre());
+	         	   	fu.mkdir();
+						grupo.guardarGrupo();
+					
+	             	break;
+	         	case 13:
+	         		opcionSalir();
+	             	return;
+
+
+
+	        	case 14:
+	         		System.out.println(usr.listarGruposEstudio());
+	         		System.out.println("Elija un grupo o 0:");
+	         		i= retOpcion();
+	         		if(i==0||i>usr.getListaGrupos().size())
+	         			break;
+	         		System.out.println("Escriba el mensaje:");
+	         		String msj= retString();
+	         		System.out.println("¿Quieres mandar este mensaje? si(1 enter) no (0):");
+					if(retOpcion()==0){
+         				break;
+         			}
+	         		Grupo gestudio= new GrupoEstudio(0, null, false, null, null);
+	         		gestudio=  gestudio.cargarGrupo(usr.getListaGrupos().get(i-1).getNombre());
+	         		System.out.println("Mensaje enviado a:");
+	         		for(Usuario u: gestudio.getListaUsuarios()){
+	         			System.out.println(u.getCorreo());
+						u=u.cargarUsuario(u.getCorreo());
+	         			MensajeUsuario msg= new MensajeUsuario(0, u, gestudio.getNombre(), Calendar.getInstance(),msj , usr);
+	         			u.addMensajeBuzon(msg);
+						u.guardarUsuario();
+	         		}
+	         		break;
+	             default:
+	            	 opcionInvalida();
+	            	 break;
+	             		
+	         	}
+         	}
+        }
+      
+
+	       	
+	}
+	public static void opcionSalir(){
+		System.out.println("Adios.");
+	}
+	public static void opcionInvalida(){
+		System.out.println("Opcion no valida.");
+	}
+	public static String retString(){
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+		String str;
+		try {
+			str = bufferRead.readLine();
+			return str;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public static int retOpcion(){
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+		 System.out.println("Introduzca una opcion:");
+	     try {
+			String str = bufferRead.readLine();
+			if(str.isEmpty())
+				return 0;
+			int i= Integer.parseInt(str);
+			return i;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			
+			return 0;
+		}
+	}
+	  public static void listarOpcionesUsurio(){
+		  System.out.println("Elija una opcion(para ello intoroduzca el numero correspondiente):");
+		  System.out.println("1.Ver Perfil");
+		  System.out.println("2.Listar mensajes no leidos");
+		  System.out.println("3.Listar mis grupos");
+		  System.out.println("4.Listar contactos");
+		  System.out.println("5.Enviar mensaje a un usuario");
+		  System.out.println("6.Buscar un usuario");
+		  System.out.println("7.Buscar un grupo");
+		  System.out.println("8.Unirse a un grupo");
+		  System.out.println("9.Salir de un grupo");
+		  System.out.println("10.Añadir un contacto");
+		  System.out.println("11.Quitar un contacto");
+		  System.out.println("12.Crear grupo");
+		  System.out.println("13.Salir");
+	  }
+	  public static void listarOpcionesProfesor(){
+		 System.out.println("14.Enviar mensaje alumnos");
+	  }
+}

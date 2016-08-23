@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="src/lib/jsoup-1.8.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="src/lib/jsoup-1.8.3-sources.jar"/>
+	<classpathentry kind="lib" path="src/lib/jsoup-1.8.3.jar"/>
+	<classpathentry kind="lib" path="src/lib/lucene-analyzers-3.6.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="src/lib/lucene-analyzers-3.6.2.jar"/>
+	<classpathentry kind="lib" path="src/lib/lucene-core-3.6.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="src/lib/lucene-core-3.6.2.jar"/>
+	<classpathentry kind="lib" path="src/lib/lucene-queryparser-3.6.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="src/lib/lucene-queryparser-3.6.2.jar"/>
+	<classpathentry kind="lib" path="src/lib/lukeall-4.0.0-ALPHA.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

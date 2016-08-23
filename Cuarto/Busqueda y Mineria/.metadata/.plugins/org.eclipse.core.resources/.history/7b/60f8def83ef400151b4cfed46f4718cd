@@ -1,0 +1,17 @@
+package es.uam.eps.bmi.crawling;
+
+import java.io.IOException;
+import java.net.Socket;
+
+public class GenericCrawler {
+	public static void main (String args[]){
+		String host = new String("www.google.es");
+		try {
+			Socket s= new Socket(host, 80);
+			System.out.println(s.isConnected());
+			s.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}
+}

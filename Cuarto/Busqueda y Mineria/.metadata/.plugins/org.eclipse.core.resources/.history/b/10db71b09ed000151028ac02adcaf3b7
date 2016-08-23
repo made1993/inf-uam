@@ -1,0 +1,12 @@
+package es.uam.eps.bmi.search.parsing;
+
+public class Parser implements TextParser{
+
+	@Override
+	public String parse(String text) {
+		
+		return null;
+	}
+	
+
+}

@@ -1,0 +1,101 @@
+package es.uam.eps.bmi.recomendacion;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class Recomendador {
+	private UserRatedMovies urm;
+	private MovieTags mt;
+	private int k;
+	public Recomendador(String path, int k){
+		urm = new UserRatedMovies();
+		mt=new MovieTags();
+		this.k=k;
+		urm.leerDatos(path+"/user_ratedmovies.dat");
+		mt.leerDatos(path+"/movie_tags.dat");
+	}
+	
+	
+	public void binJaccard(){
+		mt.similitudBinJaccard();
+	}
+	public void binCoseno(){
+		mt.similitudBinCoseno();
+	}
+	public void binTfIdf(){
+		mt.similitudTfIdf();
+	}
+	
+	public void rochio(int userId, int movieId){
+		
+		
+	}
+	
+	//TODO: probar que funcione
+	public double knn(int userId, int movieId){
+
+		int col=0;
+		int ln =mt.getMovieIds().get(movieId);
+		ArrayList<Integer> maxSimKey= new ArrayList<>();
+		ArrayList<Double> maxSimValue= new ArrayList<>();
+		for(int i=0; i<k; i++){
+			maxSimKey.add(0);
+			maxSimValue.add(0.0);
+		}
+		
+		/**
+		 * Este bucle mierdoso de abajo es para
+		 * oredenar los k vecinos mas proximos.
+		 * */
+		double val;
+		int keyAux;
+		for(Integer key :mt.getMovieIds().keySet()){
+			if(key.equals(movieId) || !urm.getDatos().get(userId).containsKey(key))
+				continue;
+			val=mt.getSimilitudes()[ln][mt.getMovieIds().get(key)];
+			if(maxSimValue.get(k-1) < val ){
+				maxSimValue.set(k-1, val);
+				maxSimKey.set(k-1, key);
+				for(int i= k-1; i>0; i--){
+					if(maxSimValue.get(i-1) > maxSimValue.get(i)){
+						break;
+					}
+					val=maxSimValue.get(i-1);
+					maxSimValue.set(i-1, maxSimValue.get(i));
+					maxSimValue.set(i, val);
+					
+					keyAux=maxSimKey.get(i-1);
+					maxSimKey.set(i-1, maxSimKey.get(i));
+					maxSimKey.set(i, keyAux);
+				}
+			}
+		}
+		
+		/**
+		 * Ahora es cuando se calcula el valor de 
+		 * knn para la recomnedacion de la peli esta
+		 */
+		
+		double rating=0;
+		double simTot=0;
+		for(int i=0; i< maxSimKey.size(); i++){
+			ln=mt.getMovieIds().get(movieId);
+			System.out.println(mt.getMovieIds());
+			System.out.println(maxSimKey.get(i));
+			System.out.println(i);
+			
+			col=mt.getMovieIds().get(maxSimKey.get(i));
+			rating+= mt.getSimilitudes()[ln][col] * maxSimValue.get(i);
+			simTot+= mt.getSimilitudes()[ln][col];
+		}
+		return rating/simTot;
+	}
+
+	public static void main(String [] args){
+		Recomendador r= new Recomendador("hetrec2011-movielens-2k-v2", 4);
+		r.binJaccard();
+		System.out.println(r.knn(75, 3));
+	}
+}

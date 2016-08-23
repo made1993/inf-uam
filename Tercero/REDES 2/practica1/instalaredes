@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "deb http://metis.ii.uam.es redes2 main" > /etc/apt/sources.list.d/redes2.list
+
+gpg --keyserver keyserver.ubuntu.com --recv-keys C95B8FCEC5A57017
+gpg --armor --export C95B8FCEC5A57017  | apt-key add -
+

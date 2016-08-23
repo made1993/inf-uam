@@ -1,0 +1,316 @@
+package usuario;
+import grupo.Grupo;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import buzon.Buzon;
+import mensaje.Mensaje;
+import mensaje.MensajeUsuario;
+
+/** 
+ * @author Antonio Gomez lucas, Mario Valdemaro Garcia Roque
+ * 
+ * Clase Usuario,
+ */
+
+
+public abstract class Usuario {
+	private int idUsuario;
+	private String nombre;
+	private String apellido;
+	private String correo;
+	private String password;
+	private ArrayList<String> listaGrupos;
+	private ArrayList<String> contactos;
+	private Buzon buzon;
+	private Calendar lastLogin;
+	
+	/**
+	 * Constructor de Usuario 
+	 * @param nombre
+	 * @param apellido
+	 * @param correo
+	 * @param password
+	 */
+	public Usuario(String nombre, String apellido, String correo,String password) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.correo = correo;
+		this.password = password;
+		this.lastLogin=Calendar.getInstance();
+	}
+	
+	/**
+	 * @return the idUsuario
+	 */	
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+	
+	/**
+	 * @param idUsuario the idUsuario to set
+	 */
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+	
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	/**
+	 * @return the apellido
+	 */
+	public String getApellido() {
+		return apellido;
+	}
+	
+	/**
+	 * @param apellido the apellido to set
+	 */
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	
+	/**
+	 * @return the correo
+	 */
+	public String getCorreo() {
+		return correo;
+	}
+	
+	/**
+	 * @param correo the correo to set
+	 */
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+	
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	/**
+	 * @return the lastLogin
+	 */
+	public Calendar getLastLogin() {
+		return lastLogin;
+	}
+	
+	/**
+	 * @param lastLogin the lastLogin to set
+	 */
+	public void setLastLogin(Calendar lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+	
+	/**
+	 * @return the listaGrupos
+	 */
+	public ArrayList<String> getListaGrupos() {
+		return listaGrupos;
+	}
+	
+	/**
+	 * @param listaGrupos the listaGrupos to set
+	 */
+	public void setListaGrupos(ArrayList<String> listaGrupos) {
+		this.listaGrupos = listaGrupos;
+	}
+	
+	/**
+	 * @return the contactos
+	 */
+	public ArrayList<String> getContactos() {
+		return contactos;
+	}
+	
+	/**
+	 * @param contactos the contactos to set
+	 */
+	public void setContactos(ArrayList<String> contactos) {
+		this.contactos = contactos;
+	}
+	
+	/**
+	 * @return the buzon
+	 */
+	public Buzon getBuzon() {
+		return buzon;
+	}
+	
+	/**
+	 * @param buzon the buzon to set
+	 */
+	public void setBuzon(Buzon buzon) {
+		this.buzon = buzon;
+	}
+
+	/** 
+	 * @return the mensajes de un buzon
+	 */
+	public ArrayList<MensajeUsuario> listarMensajes(){
+		return buzon.getMensajes();
+	}	
+	
+	/**
+	 * Mira el perfil de un usuario
+	 * @return
+	 */
+	public String verPerfil(){
+		return this.toString();
+	}
+	
+	/**
+	 * Enviar un mensaje a un grupo
+	 * @param grupo
+	 * @param mensaje
+	 * @param enviarBuzon
+	 * @return
+	 */
+	
+	//TODO
+	public boolean enviarMensajeGrupo(int id,Grupo grupo, String mensaje, boolean enviarBuzon){
+		for(Grupo g: getListaGrupos()){
+			if(g.getNombre().equals(grupo.getNombre()) && g.getIdGrupo()==grupo.getIdGrupo()){
+				if(enviarBuzon){
+					for(Usuario u:g.getListaUsuarios()){
+						this.enviarMensaje(id,u, mensaje, Calendar.getInstance(), "Mensaje de Grupo: "+g.getNombre(), this);//TODO Cambiar Mensaje Grupo + get.nombre
+					}						
+				}
+				return g.addMensaje(id,mensaje, this);
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Envia un mensaje al destinatario
+	 * @param destinatario
+	 * @param cuerpo
+	 * @param fecha
+	 * @param sujeto
+	 * @param remitente
+	 * @return
+	 */
+	private boolean enviarMensaje(int id,Usuario destinatario, String cuerpo, Calendar fecha, String sujeto, Usuario remitente) {
+		return destinatario.addMensajeBuzon(new MensajeUsuario(id,destinatario, cuerpo, fecha, sujeto, remitente));
+		
+	}
+
+	/**
+	 * 
+	 * @param idGrupo
+	 * @return
+	 */
+	public boolean salirGrupo(Grupo grupo){
+		for(Grupo g: getListaGrupos()){
+			if(g.getNombre().equals(grupo.getNombre()) && g.getIdGrupo()==grupo.getIdGrupo()){
+				return g.removeUsuario(this) && getListaGrupos().remove(g);
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Modera un mensaje
+	 * @param mensaje
+	 * @param aceptar
+	 * @return si el mensaje se ha moderado false si no se podido moderar
+	 */
+	public boolean moderarMensaje(MensajeUsuario mensaje, boolean aceptar){
+		if(aceptar){
+			String nombre=mensaje.getSujeto().split(":")[1];//TODO Pasar el id o el nombre
+			//Grupo g=buscarGrupo(nombre);//TODO hacer funcion o bucle?¿?
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Añade un grupo al usuario
+	 * @param grupo
+	 * @return
+	 */
+	public boolean addGrupo(Grupo grupo){//TODO comprobar si el grupo ya esta
+		return listaGrupos.add(grupo);
+	}	
+	
+	/**
+	 * Añade un contacto a tu usuario
+	 * @param contacto
+	 * @return
+	 */
+	public boolean addContacto(Usuario contacto){//TODO comprobar si el usuario ya esta
+		return contactos.add(contacto);
+	}
+	
+	/**
+	 * Elimina un contacto 
+	 * @param contacto
+	 * @return true si ha podido false  si no
+	 */
+	public boolean removeContacto(Usuario contacto){
+		return contactos.remove(contacto);
+	}
+	
+	/**
+	 * @return true si es un profesor false si es un estudiante
+	 */
+	public abstract boolean isProfesor();
+	
+	/**
+	 * Añade un mensaje a un buzon
+	 * @param mensaje
+	 * @return true si ha podido false si no
+	 */
+	public boolean addMensajeBuzon(MensajeUsuario mensaje ){
+		return  buzon.addMensajeBuzon(mensaje);
+	}
+	
+	/**
+	 * 
+	 * @param mensaje
+	 * @return muestra el mensaje Seleccionado
+	 */
+	public String verMensaje(Mensaje mensaje){
+		for(Mensaje m:listarMensajes())
+			if (m.equals(mensaje))
+				return m.toString();
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [nombre=" + nombre
+				+ ", apellido=" + apellido + ".\nCorreo=" + correo
+				+ ".\nListaGrupos=" + listaGrupos
+				+ ".\nContactos=" + contactos 
+				+ ".\nLastLogin=" + lastLogin + "]";
+	}
+	
+	
+	
+}
+

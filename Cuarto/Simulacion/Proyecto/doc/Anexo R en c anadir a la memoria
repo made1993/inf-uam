@@ -1,0 +1,31 @@
+Anexo: R en c
+
+Al realizar este trabajo, nos encontramos con un problema de eficiencia. Al manejar poblaciones relativamente grandes y realizar cálculos sobre ellas, decidimos hacer un cálculo previo de las distancias entre cada habitante antes de la simulación en sí, para ahorrar tiempo a la larga. 
+Inicialmente realizando esa tarea en R, resultaba glacialmente lento, así que decidimos implementar parte del código en C. Según ciertos benchmarks que consultamos, en el ejemplo de resolver cierto número de sudokus, C es del orden de 1000x más rapido que R en este problema. La ventaja de R, no reside en su eficacia, claramente, si no en la multitud de herramientas y paquetes disponibles.
+
+Para este fin, en primer lugar, se crean las funciones de C, que serán invocadas desde R. Estas funciones siguen algunas particularidades en cuanto a argumentos y operaciones permitidas. Los argumentos deben ser punteros simples, de tipos compatibles con R, como int* y double*. Las matrices de dos dimensiones no son compatibles de manera directa, pero se puede utilizar indexación de 1 dimensión como equivalente a 2 con las operaciones correspondientes.
+
+Una vez escrito el código de la función en C, es recomendable crear un wrapper en R que invoque a la función con los argumentos correspondientes, para facilitar el uso.
+
+Para compilar y utilizarlo desde R, se utiliza el comando 
+
+R CMD SHLIB dist.c
+
+Que crea un archivo .so (shared object), que se puede cargar a R con 
+
+dyn.load("dist.so")
+
+El uso de código C en la parte de precálculo de la tabla de distancias salva una cantidad de tiempo sustancial en esta tarea, así como en general al poder usar esta tabla ya calculada en el resto de la simulación.
+
+Modo de ejecución.
+
+
+El código precisa de unas librerías de R para su ejecución y para mostrar los resultados. En el fichero principal se cargan las librerías con los comandos correspondientes. Estas librerías son stpp y poweRlaw, más dependencias, que deben ser instaladas.
+
+Por otro lado, debe cargarse el fichero shared object dist.so. Debe ser compilado con el comando R CMD SHLIB dist.c, para más detalles, consultar el anexo II. 
+
+Para la lectura y escritura de resultados en ficheros, debe cargarse ficheros.r, dónde se encuentran las funciones de entrada/salida.
+
+La función principal para la ejecución de la simulación es testpob(t, funcionInfeccion, funcionMuerte, pobl), donde se ejecuta la simulación según el proceso infeccioso y de muerte, sobre una población determinada y sobre el tiempo indicado. Se pueden introducir datos directamente ahí, obteniendo la población del generador de poblaciones, o se pueden utilizar las funciones de prueba que hemos incluido, como testPrueba() y bateriaPruebas().
+
+Finalmente, los resultados se pueden observar con las funciones indicadas para ello, en la sección de funciones graficas, como plotGraficas y animacionInfectados.

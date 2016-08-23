@@ -1,0 +1,35 @@
+main
+{
+
+    array int[10] vector1;
+    array int[10] vector2;
+    array int[10] suma;
+    int x, i, norma1, norma2, escalar;
+
+	i=0;
+	norma1=0;
+	norma2=0;
+	escalar=0;
+
+	while ((i<10))
+	{
+		scanf x;
+		vector1[i]=x;
+	}
+	while ((i<10))
+	{
+		scanf x;
+		vector2[i]=x;
+	}
+	while ((i<10))
+	{
+		norma1= norma1+ (vector1[i]*vector1[i]);
+		norma2= norma2+ (vector2[i]*vector2[i]);
+		escalar= escalar + (vector1[i]*vector2[i]);
+		suma[i]=vector1[i]*vector1[i];
+		printf suma[i];
+	}
+	printf norma1;
+	printf norma2;
+	printf escalar;
+}

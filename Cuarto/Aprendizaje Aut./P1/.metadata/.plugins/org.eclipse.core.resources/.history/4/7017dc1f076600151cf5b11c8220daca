@@ -1,0 +1,92 @@
+package clasificadores;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import datos.Datos;
+
+public class ClasificadorNaiveBayes extends Clasificador {
+	ClasificadorAPriori aPriori;
+	ArrayList<Hashtable<Double, ArrayList<Integer>>> tablaNB;  
+
+	@Override
+	public void entrenamiento(Datos datosTrain) {
+		aPriori = new ClasificadorAPriori();
+		aPriori.entrenamiento(datosTrain);
+		tablaNB= new ArrayList<Hashtable<Double, ArrayList<Integer>>>();
+		for(int i=0; i<datosTrain.getSizeTipoAtributos()-1; i++){
+			tablaNB.add(new Hashtable<Double, ArrayList<Integer>>());
+			for(int j=0; j<datosTrain.getNumDatos(); j++){
+
+				System.out.println("ii="+i);
+				System.out.println(datosTrain.getClases());
+				
+				
+				if(tablaNB.get(i).containsKey(datosTrain.getDato(j,i))){
+					int n =  datosTrain.getClasesValue(datosTrain.getDato(j,datosTrain.getSizeCountAtributos()-1));
+					ArrayList<Integer> aux= tablaNB.get(i).get(datosTrain.getDato(j,i));
+					aux.set(n, aux.get(n)+1);
+				}else{
+					ArrayList<Integer> value = new ArrayList<Integer>();
+					for(int k=0 ; k<datosTrain.getClases().size() ;k++){
+						int n =  datosTrain.getClasesValue(datosTrain.getDato(j,datosTrain.getSizeCountAtributos()-1));
+						if(n==k)
+							value.add(1);
+						else
+							value.add(0);
+					}
+					System.out.println("i="+i);
+					Hashtable<Double, ArrayList<Integer>> copia=tablaNB.get(i);
+					copia.put(datosTrain.getDato(j,i), value);
+					System.out.println(copia.size());
+					tablaNB.set(i, copia);
+				    
+				}
+			}
+		}
+	}
+	private Double prediccion(Double h, Datos d, int fila){
+		Double res =  aPriori.getRepClaseValue(h)/(d.getNumDatos()*1.0);
+		for(int i=0;i<d.getSizeCountAtributos()-1;i++){
+			Double key= d.getDato(fila, i);
+			Enumeration<Double> keys=tablaNB.get(i).keys();
+			ArrayList<Integer> clases= tablaNB.get(i).get(key);
+			Integer reps=0;
+			while(keys.hasMoreElements()){
+				System.out.println("q"+d.getClases());
+				reps+=clases.get(d.getClasesValue(keys.nextElement()));
+			}
+			Integer n=clases.get(d.getClasesValue(h));
+			res*=n/(reps*1.0);
+		}
+		return res;
+	}
+	
+	@Override
+	public ArrayList<Integer> clasifica(Datos datosTest) {
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		for(int i=0;i<datosTest.getNumDatos();i++){
+			Double max=0.0;
+			Integer prec=0;
+			Enumeration<Double> key= datosTest.getClases().keys();
+			while(key.hasMoreElements()){
+				Double precKey=key.nextElement();
+				Double value=prediccion(precKey, datosTest, i);	
+				if(value>max){
+					max=value;
+					prec=datosTest.getClasesValue(precKey);
+				}
+			}
+			res.add(prec);
+		}
+		return res;
+	}
+
+	@Override
+	public ArrayList<Integer> getResultado() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

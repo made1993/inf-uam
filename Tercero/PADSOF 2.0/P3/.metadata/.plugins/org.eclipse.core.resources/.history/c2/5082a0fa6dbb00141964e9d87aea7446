@@ -1,0 +1,18 @@
+
+public class MensajeGrupo extends Mensaje{
+	private int idGrupo;
+
+	/**
+	 * @return the idGrupo
+	 */
+	public int getIdGrupo() {
+		return idGrupo;
+	}
+
+	/**
+	 * @param idGrupo the idGrupo to set
+	 */
+	public void setIdGrupo(int idGrupo) {
+		this.idGrupo = idGrupo;
+	}
+}

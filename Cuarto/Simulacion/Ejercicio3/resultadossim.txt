@@ -1,0 +1,32 @@
+  dosim (mm1initglbls, mm1reactevnt, mm1prntrslts, maxsimtime=timesim, 
+     list(arrvrate=1.0,srvrate=.5), dbg=FALSE)
+
+[1] "Numero de clientes:"
+[1] 14352
+[1] "Tiempo medio de espera:"
+[1] 7290.483
+[1] "Varianza del tiempo de espera:"
+[1] 17743456
+[1] "Tiempo total servidor inactivo:"
+[1] -2.485489
+[1] "Fraccion del tiempo inactivo frente al total:"
+[1] 1.000086
+[1] "tiempo de servicio por cliente"
+[1] 2.006862
+
+  dosim (mm1initglbls, mm1reactevnt, mm1prntrslts, maxsimtime=timesim, 
+     list(arrvrate=.5,srvrate=1), dbg=FALSE)
+
+
+[1] "Numero de clientes:"
+[1] 14475
+[1] "Tiempo medio de espera:"
+[1] 1.986739
+[1] "Varianza del tiempo de espera:"
+[1] 4.319591
+[1] "Tiempo total servidor inactivo:"
+[1] 14428.2
+[1] "Fraccion del tiempo inactivo frente al total:"
+[1] 0.4990208
+[1] "tiempo de servicio por cliente"
+[1] 0.9928704

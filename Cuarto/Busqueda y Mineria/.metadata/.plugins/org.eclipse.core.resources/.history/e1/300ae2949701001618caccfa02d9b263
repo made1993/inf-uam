@@ -1,0 +1,42 @@
+package es.uam.eps.bmi.recomendacion;
+
+import java.io.*;
+
+public class MovieTags {
+	
+	
+	int [][] datos;
+	
+	public void leerDatos(String file){
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader (new File (file)));
+			String linea;
+			int ln=0;
+			int col=0;
+			linea=br.readLine();
+			while((linea=br.readLine())!=null){
+				datos= new int[ln+1][];
+				datos[ln]=  new int[3];
+				String [] cols = linea.split(" \t");
+				col=0;
+				for(int i=0; i<cols.length; i++){
+					datos[ln][col++]=Integer.parseInt(cols[col]);
+				}
+				ln++;
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public static void main(String [] args){
+		MovieTags mt = new MovieTags();
+		mt.leerDatos("hetrec2011-movielens-2k-v2/movie_tags.dat");
+	}
+	
+	
+	
+
+}

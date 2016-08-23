@@ -1,0 +1,23 @@
+package es.uam.eps.bmi.search;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
+
+import es.uam.eps.bmi.search.searching.LuceneSearcher;
+public class TextSearcher {
+
+	public static void main(String []args) throws IOException{
+		LuceneSearcher = new LuceneSearcher();
+		String consulta = new String();
+		BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
+		
+		System.out.print("Introduzca una consulta: ");
+		consulta = entrada.readLine();
+		consulta = consulta.trim();
+		
+	}
+	
+}

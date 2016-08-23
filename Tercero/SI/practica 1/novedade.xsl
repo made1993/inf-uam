@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<html xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+	</head>
+	<body>
+		<div id="login"><xsl:for-each select="datos/usuarios/usuario">
+				<xsl:value-of select="nombre"/>
+				</xsl:for-each></div>
+		<div id="cabecera"><a href="index.html" ><h1>cabecera</h1></a></div>
+		<div id="mlateral"> <h2><a href="novedades.html">Novedades</a></h2></div>
+		<div id="contenido">
+		<ul>
+		<xsl:for-each select="datos/peliculas/pelicula">
+			
+				Pelicula: <xsl:value-of select="titulo"/><br></br>
+				Precio: <xsl:value-of select="precio"/><br></br>
+				Genero: <xsl:value-of select="categoria"/><br></br>
+				Fecha: <xsl:value-of select="fecha"/><br></br>
+				<xsl:if test="art >0">
+				<a href="comprar.html">comprar</a></xsl:if>
+				<xsl:if test="art =0"> Este articulo se encuentra agotado
+				</xsl:if>
+				<br></br>
+			
+		</xsl:for-each>
+		</ul></div>
+		<div id="ppagina">pie de pagina</div>
+	</body>
+</html>

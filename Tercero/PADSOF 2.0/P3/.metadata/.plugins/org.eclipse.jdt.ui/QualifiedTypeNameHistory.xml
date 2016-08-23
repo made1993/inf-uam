@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="Grupo"/>
+<fullyQualifiedTypeName name="Usuario"/>
+<fullyQualifiedTypeName name="GrupoEstudio"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="MensajeGrupo"/>
+<fullyQualifiedTypeName name="Pregunta"/>
+<fullyQualifiedTypeName name="Profesor"/>
+<fullyQualifiedTypeName name="java.lang.Readable"/>
+<fullyQualifiedTypeName name="Respuesta"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="MensajeUsuario"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
+<fullyQualifiedTypeName name="java.io.FileOutputStream"/>
+<fullyQualifiedTypeName name="mensaje.MensajeUsuario"/>
+<fullyQualifiedTypeName name="usuario.Profesor"/>
+</qualifiedTypeNameHistroy>

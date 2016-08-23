@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;clasificadores.genetico&apos; to &apos;Genetico&apos;&#x0A;- Original project: &apos;prgrama&apos;&#x0A;- Original element: &apos;clasificadores.genetico&apos;&#x0A;- Renamed element: &apos;clasificadores.Genetico&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;genetico&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;clasificadores{genetico.java[genetico" matchStrategy="1" name="Genetico" qualified="false" references="true" similarDeclarations="false" stamp="1446662616541" textual="false" version="1.0"/>
+</session>

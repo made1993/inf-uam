@@ -1,0 +1,10 @@
+
+public class GrupoEstudio extends Grupo{
+	private ArrayList<Preguntas> listaPreguntas;
+	public void crearPregunta(String Pregunta, int idProfesor){
+		/**/
+	}
+	public void listarPreguntas(){
+		/**/
+	}
+}

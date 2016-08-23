@@ -1,0 +1,206 @@
+/*gramatica.y original:*/
+
+%{
+#include <stdio.h>
+#include "types.h"
+#include "tabsim.h"
+extern FILE * yyout;
+extern int col , ln,err;
+hash_table_t * tlocal=NULL;
+hash_table_t * tglobal=NULL;
+int tipo_actual;
+int clase_actual=0;
+int tamanio_vector_actual;
+int pos_variable_local_actual;
+nodo *auxdato;
+nodo dato;
+int n;
+int i;
+char ** decvar=NULL;
+int l_exp=0;
+int num_variables_local_actual =0;
+int pos_variable_local_actual=0;
+int num_parametros_actual=0;
+int pos_parametro_actual=0;
+int num_parametros_llamada_actual=0;
+int en_explist=0;
+int nvar=0;
+int etiqueta=0;
+int nfunc=0;
+char **decfunc=NULL;
+%}
+%code requires {
+	#define VARIABLE 1
+	#define PARAM 2
+	#define FUNCION 3
+	
+    typedef struct  {
+        char *lexema;
+		int tipo;
+		int valor_entero;
+		int es_direccion;
+		int etiqueta;
+    }tipo_atributos;
+
+    typedef struct{
+    	char * lexema;  //identificador
+    	int categoria;	//variable, parametro de funcion y funcion
+    	int tipo;		//entero o boleano
+    	int clase;		//escalar o vector
+    	int tam;		//tamaño, solo para vectores
+    	int nparam;		//numero de parametros, para funciones
+    	int pparam;		//posicion del parametro, para paramentros de funcion
+    	int nvar;		//numero de variables locales, para funciones
+    	int pvar;		//posicion de variables locales, para parametros de funcion
+    }nodo;
+}
+
+
+/*gramrica.y modificada  basicamente se ha modificado el
+code requieres y se han metido las estructuras en types.h*/
+
+%{
+#include <stdio.h>
+#include "types.h"
+#include "tabsim.h"
+extern FILE * yyout;
+extern int col , ln,err;
+hash_table_t * tlocal=NULL;
+hash_table_t * tglobal=NULL;
+int tipo_actual;
+int clase_actual=0;
+int tamanio_vector_actual;
+int pos_variable_local_actual;
+nodo *auxdato;
+nodo dato;
+int n;
+int i;
+char ** decvar=NULL;
+int l_exp=0;
+int num_variables_local_actual =0;
+int pos_variable_local_actual=0;
+int num_parametros_actual=0;
+int pos_parametro_actual=0;
+int num_parametros_llamada_actual=0;
+int en_explist=0;
+int nvar=0;
+int etiqueta=0;
+int nfunc=0;
+char **decfunc=NULL;
+%}
+%code requires {
+	#define VARIABLE 1
+	#define PARAM 2
+	#define FUNCION 3
+	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+**types.h original
+*/
+
+
+#ifndef _TYPES_H_
+#define _TYPES_H_
+#include <stdio.h>
+#include "y.tab.h"
+#define ESCALAR 1
+#define VECTOR 2
+#define BOOL 1
+#define INT 2
+#define MAX_TAMANIO_VECTOR 64
+FILE * nasm;
+typedef struct{
+	char *lexema;
+	int tipo;
+	int valor_entero;
+	int es_direccion;
+	int etiqueta;
+}ATRIBUTOS;
+#endif
+
+/*
+** types.h modificado
+** se han añadido las estructuras que que habia en gramatica.y
+** y se ha quitado el include de y.tab.h
+*/
+
+
+#ifndef _TYPES_H_
+#define _TYPES_H_
+#include <stdio.h>
+#define ESCALAR 1
+#define VECTOR 2
+#define BOOL 1
+#define INT 2
+#define MAX_TAMANIO_VECTOR 64
+FILE * nasm;
+ typedef struct  {
+        char *lexema;
+		int tipo;
+		int valor_entero;
+		int es_direccion;
+		int etiqueta;
+    }tipo_atributos;
+
+    typedef struct{
+    	char * lexema;  //identificador
+    	int categoria;	//variable, parametro de funcion y funcion
+    	int tipo;		//entero o boleano
+    	int clase;		//escalar o vector
+    	int tam;		//tamaño, solo para vectores
+    	int nparam;		//numero de parametros, para funciones
+    	int pparam;		//posicion del parametro, para paramentros de funcion
+    	int nvar;		//numero de variables locales, para funciones
+    	int pvar;		//posicion de variables locales, para parametros de funcion
+    }nodo;
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+** tabsim.h original
+*/
+
+
+#ifndef TABSIM_H 
+#define TABSIM_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "hash.h"
+#include "y.tab.h"
+
+
+/*
+** tabsim.h modificado
+** se ha quitado el inculde de y.tab.h
+*/
+
+
+#ifndef TABSIM_H 
+#define TABSIM_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "hash.h"

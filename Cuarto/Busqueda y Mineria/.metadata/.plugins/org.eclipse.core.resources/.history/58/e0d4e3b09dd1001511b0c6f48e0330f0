@@ -1,0 +1,13 @@
+package es.uam.eps.bmi.search;
+
+import java.util.*;
+public class TextSearcher {
+
+	public static void main(String []args){
+		String consulta = new String();
+		System.out.print("Introduzca una consulta: ");
+		consulta = entrada.readLine();
+		consulta = consulta.trim();
+	}
+	
+}

@@ -1,0 +1,30 @@
+package es.uam.eps.bmi.crawling;
+
+import java.io.*;
+import java.net.*;
+import java.sql.*;
+
+public class GenericCrawler {
+	public static void main (String args[]){
+		HttpURLConnection http = new HttpURLConnection("") {
+			
+			@Override
+			public void connect() throws IOException {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public boolean usingProxy() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public void disconnect() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+	}
+}

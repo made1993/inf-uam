@@ -1,0 +1,60 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;	Problem definition
+;;
+(defstruct problem
+	states			; List of states
+	initial-state	; Initial state
+	fn-goal-test	; Function (in fn format) that determines
+					; whether a state fulfills the goal
+	fn-h			; Function (in fn format) that evaluates
+					; to the value of the heuristic of a state
+	operators)		; list of operators (in fn format)
+					; to generate successors
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setf *white-holes*
+	'((Avalon Mallory 2) (Avalon Proserpina 2)
+	 (Mallory Katril 6) (Mallory Prosperina 7)
+	 (Katril Davion 2)
+	 (Daivon Sirtis 1) (Daivon Proserpina 4)
+	 (Sirtis Daivon 1) (Sirtis Proserpina 10)
+	 (Proserpina Sirtis 10) (Proserpina Daivon 4) (Proserpina Mallory 7) (Proserpina Avalon 2)
+	 (Kentares Avalon 3) (Kentares Proserpina 2) (Kentares Katril 2)))
+	  
+(setf *worm-holes*
+      '((Avalon Kentares 4) 
+      	(Avalon Mallory 7) 
+	(Mallory Katril 5) 
+	(Mallory Proserpina 6) 
+	(Kentares Proserpina 1) 
+	(Proserpina Sirtis 7)
+	(Katril Davion 1) 
+	(Katril Sirtis 10) 
+	(Davion Sirtis 8)))
+	
+(setf *planets* '(Avalon Davion Katril Kentares Mallory Proserpina Sirtis))	
+	
+(setf *sensors*
+'((Avalon 5) (Mallory 7) (Kentares 4)(Davion 1)(Proserpina 4) (Katril 3) (Sirtis 0)))
+
+(setf *planet-origin* 'Kentares)
+(setf *planets-destination* '(Sirtis))
+
+(setf *galaxy-M35* (make-problem 
+						:states *planets*
+						:initial-state *planet-origin*
+						:fn-goal-test (make-fn 
+										name: 'f-goal-test-galaxy
+								 		lst-args: (list *planets-destination*))
+						:fn-h 		(make-fn 
+										name: 'f-h-galaxy
+								 		lst-args: (list *planets-destination*))
+						:operators 	(list (make-fn 
+												name: 'navigate-white-hole
+								 				lst-args: *white-holes*)
+								 		  (make-fn 
+								 		  		name: 'navigate-worm-hole
+								 				lst-args: *worm-holes*))))
+								
+								
+								

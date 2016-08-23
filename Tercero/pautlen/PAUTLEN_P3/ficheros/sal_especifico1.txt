@@ -1,0 +1,421 @@
+;D:	main
+;D:	{
+;D:	array
+;D:	int
+;R10:	<tipo> ::= int
+;D:	[
+;D:	10
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;D:	]
+;R15:	<clase_vector> ::= array <tipo> [ <constante_entera> ]
+;R7:	<clase> ::= <clase_vector>
+;D:	vector1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R18:	<identificadores> ::= <identificador>
+;R4:	<declaracion> ::= <clase> <identificadores> ;
+;D:	array
+;D:	int
+;R10:	<tipo> ::= int
+;D:	[
+;D:	10
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;D:	]
+;R15:	<clase_vector> ::= array <tipo> [ <constante_entera> ]
+;R7:	<clase> ::= <clase_vector>
+;D:	vector2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R18:	<identificadores> ::= <identificador>
+;R4:	<declaracion> ::= <clase> <identificadores> ;
+;D:	array
+;D:	int
+;R10:	<tipo> ::= int
+;D:	[
+;D:	10
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;D:	]
+;R15:	<clase_vector> ::= array <tipo> [ <constante_entera> ]
+;R7:	<clase> ::= <clase_vector>
+;D:	suma
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R18:	<identificadores> ::= <identificador>
+;R4:	<declaracion> ::= <clase> <identificadores> ;
+;D:	int
+;R10:	<tipo> ::= int
+;R9:	<clase_escalar> ::= <tipo>
+;R5:	<clase> ::= <clase_escalar>
+;D:	x
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	,
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	,
+;D:	norma1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	,
+;D:	norma2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	,
+;D:	escalar
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R18:	<identificadores> ::= <identificador>
+;R19:	<identificadores> ::= <identificador> , <identificadores>
+;R19:	<identificadores> ::= <identificador> , <identificadores>
+;R19:	<identificadores> ::= <identificador> , <identificadores>
+;R19:	<identificadores> ::= <identificador> , <identificadores>
+;R4:	<declaracion> ::= <clase> <identificadores> ;
+;D:	i
+;R2:	<declaraciones> ::= <declaracion>
+;R3:	<declaraciones> ::= <declaracion> <declaraciones>
+;R3:	<declaraciones> ::= <declaracion> <declaraciones>
+;R3:	<declaraciones> ::= <declaracion> <declaraciones>
+;R21:	<funciones> ::=
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	=
+;D:	0
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;R100:	<constante> ::= <constante_entera>
+;R81:	<exp> ::= <constante>
+;D:	;
+;R43:	<asignacion> ::= <identificador> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	norma1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	=
+;D:	0
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;R100:	<constante> ::= <constante_entera>
+;R81:	<exp> ::= <constante>
+;D:	;
+;R43:	<asignacion> ::= <identificador> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	norma2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	=
+;D:	0
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;R100:	<constante> ::= <constante_entera>
+;R81:	<exp> ::= <constante>
+;D:	;
+;R43:	<asignacion> ::= <identificador> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	escalar
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	=
+;D:	0
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;R100:	<constante> ::= <constante_entera>
+;R81:	<exp> ::= <constante>
+;D:	;
+;R43:	<asignacion> ::= <identificador> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	while
+;D:	(
+;D:	(
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	<
+;R80:	<exp> ::= <identificador>
+;D:	10
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;R100:	<constante> ::= <constante_entera>
+;R81:	<exp> ::= <constante>
+;D:	)
+;R97:	<comparacion> ::= <exp> < <exp>
+;R83:	<exp> ::= ( <comparacion> )
+;D:	)
+;D:	{
+;D:	scanf
+;D:	x
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;R54:	<lectura> ::= scanf <identificador>
+;R35:	<sentencia_simple> ::= <lectura>
+;D:	;
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	vector1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;D:	=
+;D:	x
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R80:	<exp> ::= <identificador>
+;R44:	<asignacion> ::= <elemento_vector> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	}
+;R30:	<sentencias> ::= <sentencia>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R52:	<bucle> ::= while ( <exp> ) { <sentencias> }
+;R41:	<bloque> ::= <bucle>
+;R33:	<sentencia> ::= <bloque>
+;D:	while
+;D:	(
+;D:	(
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	<
+;R80:	<exp> ::= <identificador>
+;D:	10
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;R100:	<constante> ::= <constante_entera>
+;R81:	<exp> ::= <constante>
+;D:	)
+;R97:	<comparacion> ::= <exp> < <exp>
+;R83:	<exp> ::= ( <comparacion> )
+;D:	)
+;D:	{
+;D:	scanf
+;D:	x
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;R54:	<lectura> ::= scanf <identificador>
+;R35:	<sentencia_simple> ::= <lectura>
+;D:	;
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	vector2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;D:	=
+;D:	x
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R80:	<exp> ::= <identificador>
+;R44:	<asignacion> ::= <elemento_vector> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	}
+;R30:	<sentencias> ::= <sentencia>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R52:	<bucle> ::= while ( <exp> ) { <sentencias> }
+;R41:	<bloque> ::= <bucle>
+;R33:	<sentencia> ::= <bloque>
+;D:	while
+;D:	(
+;D:	(
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	<
+;R80:	<exp> ::= <identificador>
+;D:	10
+;R104:	<constante_entera> ::= TOK_CONSTANTE_ENTERA
+;R100:	<constante> ::= <constante_entera>
+;R81:	<exp> ::= <constante>
+;D:	)
+;R97:	<comparacion> ::= <exp> < <exp>
+;R83:	<exp> ::= ( <comparacion> )
+;D:	)
+;D:	{
+;D:	norma1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	=
+;D:	norma1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	+
+;R80:	<exp> ::= <identificador>
+;D:	(
+;D:	vector1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;R85:	<exp> ::= <elemento_vector>
+;D:	*
+;D:	vector1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;R85:	<exp> ::= <elemento_vector>
+;R75:	<exp> ::= <exp> * <exp>
+;D:	)
+;R82:	<exp> ::= ( <exp> )
+;D:	;
+;R72:	<exp> ::= <exp> + <exp>
+;R43:	<asignacion> ::= <identificador> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	norma2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	=
+;D:	norma2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	+
+;R80:	<exp> ::= <identificador>
+;D:	(
+;D:	vector2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;R85:	<exp> ::= <elemento_vector>
+;D:	*
+;D:	vector2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;R85:	<exp> ::= <elemento_vector>
+;R75:	<exp> ::= <exp> * <exp>
+;D:	)
+;R82:	<exp> ::= ( <exp> )
+;D:	;
+;R72:	<exp> ::= <exp> + <exp>
+;R43:	<asignacion> ::= <identificador> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	escalar
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	=
+;D:	escalar
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	+
+;R80:	<exp> ::= <identificador>
+;D:	(
+;D:	vector1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;R85:	<exp> ::= <elemento_vector>
+;D:	*
+;D:	vector2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;R85:	<exp> ::= <elemento_vector>
+;R75:	<exp> ::= <exp> * <exp>
+;D:	)
+;R82:	<exp> ::= ( <exp> )
+;D:	;
+;R72:	<exp> ::= <exp> + <exp>
+;R43:	<asignacion> ::= <identificador> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	suma
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;D:	=
+;D:	vector1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;R85:	<exp> ::= <elemento_vector>
+;D:	*
+;D:	vector1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;R85:	<exp> ::= <elemento_vector>
+;R75:	<exp> ::= <exp> * <exp>
+;D:	;
+;R44:	<asignacion> ::= <elemento_vector> = <exp>
+;R34:	<sentencia_simple> ::= <asignacion>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	printf
+;D:	suma
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	[
+;D:	i
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	]
+;R80:	<exp> ::= <identificador>
+;R48:	<elemento_vector> ::= <identificador> [ <exp> ]
+;R85:	<exp> ::= <elemento_vector>
+;D:	;
+;R56:	<escritura> ::= printf <exp>
+;R36:	<sentencia_simple> ::= <escritura>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	}
+;R30:	<sentencias> ::= <sentencia>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R52:	<bucle> ::= while ( <exp> ) { <sentencias> }
+;R41:	<bloque> ::= <bucle>
+;R33:	<sentencia> ::= <bloque>
+;D:	printf
+;D:	norma1
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R80:	<exp> ::= <identificador>
+;R56:	<escritura> ::= printf <exp>
+;R36:	<sentencia_simple> ::= <escritura>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	printf
+;D:	norma2
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R80:	<exp> ::= <identificador>
+;R56:	<escritura> ::= printf <exp>
+;R36:	<sentencia_simple> ::= <escritura>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	printf
+;D:	escalar
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R80:	<exp> ::= <identificador>
+;R56:	<escritura> ::= printf <exp>
+;R36:	<sentencia_simple> ::= <escritura>
+;R32:	<sentencia> ::= <sentencia_simple> ;
+;D:	}
+;R30:	<sentencias> ::= <sentencia>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R31:	<sentencias> ::= <sentencia> <sentencias>
+;R1:	<programa> ::= main { <declaraciones> <funciones> <sentencias> }

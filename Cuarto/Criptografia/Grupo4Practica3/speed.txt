@@ -1,0 +1,90 @@
+e282725@6B-6-67-55:~$ openssl speed rsa4096
+speed rsa
+Doing 4096 bit private rsa's for 10s: 1267 4096 bit private RSA's in 9.99s
+Doing 4096 bit public rsa's for 10s: 79424 4096 bit public RSA's in 10.00s
+OpenSSL 1.0.1f 6 Jan 2014
+built on: Thu Jun 11 15:28:12 UTC 2015
+options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) blowfish(idx) 
+compiler: cc -fPIC -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -m64 -DL_ENDIAN -DTERMIO -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -Wl,-Bsymbolic-functions -Wl,-z,relro -Wa,--noexecstack -Wall -DMD32_REG_T=int -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM
+                  sign    verify    sign/s verify/s
+rsa 4096 bits 0.007885s 0.000126s    126.8   7942.4
+
+--------------------------------------------------
+speed des
+
+e282725@6B-6-67-55:~$ openssl speed des
+Doing des cbc for 3s on 16 size blocks: 14178911 des cbc's in 3.00s
+Doing des cbc for 3s on 64 size blocks: 3680380 des cbc's in 2.99s
+Doing des cbc for 3s on 256 size blocks: 927963 des cbc's in 3.00s
+Doing des cbc for 3s on 1024 size blocks: 232759 des cbc's in 3.00s
+Doing des cbc for 3s on 8192 size blocks: 29102 des cbc's in 3.00s
+Doing des ede3 for 3s on 16 size blocks: 5546053 des ede3's in 2.99s
+Doing des ede3 for 3s on 64 size blocks: 1395009 des ede3's in 3.00s
+Doing des ede3 for 3s on 256 size blocks: 348787 des ede3's in 3.00s
+Doing des ede3 for 3s on 1024 size blocks: 87317 des ede3's in 2.99s
+Doing des ede3 for 3s on 8192 size blocks: 10918 des ede3's in 3.00s
+OpenSSL 1.0.1f 6 Jan 2014
+built on: Thu Jun 11 15:28:12 UTC 2015
+options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) blowfish(idx) 
+compiler: cc -fPIC -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -m64 -DL_ENDIAN -DTERMIO -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -Wl,-Bsymbolic-functions -Wl,-z,relro -Wa,--noexecstack -Wall -DMD32_REG_T=int -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM
+The 'numbers' are in 1000s of bytes per second processed.
+type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes
+des cbc          75620.86k    78777.36k    79186.18k    79448.41k    79467.86k
+des ede3         29677.88k    29760.19k    29763.16k    29903.88k    29813.42k
+---------------------------------------------------
+
+speed aes
+
+e282725@6B-6-67-55:~$ openssl speed aes
+Doing aes-128 cbc for 3s on 16 size blocks: 25761337 aes-128 cbc's in 3.00s
+Doing aes-128 cbc for 3s on 64 size blocks: 7038974 aes-128 cbc's in 3.00s
+Doing aes-128 cbc for 3s on 256 size blocks: 1795064 aes-128 cbc's in 2.99s
+Doing aes-128 cbc for 3s on 1024 size blocks: 452510 aes-128 cbc's in 3.00s
+Doing aes-128 cbc for 3s on 8192 size blocks: 56665 aes-128 cbc's in 3.00s
+Doing aes-192 cbc for 3s on 16 size blocks: 21942755 aes-192 cbc's in 3.00s
+Doing aes-192 cbc for 3s on 64 size blocks: 5888249 aes-192 cbc's in 3.00s
+Doing aes-192 cbc for 3s on 256 size blocks: 1495151 aes-192 cbc's in 3.00s
+Doing aes-192 cbc for 3s on 1024 size blocks: 375278 aes-192 cbc's in 2.99s
+Doing aes-192 cbc for 3s on 8192 size blocks: 47065 aes-192 cbc's in 3.00s
+Doing aes-256 cbc for 3s on 16 size blocks: 19002071 aes-256 cbc's in 3.00s
+Doing aes-256 cbc for 3s on 64 size blocks: 5054790 aes-256 cbc's in 3.00s
+Doing aes-256 cbc for 3s on 256 size blocks: 1282161 aes-256 cbc's in 3.00s
+Doing aes-256 cbc for 3s on 1024 size blocks: 322363 aes-256 cbc's in 2.99s
+Doing aes-256 cbc for 3s on 8192 size blocks: 40367 aes-256 cbc's in 3.00s
+OpenSSL 1.0.1f 6 Jan 2014
+built on: Thu Jun 11 15:28:12 UTC 2015
+options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) blowfish(idx) 
+compiler: cc -fPIC -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -m64 -DL_ENDIAN -DTERMIO -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -Wl,-Bsymbolic-functions -Wl,-z,relro -Wa,--noexecstack -Wall -DMD32_REG_T=int -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM
+The 'numbers' are in 1000s of bytes per second processed.
+type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes
+aes-128 cbc     137393.80k   150164.78k   153691.10k   154456.75k   154733.23k
+aes-192 cbc     117028.03k   125615.98k   127586.22k   128523.30k   128518.83k
+aes-256 cbc     101344.38k   107835.52k   109411.07k   110401.24k   110228.82k
+
+----------------------------------------------------
+speed rc4
+e282725@6B-6-67-55:~$ openssl speed rc4
+Doing rc4 for 3s on 16 size blocks: 88903692 rc4's in 3.00s
+Doing rc4 for 3s on 64 size blocks: 34738502 rc4's in 2.99s
+Doing rc4 for 3s on 256 size blocks: 10057672 rc4's in 3.00s
+Doing rc4 for 3s on 1024 size blocks: 2614912 rc4's in 3.00s
+Doing rc4 for 3s on 8192 size blocks: 330278 rc4's in 3.00s
+OpenSSL 1.0.1f 6 Jan 2014
+built on: Thu Jun 11 15:28:12 UTC 2015
+options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) blowfish(idx) 
+compiler: cc -fPIC -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -m64 -DL_ENDIAN -DTERMIO -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -Wl,-Bsymbolic-functions -Wl,-z,relro -Wa,--noexecstack -Wall -DMD32_REG_T=int -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM
+The 'numbers' are in 1000s of bytes per second processed.
+type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes
+rc4             474153.02k   743566.60k   858254.68k   892556.63k   901879.13k
+
+-------------------------------------------------------
+RSA 1024
+e282725@6B-6-67-55:~$ openssl speed rsa1024
+Doing 1024 bit private rsa's for 10s: 67883 1024 bit private RSA's in 9.99s
+Doing 1024 bit public rsa's for 10s: 987365 1024 bit public RSA's in 10.00s
+OpenSSL 1.0.1f 6 Jan 2014
+built on: Thu Jun 11 15:28:12 UTC 2015
+options:bn(64,64) rc4(16x,int) des(idx,cisc,16,int) aes(partial) blowfish(idx) 
+compiler: cc -fPIC -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -m64 -DL_ENDIAN -DTERMIO -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -Wl,-Bsymbolic-functions -Wl,-z,relro -Wa,--noexecstack -Wall -DMD32_REG_T=int -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM
+                  sign    verify    sign/s verify/s
+rsa 1024 bits 0.000147s 0.000010s   6795.1  98736.5

@@ -1,0 +1,44 @@
+x	1
+y	2
+x
+z
+z	3
+f	-10
+x
+x	10
+y
+z
+z	30
+x
+y
+cierre	-999
+f
+g
+x	1
+g	-20
+z	30
+x
+y
+z
+g
+z	30
+t	40
+cierre	-999
+t
+f	-30
+h
+h	-40
+x
+y
+x	10
+y	20
+x
+y
+x	10
+cierre -999
+f
+g
+h
+x
+y
+z

@@ -1,0 +1,49 @@
+package datos;
+
+import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import particionado.Particion;
+public class  Datos {
+	public enum TiposDeAtributos {Continuo, Nominal};
+	ArrayList<TiposDeAtributos> tipoAtributos;
+	double [][]datos;
+	public Datos(int numDatos, ArrayList<TiposDeAtributos> tipos) {
+	}
+	
+	public Datos extraeDatosTrain(Particion idx) {
+	return null;
+	}
+	
+	public Datos extraeDatosTest(Particion idx) {
+	return null;
+	}
+	
+	public static Datos cargaDeFichero(String nombreDeFichero) {
+		BufferedReader br = null;
+		try {
+
+			String sCurrentLine;
+
+			br = new BufferedReader(new FileReader(nombreDeFichero));
+			br.readLine();
+			br.readLine();
+			while ((sCurrentLine = br.readLine()) != null) {
+				System.out.println(sCurrentLine);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+}

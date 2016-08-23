@@ -1,0 +1,252 @@
+x$arrvrate = c(1, 2)
+x
+x$arrvrate <- c(1, 2)
+x$arrvrate <- 1
+x
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+mm1initglbls(list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+mm1initglbls(list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+mm1initglbls(list(arrvrate=0.5, srvrate=1.0))
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1initglbls
+?reload
+?load
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1reactevnt
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1initglbls
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+list()$asd
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1glbls
+mm1initglbls
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1glbls
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+dosim (mm1initglbls, mm1reactevnt, mm1prntrslts,10000.0, #
+     list(arrvrate=0.5,srvrate=1.0), TRUE)
+?edit
+edit(mm1reactevnt)
+dosim (mm1initglbls, mm1reactevnt, mm1prntrslts,10000.0, #
+     list(arrvrate=0.5,srvrate=1.0), TRUE)
+mm1reactevnt
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+setWD()
+setwd()
+setwd(""/Dropbox/Simulacion/Ejercicio5")
+q
+)
+""
+setwd("/Dropbox/Simulacion/Ejercicio5")
+getwd()
+setwd("~/Dropbox/Simulacion/Ejercicio5")
+source("mm1.r")
+mm1glbls
+mm1glbls
+source("mm1.r")
+mm1glbls
+rpois(1,1)
+rpois(1000,1)
+rpois(1000,10)
+source("mm1.r")
+mm1glbls
+source("mm1.r")
+mm1glbls
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+schednewarrv
+schednewarrv()
+?runif
+mm1glbls
+mm1glbls$oldpercent <<- 0.4
+mm1glbls
+mm1glbls$oldpercent
+mm1glbls$oldpercent <<- 0.4
+mm1glbls$oldpercent <- 0.4
+schednewarrv()
+sim
+sim <- NUKK
+sim <- NULL
+schednewarrv()
+sim
+source(mm1.r)
+source("mm1.r")
+sim
+source("mm1.r")
+source("mm1.r")
+sim
+source("mm1.r")
+sim
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+head
+head$type
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+?warnings
+source("rnormT.r")
+rnormT(1000, 5, 20)
+plot(rnormT(1000, 5, 20))
+plot(rnormT(10000, 5, 1))
+hist(rnormT(10000, 5, 1))
+hist(rnormT(10000, 5, 20))
+hist(rnormT(10000, 5, 30))
+hist(rnormT(10000, 5, 5))
+rpois(1000, 10)
+hist(rpois(1000, 10))
+hist(rexp(1000, 10))
+hist(rpois(1000, 10))
+hist(rexp(1000, 10))
+rexp(1000, 10)
+rexp(1000, 1)
+rexp(1000, 0.5)
+hist(rexp(1000, 0.5))
+hist(rexp(1000, 0.01))
+hist(rexp(1000, 0.5))
+hist(rexp(1000, 0.1))
+hist(rexp(1000, 0.2))
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+sim
+mm1glbls
+sim
+source("mm1.r")
+source("mm1.r")
+?rnorm
+source("mm1.r")
+mm1glbls
+rpois(100, .5)
+rpois(100, .01)
+rpois(100, 10)
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+mm1glbls
+mm1glbls
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+mm1glbls
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+mm1glbls
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+rnormT
+source("mm1.r")
+source("mm1.r")
+?rnorm
+source("mm1.r")
+source("mm1.r")
+mm1glbls
+mm1glbls
+mm1glbls
+mm1glbls
+mm1glbls
+mm1glbls
+mm1glbls
+mm1glbls
+source("mm1.r")
+mm1glbls
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+x <-- a
+x <--- a
+x <--- 1
+x
+x <--------- 1
+z
+x
+source("mm1.r")
+mm1glbls
+source("mm1.r")
+mm1glbls
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+mm1glbls
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+rpois(1000, 10)
+rpois(1000, 5)
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+?ecdf
+source("mm1.r")
+plot(mm1glbls$q1size)
+plot(mm1glbls$q2size)
+plot(mm1glbls$q3size)
+source("mm1.r")
+graficos1()
+source("mm1.r")
+graficos1()
+?plot
+source("mm1.r")
+graficos1()
+?ecdf
+?ecdf
+plot(ecdf(mm1glbls$q1size))
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")
+source("mm1.r")

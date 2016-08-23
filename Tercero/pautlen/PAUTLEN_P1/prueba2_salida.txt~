@@ -1,0 +1,45 @@
+x 
+y 
+x        1 
+z        -1 
+z 
+f 
+x        1 
+x 
+y        2 
+z        3 
+z 
+x        10 
+y        2 
+cierre 
+f        -10 
+g        -1 
+-1        x 
+g 
+z 
+x        1 
+y        2 
+z        30 
+g        -20 
+-1        z 
+t 
+cierre 
+t        -1 
+-1        f 
+h        -1 
+h 
+x        1 
+y        2 
+x 
+y 
+x        10 
+y        20 
+-1        x 
+cierre 
+f        -10 
+g        -20 
+h        -40 
+x        1 
+y        2 
+z        3 
+

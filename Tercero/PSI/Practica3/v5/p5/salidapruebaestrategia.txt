@@ -1,0 +1,27 @@
+El ganador del torneo con una lucha de 5 asaltos es Sarah
+El ganador del torneo con una lucha de 6 asaltos es Sarah
+El ganador del torneo con una lucha de 15 asaltos es Sarah
+
+Al añadir un participante con profundidad 6, ése ganará siempre.
+	El ganador del torneo es Chuck
+	El ganador del torneo es Chuck
+	El ganador del torneo es Chuck
+	El ganador del torneo es Chuck
+	El ganador del torneo es Chuck
+	El ganador del torneo es Chuck
+	El ganador del torneo es Chuck
+	El ganador del torneo es Chuck
+	El ganador del torneo es Chuck
+	El ganador del torneo es Chuck
+
+Al ser todos los participantes de la misma profundidad, el ganador será aleatorio.
+	El ganador del torneo es Alex
+	El ganador del torneo es Alex
+	El ganador del torneo es Sarah
+	El ganador del torneo es Sarah
+	El ganador del torneo es Bea
+	El ganador del torneo es Alex
+	El ganador del torneo es Sarah
+	El ganador del torneo es David
+	El ganador del torneo es Sarah
+	El ganador del torneo es Daniel

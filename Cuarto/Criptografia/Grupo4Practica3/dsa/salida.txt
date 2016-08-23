@@ -1,0 +1,54 @@
+
+ccpp@ccpp ~/Dropbox/cuarto/Criptografia/Grupo4Practica3$ openssl dsaparam -out dsaparam.pem 1024
+Generating DSA parameters, 1024 bit long prime
+This could take some time
+.+......+....+....+..............+++++++++++++++++++++++++++++++++++++++++++++++++++*
++.......+.....+.+..+........+.........+.+......+.........................+....+++++++++++++++++++++++++++++++++++++++++++++++++++*
+
+
+ccpp@ccpp ~/Dropbox/cuarto/Criptografia/Grupo4Practica3$ cat dsaparam.pem 
+-----BEGIN DSA PARAMETERS-----
+MIIBHgKBgQCf0pWKqUKlNXzBOC4zNlDPvF4XNPtUEpTLFI2yWRrUO0eXKlVVdNqd
+AWXTiZNqMscDorauNDS3SVWui/lBgHh9ORT+4yyhLcj7CkToGxGhtqdOg/vMo0yH
+twDVPLsmSgyMRgiG9vUZeoe253+tV8CvVW7GtvPAdpyUX8v0RtBorQIVAIbTZOee
+2bVG6PfkYSkeLmBgHQbnAoGAM1s/ikQAgZLwi7dxcKf5GRb1DhSgHK703mIGh2H/
+OCB4rtKxegHa4NXO/Xk+cnkKWemvWhIbUCq5cKLnEWwtWS0h1Hbj+3wJi+JG1dL6
+1BJu1DEPiTnOj4uvxzDZ3rgQpylmToJftJaFHiz7nck+KfJx8nRebLMW61enP1OG
+ko0=
+-----END DSA PARAMETERS-----
+
+
+
+
+ccpp@ccpp ~/Dropbox/cuarto/Criptografia/Grupo4Practica3$ openssl gendsa -out dsaprivatekey.pem -des3 dsaparam.pem
+Generating DSA key, 1024 bits
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+
+-----BEGIN PUBLIC KEY-----
+MIIBtjCCASsGByqGSM44BAEwggEeAoGBAJ/SlYqpQqU1fME4LjM2UM+8Xhc0+1QS
+lMsUjbJZGtQ7R5cqVVV02p0BZdOJk2oyxwOitq40NLdJVa6L+UGAeH05FP7jLKEt
+yPsKROgbEaG2p06D+8yjTIe3ANU8uyZKDIxGCIb29Rl6h7bnf61XwK9Vbsa288B2
+nJRfy/RG0GitAhUAhtNk557ZtUbo9+RhKR4uYGAdBucCgYAzWz+KRACBkvCLt3Fw
+p/kZFvUOFKAcrvTeYgaHYf84IHiu0rF6Adrg1c79eT5yeQpZ6a9aEhtQKrlwoucR
+bC1ZLSHUduP7fAmL4kbV0vrUEm7UMQ+JOc6Pi6/HMNneuBCnKWZOgl+0loUeLPud
+yT4p8nHydF5ssxbrV6c/U4aSjQOBhAACgYASUqfRTBgZlZ9AZWl8ZxlGg4hC2QLz
+d3Rwf4Yocm1Mv+7aVgubXMAqNWMCy8S+YJeAEQCNKDOflh5uVKXVxnlBQnpSjuCI
+TBSO0BR+KRagmtlInLX2SAw7aBN14o9Z5TsLJ+Pqvcz1EEZTIbjfYDBBDr46nRx9
+q8PRvbtGQuSD+g==
+-----END PUBLIC KEY-----
+-----BEGIN DSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: DES-EDE3-CBC,18064F33A090E268
+
+zAfo095NmSA3aIpPanZmO4zFDZhrwnVbBOL8Sy0CYp09N65f7hNLE07Ld2mJ4VuY
+INsXj63J43rfhgEn6iS+DVyFAcr7QU7YCCt8z6ek3yXPRGY4f/xrzTvfnjo5Psjc
++kVWWZnxPKweqX+GNfYduMrrmj66OnG2dNtEQ1d06kQhOJ/xkOGFVK8FcVdDxZmT
+PlgPJbIZc6BmyqzWUnxiru+HT96M2SKm7ghgcQCH8PUwOJHSYUPQTXe7GfYhJG3+
+CY6geMYKit7RRS+R5F3xqdWx/QcecekdHsciQdwVJV5cTwh4W0/UdSGLvyTZE1UX
+ReHBziFxB6Pyx5cq/5RPLrCbtWlabgulMMxbvuhqwjkn3PSeYQGxQotRdI+Gv4PW
+1X17vrbwCTwUrto37E7KQv6OgR4E5MpUelD7g1Qb8RJHi/ix7VwQHgvzLJaCdJl3
+EydAGJ6hP0bubSLVO2TXVhzlBr4gj8LPlPvSoV27E40m8eNgVIRTBONaGX3Cv4ou
+QVfOk3eFK3sv4WuuIXtXFWMtgwn3ad2v7RTQByYrDnIfrkVo5xFPd1c0zX1RTB6d
+ubiFZ6TP/9wuFBUstT5D7g==
+-----END DSA PRIVATE KEY-----

@@ -1,0 +1,133 @@
+package clasificadores;
+import datos.*;
+import interfacesAlgoritmoGenetico.*;
+import particionado.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+
+import clasesAlgoritmoGentecio.*;
+
+abstract public class Clasificador {
+	abstract public void entrenamiento (Datos datosTrain);
+	abstract public ArrayList<Double> clasifica (Datos datosTest);
+	public Boolean fLaplace;
+	abstract public ArrayList<Double> getResultado();
+	static int[][] confusion;
+	
+	public static double error (Datos datos, Clasificador clas) {
+		/*Recorremos todos los datos*/
+		int error = 0;
+		for(int i=0; i<datos.getNumDatos(); i++){
+			//System.out.println("	Real: "+datos.getDato(i, datos.getSizeTipoAtributos()-1)+ "		Prediccion: "+ clas.getResultado().get(i)*1.0);
+			/*Comprobamos si el dato es correcto*/
+			if(datos.getDato(i, datos.getSizeTipoAtributos()-1) != clas.getResultado().get(i)*1.0){
+				error++;
+			}
+			/*Añadimos el dato a su lugar en la matrix de confusion*/
+			if (datos.getClasesValue(clas.getResultado().get(i))!=null)
+				confusion[datos.getClasesValue(clas.getResultado().get(i))][datos.getClasesValue(datos.getDato(i, datos.getSizeTipoAtributos()-1))]++;
+		}
+		/*Devolvemos el % de errores sobre el total de comprobaciones*/
+		return error/(datos.getNumDatos()*1.0);
+	}
+	
+	public static ArrayList<Double> validacion(EstrategiaParticionado part, Datos datos, Clasificador clas) {
+		/*Inicializacion de la matriz de confusion*/
+		confusion = new int[datos.getClases().size()][datos.getClases().size()];		
+		for(int j=0,k=0; j<datos.getClases().size(); j++){
+			for(;k<datos.getClases().size();k++){
+				datos.getClases().keys().nextElement();
+				confusion[j][k]=0;
+			}	
+		}
+		
+		/*Para particion recibida se realiza el entrenamiento, test y se contabilizan los errores*/
+		ArrayList<Double> res = new ArrayList<Double>();
+		for (Particion p:part.crearPartciones(datos)){
+			clas.entrenamiento(datos.getParticion( p.getTrain()));
+			clas.clasifica(datos.getParticion( p.getTest()));
+			Double e=Clasificador.error(datos.getParticion(p.getTest()), clas);
+			res.add(e);
+		}
+		return res;
+	}
+	
+	public static void matrizConf(){
+		System.out.println("Matriz de confusion:");
+		for(int i=0;i<confusion.length;i++){
+			for(int j=0;j<confusion.length;j++){
+				System.out.print("["+confusion[i][j]+"]\t");
+			}
+			System.out.println();
+		}
+	}
+	
+	public static void error(){
+		double errores = 0.0;
+		double numDat = 0.0;
+		for(int i=0;i<confusion.length;i++){
+			for(int j=0;j<confusion.length;j++){
+				numDat+=confusion[i][j];
+				if(i!=j)
+					errores+=confusion[i][j];
+			}	
+		}
+		System.out.println("Error matriz = "+errores/numDat*100);
+		return;
+	}
+	
+	public static void validar(EstrategiaParticionado part, Datos datos, Clasificador clas, boolean matriz){
+		ArrayList<Double> errores = Clasificador.validacion(part, datos, clas);
+		Double suma=0.0;
+		for(Double e: errores){
+			//System.out.println("Error de una prueba = "+e*100);
+			suma = suma + e;
+		}
+		System.out.println("Error medio = "+suma/errores.size()*100+" %");
+		if(matriz) matrizConf();
+		error();
+	}
+	
+	public static void main(String []args) {
+		
+		boolean matriz = true;
+
+		double [][]des= new double[2][2];
+		des[0][0]=1.0;
+		Arrays.sort(des, new Comparator<double[]>() {
+			@Override
+			public int compare(double[] o1, double[] o2) {
+				return Double.compare(o2[0], o1[0]);
+			}
+		});
+		System.out.println("- Leyendo ficheros...");
+		Datos d1 = Datos.cargaDeFichero("src/ficheros/tic-tac-toe.data");
+		//EstrategiaParticionado part=new ValidacionCruzada(10); 
+		EstrategiaParticionado part=new ValidacionSimple(80);
+		int nreglas = 50;
+		double pmut =0.001;
+		double cruce =0.9;
+		double elite=0.05;
+
+		int generaciones=100;
+		int tamPoblacion=100;
+		EndAlgGen parada = new EndAlgGenBasico(generaciones);
+		//EndAlgGen parada = new EndAlgGenTopFit(generaciones, 0.50);
+		//EndAlgGen parada = new EndAlgGenNumChanges(generaciones, 5);
+		Seleccion selecc= new SeleccionTicTac(elite);
+		Fitness fit = new FitnessTicTac();
+		IniPoblacion inip= new IniPoblacionTicTac(nreglas, tamPoblacion);
+		Mutacion mut = new MutacionTicTac(pmut);
+		Recombinar reco= new RecombinarUnPuntoTicTac(cruce);
+		//Recombinar reco= new RecombinarDosPuntosTicTac(cruce);
+		//Recombinar reco= new RecombinarUniformeTicTac(cruce);
+		SelectPadres sepad= new SelectPadresTicTac();
+		
+		Clasificador c1 = new ClasificadorGenetico(parada, selecc, fit, inip, mut, reco, sepad, tamPoblacion, generaciones);
+		validar(part, d1, c1, matriz);
+		
+
+	}
+}

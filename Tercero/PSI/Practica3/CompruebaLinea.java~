@@ -1,0 +1,87 @@
+package conecta4;
+
+import java.util.*;
+
+public class CompruebaLinea {
+	public boolean compruebaLinea(int[][] tablero ,int n, int jugador){
+		int ganador=0;
+		int num_lineas=0;
+		int lineas_posibles=8-n;
+		int cuaterna, cuaternaVert;
+		int i,j,k;
+
+		List<Integer> cuaterna1=new ArrayList<Integer>();
+		List<Integer> cuaterna2=new ArrayList<Integer>();
+		List<Integer> cuaterna3=new ArrayList<Integer>();
+		List<Integer> cuaterna4=new ArrayList<Integer>();
+
+		for(i=0;i<6;i++){ //horizontal
+			for(j=0;j<lineas_posibles-1;j++){
+				for(k=0; k<=n;k++){
+					cuaterna = tablero[i][j+k];
+					if(cuaterna==tablero[i][j]*n && tablero[i][j]!=0){
+						ganador=tablero[i][j];
+						if(ganador==jugador){
+							num_lineas=num_lineas + 1;
+						}
+					}
+				}
+			}
+		}
+		for(i=0;i<7;i++){
+			for(j=0;j<lineas_posibles;j++){
+				//cuaterna=[];
+				for(k=0; k<n; k++){
+					cuaternaVert = tablero[i][j+k];
+					if(cuaternaVert==tablero[j][i]*n && tablero[j][i]!=0){
+						ganador=tablero[j][i];
+						if(ganador==jugador){
+							num_lineas=num_lineas + 1;
+						}
+					}
+				}
+			}
+		}
+		for(i=0;i<4;i++){
+			for(j=0; j<lineas_posibles -i; j++){
+				cuaterna1.removeAll(cuaterna1);
+				cuaterna2.removeAll(cuaterna2);
+				cuaterna3.removeAll(cuaterna3);
+				cuaterna4.removeAll(cuaterna4);
+			
+				for(k=0;k<n;k++){
+					cuaterna1.add(tablero[i+j+k][j+k]);
+					cuaterna2.add(tablero[i+j][i+j+k]);
+					cuaterna3.add(tablero[i+j+k][6-(j+k)]);
+					cuaterna4.add(tablero[j+k][6-(i+j+k)]);
+				}
+				
+				if((cuaterna1==cuaterna1.get(0)*n) && (tablero[i+j][j]!=0)){
+					ganador = tablero[i+j][j];
+					if (ganador==jugador){
+						num_lineas = num_lineas + 1;
+					}
+				}
+				else if((cuaterna2==cuaterna2.get(0)*n) && (tablero[i+j])){
+					ganador = tablero[i+j][i+j];
+					if (ganador==jugador){
+						num_lineas = num_lineas + 1;
+					}
+				}
+				else if((cuaterna3==cuaterna3.get(0)*n) && (tablero[i+j])){
+					ganador = tablero[i+j][6-j];
+					if (ganador==jugador){
+						num_lineas = num_lineas + 1;
+					}
+				}
+				else if((cuaterna4==cuaterna4.get(0)*n) && (tablero[j])){
+					ganador = tablero[i+j][6-(i+j)];
+					if (ganador==jugador){
+						num_lineas = num_lineas + 1;
+					}
+				}
+			}
+		}
+		return true;
+	}
+}

@@ -1,0 +1,36 @@
+package es.uam.eps.bmi.search.parsing;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
+/**
+ * Clase que implementa la interfaz TextParser, que limpia un texto de
+ * caracteres propios de HTML.
+ * 
+ * @author Mario Valdemaro Garcia Roque <mariov.garcia@estudiante.uam.es> y
+ * Angel Fuente Ortega <angel.fuente@estudiante.uam.es>
+ *
+ */
+public class HTMLSimpleParser implements TextParser {
+
+	@Override
+	public String parse(String text){
+		String str = text;
+		Document doc = Jsoup.parse(text);
+
+		// Clean the document.
+		doc = new Cleaner(Whitelist.simpleText()).clean(doc);
+
+		// Adjust escape mode
+		doc.outputSettings().escapeMode(EscapeMode.xhtml);
+
+		// Get back the string of the body.
+		str = doc.body().html();
+		return str;
+	}
+
+	public static void main(String[] args){
+		TextParser parser= new HTMLSimpleParser();
+		System.out.println(parser.parse("<html> asdasd</html>"));
+	}
+}

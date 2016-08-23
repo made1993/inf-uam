@@ -1,0 +1,52 @@
+package es.uam.eps.bmi.search.indexing;
+
+import java.util.List;
+
+import es.uam.eps.bmi.search.*;
+import es.uam.eps.bmi.search.parsing.*;
+
+public class BasicIndexing implements Index{
+
+	@Override
+	public void build(String inputCollectionPath, String outputIndexPath, TextParser textParser) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void load(String indexPath) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getDocIds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TextDocument getDocument(String docId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getTerms() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Posting> getTermPostings(String term) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

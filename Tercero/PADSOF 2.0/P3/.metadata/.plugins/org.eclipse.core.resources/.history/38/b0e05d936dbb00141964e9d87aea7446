@@ -1,0 +1,75 @@
+import java.util.ArrayList;
+
+
+public class Grupo {
+	private int idGrupo;
+	private String nombre;
+	private boolean privado;
+	private int  idModerador;
+	private ArrayList<Usuario> listaUsuarios;
+	private ArrayList<Mensaje> listaMensajes; //TODO REVISAR SI ES MENSAJE GRUPO
+	private ArrayList<Grupo> subGrupos;
+	/**
+	 * @return the idGrupo
+	 */
+	public int getIdGrupo() {
+		return idGrupo;
+	}
+	/**
+	 * @param idGrupo the idGrupo to set
+	 */
+	public void setIdGrupo(int idGrupo) {
+		this.idGrupo = idGrupo;
+	}
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	/**
+	 * @return the privado
+	 */
+	public boolean isPrivado() {
+		return privado;
+	}
+	/**
+	 * @param privado the privado to set
+	 */
+	public void setPrivado(boolean privado) {
+		this.privado = privado;
+	}
+	/**
+	 * @return the idModerador
+	 */
+	public int getIdModerador() {
+		return idModerador;
+	}
+	/**
+	 * @param idModerador the idModerador to set
+	 */
+	public void setIdModerador(int idModerador) {
+		this.idModerador = idModerador;
+	}
+	
+	public void addSubgrupo(String nombreSubgrupo,boolean privado, int idModerador){
+		/*TODO*/
+	}
+	
+	public boolean addUsuario(int idUsuario){
+		return false;/*TODO*/
+	}
+	
+	public boolean removeUsuario(int idUsuario){
+		return false;/*TODO*/
+	}
+	public boolean addMensaje(String cuerpo, String sujeto){
+		return false;/*TODO*/
+	}
+}

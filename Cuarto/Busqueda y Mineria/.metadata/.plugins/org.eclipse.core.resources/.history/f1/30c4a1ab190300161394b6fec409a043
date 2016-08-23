@@ -1,0 +1,48 @@
+package es.uam.eps.bmi.recomendacion;
+
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class Recomendador {
+	private UserRatedMovies urm;
+	private MovieTags mt;
+	private int k;
+	public Recomendador(String path, int k){
+		urm = new UserRatedMovies();
+		mt=new MovieTags();
+		this.k=k;
+		urm.leerDatos(path+"/user_ratedmovies.dat");
+		mt.leerDatos(path+"/movie_tags.dat");
+	}
+	
+	
+	public void binJaccard(){
+		mt.similitudBinJaccard();
+	}
+	public void binCoseno(){
+		mt.similitudBinCoseno();
+	}
+	public void binTfIdf(){
+		mt.similitudTfIdf();
+	}
+	
+	public void rochio(int userId, int movieId){
+		
+		
+	}
+	
+	//TODO: probar que funcione
+	public double knn(int userId, int movieId){
+			
+		int [] maxSimKey= new int [k];
+		int [] maxSimValue= new int [k];
+		
+		
+			//	rating+= mt.getSimilitudes().get(movieId).get(keys[i])
+	//					*urm.getDatos().get(userId).get(keys[i]);
+				//simTot+=mt.getSimilitudes().get(movieId).get(keys[i]);
+		return 0;
+	}
+
+}

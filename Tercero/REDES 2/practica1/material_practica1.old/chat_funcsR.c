@@ -1,0 +1,1523 @@
+
+#include <redes2/chat.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <netdb.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <redes2/irc.h>
+#include "funciones.h"
+void* commandCase(void * args);
+void * Ping(void *args);
+int sockfd;
+char nickName[10];
+/**
+ * @page connect_client \b connect_client
+ *
+ * @brief Llamada por el botón de "Conexión".
+ *
+ * @section SYNOPSIS
+ * 	\b #include \b <redes2/chat.h>
+ *
+ *	\b void \b connect_client \b (\b void\b )
+ * 
+ * @section descripcion DESCRIPCIÓN
+ *
+ * Es la función llamada cada vez que se pulsa el botón de "Conexión" en el
+ * interfaz gráfico.
+ * Esta función debe ser implementada por el alumno.
+ * 
+ * No tiene parámetros de entrada.
+ *
+ * @section retorno RETORNO
+ * No devuelve ningún valor ni código de error.
+ *
+ * @section seealso VER TAMBIÉN
+ * \b disconnect_client(3).
+ *
+ * @section authors AUTOR
+ * Eloy Anguiano (eloy.anguiano@uam.es)
+*/
+ void * Ping(void *args){
+ 	while(1){
+ 		char command[10];
+ 		int user;
+		sleep(30);
+		IRC_Ping(command, NULL, get_server(), NULL);
+		user=escribir(sockfd,command);
+		printf("%s, %d\n",command,user );
+	}
+ }
+void connect_client(void)
+{
+	struct addrinfo hints, *res;
+	int nick, user;
+	pthread_t h1,h2;
+	char port[20];
+	char command[256];
+	sprintf(port, "%d",get_port());
+	printf("%s:%s\n",get_server(),port );
+	memset(&hints, 0, sizeof hints);
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	/*TODO*/
+	strcpy(nickName,"cosas");
+	/*Comenzamos la conexion TCP*/
+	printf("se obtiene iformacion\n");
+	if(0!=getaddrinfo(get_server(), port, &hints, &res)){
+		error_text(current_page(),"Error al onbtener informacion del servidor");
+		return;
+	}
+	printf("socket\n");
+	sockfd=abrirSocketTCP();
+	if(sockfd==-1){
+		error_text(current_page(),"Error al crear el socket");
+		return;
+	}
+	printf("connect\n");
+	if(-1==abrirConnect(sockfd, *(res->ai_addr))){
+		error_text(current_page(),"Error al conectar");	
+		return;
+	}
+	/*Conexion IRC*/
+	printf("IRC\n");
+	IRC_Nick(command, NULL, "cosas");
+	nick=escribir(sockfd,command);
+	pthread_create(&h1,NULL, commandCase, (void *)NULL );
+
+	printf("%s, %d\n",command,nick );
+	IRC_User(command, NULL, "guest", "w", "cosas");
+	user=escribir(sockfd,command);
+	printf("%s, %d\n",command,user );
+	pthread_create(&h2,NULL, Ping, (void *)NULL );
+	
+	message_text(current_page(),"Conectado"); /* Ejemplo de uso */
+}
+
+/**
+ * @page disconnect_client \b disconnect_client
+ *
+ * @brief Llamada por el botón de "Desconexión".
+ *
+ * @section SYNOPSIS
+ * 	\b #include \b <redes2/chat.h>
+ *
+ *	\b void \b disconnect_client \b (\b void\b )
+ * 
+ * @section descripcion DESCRIPCIÓN
+ *
+ * Es la función llamada cada vez que se pulsa el botón de "Desconexión" en el
+ * interfaz gráfico.
+ * Esta función debe ser implementada por el alumno.
+ * 
+ * No tiene parámetros de entrada.
+ *
+ * @section retorno RETORNO
+ * No devuelve ningún valor ni código de error.
+ *
+ * @section seealso VER TAMBIÉN
+ * \b connect_client(3).
+ *
+ * @section authors AUTOR
+ * Eloy Anguiano (eloy.anguiano@uam.es)
+*/
+
+void disconnect_client()
+{
+	/*TODO revisar para conectar y desconectar sin problemas*/
+	close(sockfd);
+	message_text(current_page(),"DESCONEXION"); /* Ejemplo de uso */
+}
+
+/**
+ * @page topic_protect \b topic_protect
+ *
+ * @brief Llamada por el checkbox de "Protección de tópico".
+ *
+ * @section SYNOPSIS
+ * 	\b #include \b <redes2/chat.h>
+ *
+ *	\b void \b topic_protect \b (\b gboolean\b )
+ * 
+ * @section descripcion DESCRIPCIÓN
+ *
+ * Es la función llamada cada vez que se selecciona o deselecciona el checkbox
+ * de "Protección de tópico".
+ * Esta función debe ser implementada por el alumno.
+ * 
+ * Recibe como parámetro de entrada el valor TRUE o FALSE según se active o
+ * desactive el botón de "Protección de tópico".
+ *
+ * @section retorno RETORNO
+ * No devuelve ningún valor ni código de error.
+ *
+ * @section seealso VER TAMBIÉN
+ * \b extern_msg(3), \b secret(3), \b guests(3), \b privated(3), \b moderated(3).
+ *
+ * @section authors AUTOR
+ * Eloy Anguiano (eloy.anguiano@uam.es)
+*/
+
+void topic_protect(gboolean state)
+{
+	error_text(current_page(),"Función no implementada"); /* Ejemplo de uso */
+}
+
+/**
+ * @page extern_msg \b extern_msg
+ *
+ * @brief Llamada por el checkbox de "Mensaje externos".
+ *
+ * @section SYNOPSIS
+ * 	\b #include \b <redes2/chat.h>
+ *
+ *	\b void \b extern_msg \b (\b gboolean\b )
+ * 
+ * @section descripcion DESCRIPCIÓN
+ *
+ * Es la función llamada cada vez que se selecciona o deselecciona el checkbox
+ * de "Mensaje externos".
+ * Esta función debe ser implementada por el alumno.
+ * 
+ * Recibe como parámetro de entrada el valor TRUE o FALSE según se active o
+ * desactive el botón de "Mensaje externos".
+ *
+ * @section retorno RETORNO
+ * No devuelve ningún valor ni código de error.
+ *
+ * @section seealso VER TAMBIÉN
+ * \b topic_protect(3), \b secret(3), \b guests(3), \b privated(3), \b moderated(3).
+ *
+ * @section authors AUTOR
+ * Eloy Anguiano (eloy.anguiano@uam.es)
+*/
+
+void extern_msg(gboolean state)
+{
+	error_text(current_page(),"Función no implementada"); /* Ejemplo de uso */
+}
+
+/**
+ *
+ * @brief Llamada por el checkbox de "Secreto".
+ * @page secret \b secret
+ *
+ * @section SYNOPSIS
+ * 	\b #include \b <redes2/chat.h>
+ *
+ *	\b void \b secret \b (\b gboolean\b )
+ * 
+ * @section descripcion DESCRIPCIÓN
+ *
+ * Es la función llamada cada vez que se selecciona o deselecciona el checkbox
+ * de "Secreto".
+ * Esta función debe ser implementada por el alumno.
+ * 
+ * Recibe como parámetro de entrada el valor TRUE o FALSE según se active o
+ * desactive el botón de "Secreto".
+ *
+ * @section retorno RETORNO
+ * No devuelve ningún valor ni código de error.
+ *
+ * @section seealso VER TAMBIÉN
+ * \b extern_msg(3), \b topic_protect(3), \b guests(3), \b privated(3), \b moderated(3).
+ *
+ * @section authors AUTOR
+ * Eloy Anguiano (eloy.anguiano@uam.es)
+*/
+
+void secret(gboolean state)
+{
+	error_text(current_page(),"Función no implementada"); /* Ejemplo de uso */
+}
+
+/**
+ *
+ * @brief Llamada por el checkbox de "Invitados".
+ * @page guests \b guests
+ *
+ * @section SYNOPSIS
+ * 	\b #include \b <redes2/chat.h>
+ *
+ *	\b void \b guests \b (\b gboolean\b )
+ * 
+ * @section descripcion DESCRIPCIÓN
+ *
+ * Es la función llamada cada vez que se selecciona o deselecciona el checkbox
+ * de "Invitados".
+ * Esta función debe ser implementada por el alumno.
+ * 
+ * Recibe como parámetro de entrada el valor TRUE o FALSE según se active o
+ * desactive el botón de "Invitados".
+ *
+ * @section retorno RETORNO
+ * No devuelve ningún valor ni código de error.
+ *
+ * @section seealso VER TAMBIÉN
+ * \b extern_msg(3), \b topic_protect(3), \b secret(3), \b privated(3), \b moderated(3).
+ *
+ * @section authors AUTOR
+ * Eloy Anguiano (eloy.anguiano@uam.es)
+*/
+
+void guests(gboolean state)
+{
+	error_text(current_page(),"Función no implementada"); /* Ejemplo de uso */
+}
+
+/**
+ *
+ * @brief Llamada por el checkbox de "Privado".
+ * @page privated \b privated
+ *
+ * @section SYNOPSIS
+ * 	\b #include \b <redes2/chat.h>
+ *
+ *	\b void \b privated \b (\b gboolean\b )
+ * 
+ * @section descripcion DESCRIPCIÓN
+ *
+ * Es la función llamada cada vez que se selecciona o deselecciona el checkbox
+ * de "Privado".
+ * Esta función debe ser implementada por el alumno.
+ * 
+ * Recibe como parámetro de entrada el valor TRUE o FALSE según se active o
+ * desactive el botón de "Privado".
+ *
+ * @section retorno RETORNO
+ * No devuelve ningún valor ni código de error.
+ *
+ * @section seealso VER TAMBIÉN
+ * \b extern_msg(3), \b topic_protect(3), \b secret(3), \b guests(3), \b moderated(3).
+ *
+ * @section authors AUTOR
+ * Eloy Anguiano (eloy.anguiano@uam.es)
+*/
+
+void privated(gboolean state)
+{
+	error_text(current_page(),"Función no implementada"); /* Ejemplo de uso */
+}
+
+/**
+ *
+ * @brief Llamada por el checkbox de "Moderado".
+ * @page moderated \b moderated
+ *
+ * @section SYNOPSIS
+ * 	\b #include \b <redes2/chat.h>
+ *
+ *	\b void \b moderated \b (\b gboolean\b )
+ * 
+ * @section descripcion DESCRIPCIÓN
+ *
+ * Es la función llamada cada vez que se selecciona o deselecciona el checkbox
+ * de "Moderado".
+ * Esta función debe ser implementada por el alumno.
+ * 
+ * Recibe como parámetro de entrada el valor TRUE o FALSE según se active o
+ * desactive el botón de "Moderado".
+ *
+ * @section retorno RETORNO
+ * No devuelve ningún valor ni código de error.
+ *
+ * @section seealso VER TAMBIÉN
+ * \b extern_msg(3), \b topic_protect(3), \b secret(3), \b guests(3), \b privated(3).
+ *
+ * @section authors AUTOR
+ * Eloy Anguiano (eloy.anguiano@uam.es)
+*/
+
+void moderated(gboolean state)
+{
+	error_text(current_page(),"Función no implementada"); /* Ejemplo de uso */
+}
+
+/**
+ * @page new_text \b new_text
+ *
+ * @brief Llamada por la introducción de texto.
+ *
+ * @section SYNOPSIS
+ * 	\b #include \b <redes2/chat.h>
+ *
+ *	\b void \b new_text \b (\b gboolean\b )
+ * 
+ * @section descripcion DESCRIPCIÓN
+ *
+ * Es la función llamada cada vez que se introduce un texto en el campo de
+ * introducción de texto.
+ * Esta función debe ser implementada por el alumno.
+ * 
+ * Recibe como parámetro el texto introducido en el campo.
+ *
+ * @section retorno RETORNO
+ * No devuelve ningún valor ni código de error.
+ *
+ * @section authors AUTOR
+ * Eloy Anguiano (eloy.anguiano@uam.es)
+*/
+
+void new_text (char *msg)
+{
+	int currpage,i,j;
+	char command[1024];
+	char **str;
+	char *str2, *usr,*ch;
+
+	int numchannels;
+	char nch[3];
+	ch=(char*)malloc(sizeof(char)*10);
+	usr=(char*)malloc(sizeof(char)*9);
+	str2=(char*)malloc(sizeof(char)*128);
+	currpage = current_page(); /* Ejemplo de uso */
+	public_text(currpage,"User",msg); /* Ejemplo de uso */
+	switch(IRCUser_CommandQuery(msg)){
+		case UCYCLE:
+			printf("UCYCLE\n");
+			
+			if( IRCUserParse_Cycle(msg, &str, &numchannels) == -1){
+				message_text(current_page(), "argumentos erroneos para el comando cycle");
+			}
+			
+			IRC_Part(command, NULL, get_name_page(current_page()), NULL);
+			escribir(sockfd, command);
+			
+			for(i=0;i<numchannels;i++){
+				IRC_Join(command, NULL, str[i], NULL);	
+				escribir(sockfd, command);			
+			}
+			
+		break;
+
+
+
+		case UUSERHOST:
+			printf("UUSERHOST\n");
+			
+			if(IRCUserParse_Userhost(msg, &str2) == -1){
+				message_text(0, "entrada incorrecta para el comando userhost");
+			}
+			
+			IRC_Userhost(command, NULL, str2, NULL, NULL, NULL, NULL);
+			escribir(sockfd, command);
+			
+		break;
+
+		case UBOTMOTD:
+			printf("UBOTMOTD\n");
+			/*TODO*/
+			if(IRCUserParse_BotMotd( msg, &str2) < 0){
+				if(str2 == NULL){
+					IRC_Motd(command, NULL, str2);
+					escribir(sockfd, command);
+				}else{				
+					message_text(current_page(), "argumentos erroneos para el comando motd");
+				}
+			}else{
+				IRC_Motd(command, NULL, str2);
+				escribir(sockfd, command);
+			}
+			
+		break;
+
+
+		case UIDENTIFY:
+			printf("UIDENTIFY\n");
+			if(IRCUserParse_Identify( msg, &str2) < 0){
+				message_text(current_page(), "argumentos erroneos para el comando identify");
+			}
+			/*TODO*/
+			
+			
+		break;
+		case UDNS:
+			printf("UDNS\n");
+			
+			if(IRCUserParse_Dns( msg, &str2) < 0){
+				message_text(current_page(), "argumentos erroneos para el comando dns");				
+			}
+			
+			/*TODO*/
+			
+		break;
+
+		case UUSERIP:
+			printf("UUSERIP\n");
+			
+			if(IRCUserParse_UserIp( msg, &str2) < 0){
+				message_text(current_page(), "argumentos erroneos para el comando userip");
+				break;
+			}
+			/*TODO*/
+			
+		break;
+
+		case USTATS:
+			printf("USTATS\n");
+			
+			if(IRCUserParse_Stats( msg, &str2) < 0){
+				message_text(current_page(), "argumentos erroneos para el comando stats");
+				break;
+			}
+			
+			IRC_Stats(command, NULL, str2, NULL);
+			escribir(sockfd, command);			
+			
+		break;
+
+		case UCTCP:
+			printf("UCTCP\n");
+			if(IRCUserParse_CTCP( msg, &str2) < 0){
+				message_text(current_page(), "argumentos erroneos para el comando ctcp");
+				break;
+			}
+			/*TODO*/
+		break;
+
+		case UDCC:
+			printf("UDCC\n");
+			
+			if(IRCUserParse_DCC( msg, &str2) < 0){
+				message_text(current_page(), "argumentos erroneos para el comando ctcp");
+				break;
+			}
+			/*TODO*/
+		break;
+
+		case UNAMES:
+			printf("UNAMES\n");/*TODO preguntar a Eloy*/
+			
+		break;
+		case UHELP:
+			printf("UHELP\n");
+			IRCUserParse_Help(msg, &str2);
+			message_text(current_page(),"le has dado a HELP");
+		break;
+		case ULIST:
+			printf("ULIST\n");
+			IRCUserParse_List(msg, &str2);
+			IRC_List(command, NULL, str2, NULL);
+			escribir(sockfd, command);
+		break;
+		case UJOIN:/*TODO entra en un canal aunque no le pongas el #, pese a que no lo reconoce como canal*/
+			printf("UJOIN\n");
+			printf("%s\n",msg );
+			IRCUserParse_Join(msg, &str, &numchannels);
+			//IRC_Join(command, NULL, str[0], nch);
+			//escribir(sockfd,command);
+			printf("%s\n",command );
+			for(i=0;i<numchannels;i++){
+				IRC_Join(command, NULL, str[i], NULL);
+				escribir(sockfd,command);
+				
+			}
+		break;
+		case UPART:
+			printf("UPART\n");
+			IRCUserParse_Part(msg, &ch,&str2);
+			
+			IRC_Part(command, NULL, *str, ch);/*TODO??*/
+		break;
+		case ULEAVE:
+			printf("ULEAVE\n");
+			IRCUserParse_Leave(msg, &ch,& str2);
+
+			if((strlen(str2)==0)||(-1==get_index_page(str2))){
+				message_text(current_page(),"NO ESTAS EN ESE CANAL");
+				break;
+			}
+			/*TODO*/
+			printf("%d\n", get_index_page(str2));
+			delete_page	(get_index_page(str2));
+		break;
+		case UQUIT:
+			printf("UQUIT\n");
+			IRCUserParse_Quit(msg, &str2);
+			if(IRC_Quit(command, NULL, str2)<0){
+				message_text(current_page(), "asdasd");
+				break;
+			}
+			escribir(sockfd,command);
+			disconnect_client();
+		break;
+		case UNICK:
+			printf("UNICK\n");
+			IRCUserParse_Nick(msg,&usr);
+			IRC_Nick(command,NULL,usr);
+			escribir(sockfd,command);
+
+		break;
+		case UAWAY:
+			printf("UAWAY\n");
+			IRCUserParse_Away(msg, &str2);
+			IRC_Away(command, NULL, str2);
+			escribir(sockfd,command);
+		break;
+		case UWHOIS:
+			printf("UWHOIS\n");
+			IRCUserParse_Whois(msg, &usr);
+			IRC_Whois(command, NULL, usr, NULL);
+			escribir(sockfd, command);
+		break;
+		case UINVITE:
+			printf("UINVITE\n");
+			IRCUserParse_Invite(msg, &usr, &ch);
+			IRC_Invite(command,NULL,usr,ch);
+			escribir(sockfd,command);
+		break;
+		case UKICK:
+			printf("UKICK\n");
+			IRCUserParse_Kick(msg, &usr);
+			IRC_Kick(command,NULL, get_name_page(current_page()), usr, "TU MADRE");
+			escribir(sockfd, command);
+		break;
+		case UTOPIC:
+			printf("UTOPIC\n");
+			IRCUserParse_Topic(msg,&str2);
+			IRC_Topic(command,NULL, get_name_page(current_page()),str2);
+			escribir(sockfd,command);
+		break;
+		case UME:
+			printf("UME\n");
+			if(IRCUserParse_Me(msg, &str2)<0){
+				message_text(current_page(), "argumentos erroneos para el comando me");
+				break;
+			}
+			IRC_Privmsg(command, NULL,get_name_page(current_page()),str2);
+			escribir(sockfd, command);
+		break;
+		case UMSG:
+			printf("UMSG\n");
+			if(IRCUserParse_Msg(msg, &ch, &str2)<0){
+				message_text(current_page(), "argumentos erroneos para el comando msg");
+				break;
+			}
+			IRC_Privmsg(command, NULL,ch,str2);
+			escribir(sockfd, command);
+			/*TODO*/
+		break;
+		case UQUERY:
+			printf("UQUERY\n");
+			if(IRCUserParse_Query(msg, &usr, &str2)){
+				message_text(current_page(), "argumentos erroneos para el comando query");
+				break;
+			}
+			gdk_threads_enter();
+			add_new_page(usr);
+			gdk_threads_leave();
+			set_current_page(get_index_page(usr));
+			IRC_Privmsg(command, NULL, usr, str2);
+			escribir(sockfd, command);
+			/*TODO*/
+		break;
+		case UNOTICE:
+			printf("UNOTICE\n");
+			if(IRCUserParse_Notice(msg, &ch , &str2)<0){
+				message_text(current_page(), "argumentos erroneos para el comando notice");
+				break;
+			}
+			IRC_Notice(command, NULL, ch,str2 );
+			printf("%s\n",command);
+			escribir(sockfd,command);
+		break;
+		case UNOTIFY:
+			printf("UNOTIFY\n");
+		break;
+		case UIGNORE:
+			printf("UIGNORE\n");
+		break;
+		case UPING:
+			printf("UPING\n");
+
+		break;
+		case UWHO:
+			printf("UWHO\n");
+			IRCUserParse_Who(msg, &str2 );
+			IRC_Who(command,NULL, str2, NULL);
+			escribir(sockfd, command);
+		break;
+		case UWHOWAS:
+			printf("UWHOWAS\n");
+			IRCUserParse_WhoWas(msg, &usr, &j);
+			IRC_Whowas(command, NULL, usr, j, NULL);
+			escribir(sockfd, command);
+
+
+		break;
+		case UISON:
+			printf("UISON\n");
+			IRCUserParse_Ison(msg, &str, &j);
+			for(i=0;i<j;i++){
+				IRC_Ison(command, NULL, str[i], NULL);
+				escribir(sockfd,command);
+			}
+		break;
+		
+		case UMOTD:
+			printf("UMOTD\n");
+			IRCUserParse_Motd(msg, &str2);
+			IRC_Motd(command, NULL,str2);
+			escribir(sockfd, command);
+			
+		break;
+		case URULES:
+			printf("URULES\n");
+		break;
+		case ULUSERS:
+			printf("ULUSERS\n");
+			IRCUserParse_Lusers(msg, &str2);
+			IRC_Lusers(command, NULL, NULL,NULL );
+			escribir(sockfd, command);
+		break;
+		case UVERSION:
+			printf("UVERSION\n");
+			IRCUserParse_Version(msg, &str2);
+			IRC_Version(command,NULL, str2);
+			escribir(sockfd,command);
+		break;
+		case UADMIN:
+			printf("UADMIN\n");
+			IRCUserParse_Admin(msg, &str2);
+			IRC_Admin(command,NULL, str2);
+			escribir(sockfd,command);
+		break;
+		
+		case UKNOCK:
+			printf("UKNOCK\n");
+		break;
+		case UVHOST:
+			printf("UVHOST\n");
+		break;
+		case UMODE:
+			printf("UMODE\n");
+			IRCUserParse_Mode(msg,&ch,&str2,&usr);
+			IRC_Mode(command,NULL, ch, str2, usr);
+			escribir(sockfd,command);
+
+		break;
+		case UTIME:
+			printf("UTIME\n");
+			IRCUserParse_Time(msg, &str2);
+			IRC_Time(command,NULL, str2);
+			escribir(sockfd,command);			
+		break;
+		case UMAP:
+			printf("UMAP\n");
+			/*TODO sin definir*/
+		break;
+		case ULINKS:
+			printf("ULINKS\n");
+			//falta el parse de la libreria
+			//IRC_Links(command, NULL, char *remoteserver, char *servermask);
+			/*TODO*/
+		break;
+		case USETNAME:
+			printf("USETNAME\n");
+		break;
+		case ULICENSE:
+			printf("ULICENSE\n");
+		break;
+		case UMODULE:
+			printf("UMODULE\n");
+		break;
+		case UPARTALL:
+			printf("UPARTALL\n");
+		break;
+		case UCHAT:
+			printf("UCHAT\n");
+		break;
+		default:
+			printf("DEFAULT\n");
+
+			IRC_Privmsg(command, NULL, get_name_page(current_page()	), msg);
+			//IRC_Notice(command, NULL, "#cosas", msg);
+			printf("%s\n",command);
+			escribir(sockfd,command);
+		break;
+	}
+	free(ch);
+	free(usr);
+	free(str2);
+}
+
+
+
+void * commandCase(void* args){
+	long command;
+	char buf[1024];
+	char *aux1,*aux11;
+	char *aux2,*aux12;
+	char *aux3,*aux13,*aux14;
+	char *usr;
+	char *ch;
+	char *pch;
+	char *buf2=NULL;
+
+	aux1=(char*)malloc(sizeof(char)*128);
+	aux2=(char*)malloc(sizeof(char)*128);
+	aux3=(char*)malloc(sizeof(char)*128);
+	while(1){
+		command =recibir(sockfd,buf);
+		printf("\t\t\t\tcommand:%li\n",command);
+		printf("%s\n",buf );
+		command=IRC_CommandQuery(buf);
+		switch(command){
+			case PASS:
+				printf("PASS\n");
+			break;
+			case NICK:
+				printf("NICK\n");
+			break;
+			case USER:
+				printf("USER\n");
+			break;
+			case OPER:
+				printf("OPER\n");
+			break;
+			case MODE:
+				printf("MODE\n");
+				IRCParse_Mode(buf, NULL, &usr, &aux11, &aux12);
+				/**/
+
+			break;
+			case SERVICE:
+				printf("SERVICE\n");
+				//IRCParse_Service(buf, NULL, char **servicenick, char **maskdistribution, char **info);
+				/*TODO*/
+			break;
+			case QUIT:
+				printf("QUIT\n");
+				IRCParse_Quit(buf, NULL, &aux11);
+				/*TODO
+				** implementar en la lista de notificaciones 
+				**
+				*/
+			break;
+			case SQUIT:
+				printf("SQUIT\n");
+				IRCParse_Squit(buf, NULL, &aux11, &aux12);
+				/*TODO*/
+			break;
+			case JOIN:
+				printf("JOIN\n");
+				IRCParse_Join(buf, &usr, &ch, &aux2);
+				pch = strtok(usr,"!");
+				if(strcmp(nickName,pch)==0){
+					add_new_page(&ch[1]);
+					set_current_page(get_index_page(&ch[1]));
+					gdk_threads_enter();
+					message_text(get_index_page(&ch[1]),"te has unido");
+					gdk_threads_leave();	
+				}
+				else{
+					gdk_threads_enter();
+					message_text(get_index_page(&ch[1]),"se ha unido");
+					message_text(get_index_page(&ch[1]),pch);
+					gdk_threads_leave();	
+				}
+				
+			break;
+			case PART:
+				printf("PART\n");
+				IRCParse_Part(buf, &aux12, &ch, &aux11);
+				public_text	(get_index_page(ch), strtok(aux12,"!"), aux11);
+			break;
+			case TOPIC:
+				printf("TOPIC\n");
+				IRCParse_Topic(buf, NULL, &ch, &aux11);
+				sprintf(aux1,"%s se ha ido de %s",aux11,ch);
+				message_text(get_index_page(ch), aux11);
+			break;
+			case NAMES:
+				printf("NAMES\n");
+				IRCParse_Names(buf, NULL, &ch,  &aux11);
+				message_text(get_index_page(ch), aux11);
+			break;
+			case LIST:
+				printf("LIST\n");
+				IRCParse_List(buf, NULL, &ch,  &aux11);
+				message_text(get_index_page(ch), aux11);
+			break;
+			case INVITE:
+				printf("INVITE\n");
+				IRCParse_Invite(buf, NULL, &ch,&aux12);
+				sprintf(aux1,"Has sido invitado a %s",ch );
+				message_text(current_page(),aux1);
+			break;
+			case KICK:
+				printf("KICK\n");
+				IRCParse_Kick(buf, NULL, &ch, &usr, &aux11);
+				sprintf(aux1,"%s ha sido expulsado por: %s",usr,aux11);
+				message_text(get_index_page(ch), aux1);
+			break;
+			case PRIVMSG:
+				printf("\tPRIVMSG: %s\n",buf);
+
+				IRCParse_Privmsg(buf, &aux1, &aux2, &aux3);
+				printf("%s %s %s\n", aux1, aux2, aux3);
+				//get_index_page(aux2);
+				pch=strtok(aux1,"!");
+				gdk_threads_enter();
+				public_text( get_index_page(aux2),pch,aux3);
+				gdk_threads_leave();
+			break;
+			case NOTICE:
+				printf("NOTICE\n");
+				IRCParse_Notice(buf, &aux1, &aux2, &aux3);
+				printf("%s %s %s\n",aux1 ,aux2,aux3 );
+				public_text( current_page(),aux2,aux3);
+			break;
+			case MOTD:
+				printf("MOTD\n");
+				IRCParse_Motd(buf, NULL, &buf2);
+				message_text(0, buf2);
+			break;
+			case LUSERS:
+				printf("LUSERS\n");
+				IRCParse_Lusers(buf, NULL, NULL, &buf2);
+				message_text(0,buf );
+			break;
+			case VERSION:
+				printf("VERSION\n");
+				IRCParse_Version(buf, NULL,&buf2);
+				message_text(0, aux1);
+
+			break;
+			case STATS:
+				printf("STATS\n");
+				//IRCParse_Stats(buf, NULL, char **query, char **target);
+				
+			break;
+			case LINKS:
+				printf("LINKS\n");
+				IRCParse_Links(buf, NULL, &aux11, NULL);
+				message_text(0,aux11);
+			break;
+			case TIME:
+				printf("TIME\n");
+				IRCParse_Time(buf, NULL, &buf2);
+				message_text(0,buf2);
+			break;
+			case CONNECT:
+				printf("CONNECT\n");
+				/*TODO*/
+			break;
+			case TRACE:
+				printf("TRACE\n");
+				IRCParse_Trace(buf, NULL, &buf2);
+				message_text(0, buf2);
+			break;
+			case ADMIN:
+				printf("ADMIN\n");
+				IRCParse_Admin(buf, NULL, &buf2);
+				message_text(0,buf2);
+			break;
+			case INFO:
+				printf("INFO\n");
+				IRCParse_Info(buf, NULL, &buf2);
+				message_text(0,buf2);
+			break;
+			case SERVLIST:
+				printf("SERVLIST\n");
+				IRCParse_Servlist(buf, NULL, NULL, &buf2);
+				/*TODO*/
+			break;
+			case SQUERY:
+				printf("SQUERY\n");
+				//IRCParse_Squery(buf, NULL, char **servicename, char **msg);
+				/*TODO*/
+			break;
+			case WHO:
+				printf("WHO\n");
+			break;
+			case WHOIS:
+				printf("WHOIS\n");
+			break;
+			case WHOWAS:
+				printf("WHOWAS\n");
+			break;
+			case KILL:
+				printf("KILL\n");
+			break;
+			case PING:
+				printf("PING\n");
+			break;
+			case PONG:
+				printf("PONG\n");
+			break;
+			case ERROR:
+				printf("ERROR\n");
+			break;
+			case AWAY:
+				printf("AWAY\n");
+			break;
+			case REHASH:
+				printf("REHASH\n");
+			break;
+			case DIE:
+				printf("DIE\n");
+			break;
+			case RESTART:
+				printf("RESTART\n");
+			break;
+			case SUMMON:
+				printf("SUMMON\n");
+			break;
+			case USERS:
+				printf("USERS\n");
+			break;
+			case WALLOPS:
+				printf("WALLOPS\n");
+			break;
+			case USERHOST:
+				printf("USERHOST\n");
+			break;
+			case ISON:
+				printf("ISON\n");
+			break;
+			case HELP:
+				printf("HELP\n");
+			break;
+			case RULES:
+				printf("RULES\n");
+			break;
+			case SERVER:
+				printf("SERVER\n");
+			break;
+			case ENCAP:
+				printf("ENCAP\n");
+			break;
+			case CNOTICE:
+				printf("CNOTICE\n");
+				//IRCUserParse_Notice(buf, aux[0], char **msg);
+			break;
+			case CPRIVMSG:
+				printf("CPRIVMSG\n");
+			break;
+			case NAMESX:
+				printf("NAMESX\n");
+			break;
+			case SILENCE:
+				printf("SILENCE\n");
+			break;
+			case UHNAMES:
+				printf("UHNAMES\n");
+			break;
+			case WATCH:
+				printf("WATCH\n");
+			break;
+			case KNOCK:
+				printf("KNOCK\n");
+			break;
+			case USERIP:
+				printf("USERIP\n");
+			break;
+			case SETNAME:
+				printf("SETNAME\n");
+			break;
+			case ERR_NEEDMOREPARAMS:
+				printf("ERR_NEEDMOREPARAMS\n");
+			break;
+			case ERR_ALREADYREGISTRED:
+				printf("ERR_ALREADYREGISTRED\n");
+			break;
+			case ERR_NONICKNAMEGIVEN:
+				printf("ERR_NONICKNAMEGIVEN\n");
+			break;
+			case ERR_ERRONEUSNICKNAME:
+				printf("ERR_ERRONEUSNICKNAME\n");
+			break;
+			case ERR_NICKNAMEINUSE:
+				printf("ERR_NICKNAMEINUSE\n");
+			break;
+			case ERR_NICKCOLLISION:
+				printf("ERR_NICKCOLLISION\n");
+			break;
+			case ERR_UNAVAILRESOURCE:
+				printf("ERR_UNAVAILRESOURCE\n");
+			break;
+			case ERR_RESTRICTED:
+				printf("ERR_RESTRICTED\n");
+			break;
+			case RPL_YOUREOPER:
+				printf("RPL_YOUREOPER\n");
+				IRCParse_RplYoureOper(buf,NULL, &usr, &aux11);
+				sprintf(aux1,"%s %s",usr, aux11);
+				message_text(0, aux1);
+			break;
+			case ERR_NOOPERHOST:
+				printf("ERR_NOOPERHOST\n");
+				IRCParse_ErrNoOperHost(buf, NULL, &usr, &aux11);
+				sprintf(aux1,"%s %s",usr,aux11);
+				message_text(0, aux1);
+			break;
+			case ERR_PASSWDMISMATCH:
+				printf("ERR_PASSWDMISMATCH\n");
+			break;
+			case RPL_UMODEIS:
+				printf("RPL_UMODEIS\n");
+				IRCParse_RplUModeIs(buf, NULL, &usr, &aux11);
+				sprintf(aux1,"%s %s",usr,aux11);
+				message_text(0, aux1);
+			break;
+			case ERR_UMODEUNKNOWNFLAG:
+				printf("ERR_UMODEUNKNOWNFLAG\n");
+				IRCParse_ErrUModeUnknownFlag(buf, NULL, &usr, &aux11);
+				sprintf(aux1,"%s %s",usr,aux11);
+				message_text(0, aux1);
+			break;
+			case ERR_USERSDONTMATCH:
+				printf("ERR_USERSDONTMATCH\n");
+				IRCParse_ErrUsersDontMatch	(buf, NULL, &usr, &aux11);
+				sprintf(aux1,"%s %s",usr,aux11);
+				message_text(0, aux1);
+			break;
+			case RPL_YOURESERVICE:
+				printf("RPL_YOURESERVICE\n");
+				IRCParse_RplYoureService(buf, NULL, &usr, &aux11,&aux12);
+				sprintf(aux1,"%s %s %s",usr, aux11,aux12);
+				message_text(0,aux1);
+			break;
+			case RPL_YOURHOST:
+				printf("RPL_YOURHOST\n");
+				IRCParse_RplYourHost(buf,NULL, &usr,&aux11,&aux12,&aux13);
+				sprintf(aux1,"%s %s %s %s",usr,aux11,aux12,aux13);
+				message_text(0, aux1);
+			break;
+			case RPL_MYINFO:
+				printf("RPL_MYINFO\n");
+				IRCParse_RplMyInfo(buf, NULL, &usr, &buf2,&aux11,&aux12,&aux13,&aux14);
+				sprintf(aux1,"%s %s %s %s %s %s %s ",usr,buf2,aux11,aux12,aux13,aux14);
+				message_text(0, aux1);
+			break;
+			case ERR_NOPRIVILEGES:
+				printf("ERR_NOPRIVILEGES\n");
+				IRCParse_ErrNoPrivileges(buf, NULL, &usr, &aux11);
+				sprintf(aux1,"%s %s",usr,aux11);
+				message_text(0, aux1);
+			break;
+			case ERR_NOSUCHSERVER:
+				printf("ERR_NOSUCHSERVER\n");
+				IRCParse_ErrNoSuchServer(buf,NULL, char **nick, &usr, &aux11, &aux12);
+				sprintf(aux1,"%s %s %s",usr,aux11,aux12);
+				message_text(0, aux1);				
+
+			break;
+			case RPL_ENDOFWHO:
+				printf("RPL_ENDOFWHO\n");
+				IRCParse_RplEndOfWho(char *strin, char **prefix, char **nick, char **name, char **msg);
+			break;
+			case RPL_ENDOFWHOIS:
+				printf("RPL_ENDOFWHOIS\n");
+			break;
+			case RPL_ENDOFWHOWAS:
+				printf("RPL_ENDOFWHOWAS\n");
+			break;
+			case ERR_WASNOSUCHNICK:
+				printf("ERR_WASNOSUCHNICK\n");
+			break;
+			case RPL_WHOWASUSER:
+				printf("RPL_WHOWASUSER\n");
+			break;
+			case RPL_WHOISUSER:
+				printf("RPL_WHOISUSER\n");
+			break;
+			case RPL_WHOISCHANNELS:
+				printf("RPL_WHOISCHANNELS\n");
+			break;
+			case RPL_WHOISOPERATOR:
+				printf("RPL_WHOISOPERATOR\n");
+			break;
+			case RPL_WHOISSERVER:
+				printf("RPL_WHOISSERVER\n");
+			break;
+			case RPL_WHOISIDLE:
+				printf("RPL_WHOISIDLE\n");
+			break;
+			case RPL_WHOREPLY:
+				printf("RPL_WHOREPLY\n");
+			break;
+			case ERR_BADMASK:
+				printf("ERR_BADMASK\n");
+			break;
+			case ERR_CANNOTSENDTOCHAN:
+				printf("ERR_CANNOTSENDTOCHAN\n");
+			break;
+			case ERR_NOTEXTTOSEND:
+				printf("ERR_NOTEXTTOSEND\n");
+			break;
+			case ERR_NOTOPLEVEL:
+				printf("ERR_NOTOPLEVEL\n");
+			break;
+			case ERR_WILDTOPLEVEL:
+				printf("ERR_WILDTOPLEVEL\n");
+			break;
+			case ERR_BADCHANMASK:
+				printf("ERR_BADCHANMASK\n");
+			break;
+			case ERR_BADCHANNELKEY:
+				printf("ERR_BADCHANNELKEY\n");
+			break;
+			case RPL_BANLIST:
+				printf("RPL_BANLIST\n");
+			break;
+			case ERR_BANNEDFROMCHAN:
+				printf("ERR_BANNEDFROMCHAN\n");
+			break;
+			case ERR_CHANNELISFULL:
+				printf("ERR_CHANNELISFULL\n");
+			break;
+			case RPL_CHANNELMODEIS:
+				printf("RPL_CHANNELMODEIS\n");
+			break;
+			case ERR_CHANOPRIVSNEEDED:
+				printf("ERR_CHANOPRIVSNEEDED\n");
+			break;
+			case RPL_ENDOFBANLIST:
+				printf("RPL_ENDOFBANLIST\n");
+			break;
+			case RPL_ENDOFEXCEPTLIST:
+				printf("RPL_ENDOFEXCEPTLIST\n");
+			break;
+			case RPL_ENDOFINVITELIST:
+				printf("RPL_ENDOFINVITELIST\n");
+			break;
+			case RPL_ENDOFNAMES:
+				printf("RPL_ENDOFNAMES\n");
+			break;
+			case RPL_EXCEPTLIST:
+				printf("RPL_EXCEPTLIST\n");
+			break;
+			case RPL_INVITELIST:
+				printf("RPL_INVITELIST\n");
+			break;
+			case ERR_INVITEONLYCHAN:
+				printf("ERR_INVITEONLYCHAN\n");
+			break;
+			case RPL_INVITING:
+				printf("RPL_INVITING\n");
+			break;
+			case ERR_KEYSET:
+				printf("ERR_KEYSET\n");
+			break;
+			case RPL_LISTSTART:
+				printf("RPL_LISTSTART\n");
+			break;
+			case RPL_LIST:
+				printf("RPL_LIST\n");
+			break;
+			case RPL_LISTEND:
+				printf("RPL_LISTEND\n");
+			break;
+			case RPL_NAMREPLY:
+				printf("RPL_NAMREPLY\n");
+			break;
+			case ERR_NOCHANMODES:
+				printf("ERR_NOCHANMODES\n");
+			break;
+			case ERR_NOSUCHCHANNEL:
+				printf("ERR_NOSUCHCHANNEL\n");
+			break;
+			case ERR_NOTONCHANNEL:
+				printf("ERR_NOTONCHANNEL\n");
+			break;
+			case RPL_NOTOPIC:
+				printf("RPL_NOTOPIC\n");
+			break;
+			case ERR_TOOMANYCHANNELS:
+				printf("ERR_TOOMANYCHANNELS\n");
+			break;
+			case ERR_TOOMANYTARGETS:
+				printf("ERR_TOOMANYTARGETS\n");
+			break;
+			case ERR_UNKNOWNMODE:
+				printf("ERR_UNKNOWNMODE\n");
+			break;
+			case ERR_USERNOTINCHANNEL:
+				printf("ERR_USERNOTINCHANNEL\n");
+			break;
+			case ERR_USERONCHANNEL:
+				printf("ERR_USERONCHANNEL\n");
+			break;
+			case RPL_UNIQOPIS:
+				printf("RPL_UNIQOPIS\n");
+			break;
+			case RPL_TOPIC:
+				printf("RPL_TOPIC\n");
+			break;
+			case RPL_ADMINME:
+				printf("RPL_ADMINME\n");
+			break;
+			case RPL_ADMINLOC1:
+				printf("RPL_ADMINLOC1\n");
+			break;
+			case RPL_ADMINLOC2:
+				printf("RPL_ADMINLOC2\n");
+			break;
+			case RPL_ADMINEMAIL:
+				printf("RPL_ADMINEMAIL\n");
+			break;
+			case RPL_INFO:
+				printf("RPL_INFO\n");
+			break;
+			case RPL_ENDOFLINKS:
+				printf("RPL_ENDOFLINKS\n");
+			break;
+			case RPL_ENDOFINFO:
+				printf("RPL_ENDOFINFO\n");
+			break;
+			case RPL_ENDOFMOTD:
+				printf("RPL_ENDOFMOTD\n");
+			break;
+			case RPL_ENDOFSTATS:
+				printf("RPL_ENDOFSTATS\n");
+			break;
+			case RPL_LINKS:
+				printf("RPL_LINKS\n");
+			break;
+			case RPL_LUSERCHANNELS:
+				printf("RPL_LUSERCHANNELS\n");
+			break;
+			case RPL_LUSERCLIENT:
+				printf("RPL_LUSERCLIENT\n");
+			break;
+			case RPL_LUSERME:
+				printf("RPL_LUSERME\n");
+			break;
+			case RPL_LUSEROP:
+				printf("RPL_LUSEROP\n");
+			break;
+			/*case RPL_LUSERUNKOWN:
+				printf("RPL_LUSERUNKOWN\n");
+			break;*/
+			case RPL_MOTD:
+				printf("RPL_MOTD\n");
+				message_text(current_page(), buf);
+			break;
+			case RPL_MOTDSTART:
+				printf("RPL_MOTDSTART\n");
+			break;
+			case ERR_NOMOTD:
+				printf("ERR_NOMOTD\n");
+			break;
+			case RPL_STATSCOMMANDS:
+				printf("RPL_STATSCOMMANDS\n");
+			break;
+			case RPL_STATSLINKINFO:
+				printf("RPL_STATSLINKINFO\n");
+			break;
+			case RPL_STATSOLINE:
+				printf("RPL_STATSOLINE\n");
+			break;
+			case RPL_STATSUPTIME:
+				printf("RPL_STATSUPTIME\n");
+			break;
+			case RPL_TIME:
+				printf("RPL_TIME\n");
+			break;
+			case RPL_TRACECLASS:
+				printf("RPL_TRACECLASS\n");
+			break;
+			case RPL_TRACECONNECT:
+				printf("RPL_TRACECONNECT\n");
+			break;
+			case RPL_TRACECONNECTING:
+				printf("RPL_TRACECONNECTING\n");
+			break;
+			case RPL_TRACEHANDSHAKE:
+				printf("RPL_TRACEHANDSHAKE\n");
+			break;
+			case RPL_TRACELINK:
+				printf("RPL_TRACELINK\n");
+			break;
+			case RPL_TRACENEWTYPE:
+				printf("RPL_TRACENEWTYPE\n");
+			break;
+			case RPL_TRACEOPERATOR:
+				printf("RPL_TRACEOPERATOR\n");
+			break;
+			case RPL_TRACESERVER:
+				printf("RPL_TRACESERVER\n");
+			break;
+			case RPL_TRACESERVICE:
+				printf("RPL_TRACESERVICE\n");
+			break;
+			case RPL_TRACEUSER:
+				printf("RPL_TRACEUSER\n");
+			break;
+			case RPL_TRACEUNKNOWN:
+				printf("RPL_TRACEUNKNOWN\n");
+			break;
+			case RPL_TRACELOG:
+				printf("RPL_TRACELOG\n");
+			break;
+			case RPL_TRACEEND:
+				printf("RPL_TRACEEND\n");
+			break;
+			case RPL_VERSION:
+				printf("RPL_VERSION\n");
+			break;
+			case ERR_NOSUCHSERVICE:
+				printf("ERR_NOSUCHSERVICE\n");
+			break;
+			case RPL_SERVLIST:
+				printf("RPL_SERVLIST\n");
+			break;
+			case RPL_SERVLISTEND:
+				printf("RPL_SERVLISTEND\n");
+			break;
+			case ERR_CANTKILLSERVER:
+				printf("ERR_CANTKILLSERVER\n");
+			break;
+			case ERR_NOORIGIN:
+				printf("ERR_NOORIGIN\n");
+			break;
+			case RPL_ENDOFUSERS:
+				printf("RPL_ENDOFUSERS\n");
+			break;
+			case ERR_FILEERROR:
+				printf("ERR_FILEERROR\n");
+			break;
+			case RPL_ISON:
+				printf("RPL_ISON\n");
+			break;
+			case ERR_NOLOGIN:
+				printf("ERR_NOLOGIN\n");
+			break;
+			case RPL_NOUSERS:
+				printf("RPL_NOUSERS\n");
+			break;
+			case RPL_NOWAWAY:
+				printf("RPL_NOWAWAY\n");
+			break;
+			case RPL_REHASHING:
+				printf("RPL_REHASHING\n");
+			break;
+			case ERR_SUMMONDISABLED:
+				printf("ERR_SUMMONDISABLED\n");
+			break;
+			case RPL_SUMMONING:
+				printf("RPL_SUMMONING\n");
+			break;
+			case RPL_UNAWAY:
+				printf("RPL_UNAWAY\n");
+			break;
+			case RPL_USERHOST:
+				printf("RPL_USERHOST\n");
+			break;
+			case RPL_USERS:
+				printf("RPL_USERS\n");
+			break;
+			case ERR_USERSDISABLED:
+				printf("ERR_USERSDISABLED\n");
+			break;
+			case RPL_USERSSTART:
+				printf("RPL_USERSSTART\n");
+			break;
+			case RPL_AWAY:
+				printf("RPL_AWAY\n");
+			break;
+			case ERR_NOSUCHNICK:
+				printf("ERR_NOSUCHNICK\n");
+			break;
+			case RPL_WELCOME:
+				/*printf("RPL_WELCOME\n");
+				IRCParse_RplWellcome(buf, NULL, &aux[0], &aux[1]);
+				printf("asda\n");
+				message_text(current_page(), aux[0]);
+				message_text(current_page(), aux[1]);*/
+			break;
+			case RPL_CREATED:
+				printf("RPL_CREATED\n");
+			break;
+			case RPL_BOUNCE:
+				printf("RPL_BOUNCE\n");
+			break;
+			case RPL_TRYAGAIN:
+				printf("RPL_TRYAGAIN\n");
+			break;
+			case ERR_UNKNOWNCOMMAND:
+				printf("ERR_UNKNOWNCOMMAND\n");
+			break;
+			case ERR_NOADMININFO:
+				printf("ERR_NOADMININFO\n");
+			break;
+			case ERR_NOTREGISTERED:
+				printf("ERR_NOTREGISTERED\n");
+			break;
+			case ERR_NOPERMFORHOST:
+				printf("ERR_NOPERMFORHOST\n");
+			break;
+			case ERR_YOUREBANNEDCREEP:
+				printf("ERR_YOUREBANNEDCREEP\n");
+			break;
+			case ERR_YOUWILLBEBANNED:
+				printf("ERR_YOUWILLBEBANNED\n");
+			break;
+			case ERR_BANLISTFULL:
+				printf("ERR_BANLISTFULL\n");
+			break;
+			case ERR_UNIQOPPRIVSNEEDED:
+				printf("ERR_UNIQOPPRIVSNEEDED\n");
+			break;
+			case ERR_NORECIPIENT:
+				printf("ERR_NORECIPIENT\n");
+			break;
+			case ERR_TOOMANYMATCHES:
+				printf("ERR_TOOMANYMATCHES\n");
+			break;
+			case RPL_YOURID:
+				printf("RPL_YOURID\n");
+				IRCParse_RplYourId (buf, NULL, &usr, &aux11, &aux12);
+				sprintf(aux1,"%s %s %s",usr, aux11, aux12);
+				message_text(0, aux1);
+			break;
+			case RPL_CREATIONTIME:
+				printf("RPL_CREATIONTIME\n");
+				IRCParse_RplCreationTime (buf, NULL, &usr, &ch, &buf2);
+				sprintf(aux1,"%s %s %s ",usr,ch,buf2);
+				message_text(0, aux1);
+			break;
+			case RPL_LOCALUSERS:
+				printf("RPL_LOCALUSERS\n");
+				IRCParse_RplLocalUsers (buf,NULL, &usr, &aux11, &aux12,&aux13);
+				sprintf(aux1,"%s %s total=%s maximum=%s",usr, aux11, aux12,aux13);
+				message_text(0,aux1);
+			break;
+			case RPL_GLOBALUSERS:
+				printf("RPL_GLOBALUSERS\n");
+				IRCParse_RplGlobalUsers (buf, NULL, &usr,&aux11, &aux12,&aux13);
+				sprintf(aux1,"%s %s total=%s maximum=%s",usr, aux11, aux12,aux13);
+				message_text(0,aux1);
+			break;
+			case RPL_TOPICWHOTIME:
+				printf("RPL_TOPICWHOTIME\n");
+				IRCParse_RplTopicWhoTime (buf, NULL, &usr, &ch, &aux11,&aux12);
+				sprintf(aux1,"%s %s %s %s",usr, ch, aux11,aux12);
+				message_text(0,aux1);
+
+			break;
+			case RPL_CHANNELURL:
+				printf("RPL_CHANNELURL\n");
+				IRCParse_RplChannelUrl (buf,NULL, &usr, &ch, aux11);
+				sprintf(aux1,"%s %s %s",usr,ch,aux11);
+				message_text(0,aux1);
+			break;
+			default:/*TODO*/
+			/*IRCParse_GeneralCommand(char *strin, char **prefix, char **type, char ***parameters, int *numparame-
+			ters, char **msg)
+				printf("DEFAULT\n");
+				IRCParse_Motd(buf, NULL, &aux[0]);
+
+				message_text(current_page(),aux[0]);*/
+			break;
+
+		}
+	}
+}

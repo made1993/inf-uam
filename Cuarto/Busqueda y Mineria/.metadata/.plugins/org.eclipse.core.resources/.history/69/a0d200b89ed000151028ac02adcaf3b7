@@ -1,0 +1,14 @@
+package es.uam.eps.bmi.search.parsing;
+
+import org.jsoup.Jsoup;
+
+public class Parser implements TextParser{
+
+	@Override
+	public String parse(String text) {
+		
+		return null;
+	}
+	
+
+}

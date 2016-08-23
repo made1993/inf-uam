@@ -1,0 +1,8 @@
+1 - Dar pesos a cada att
+	Mas cosas que no entiendo
+	
+2 - Determinar la k en el entreno
+
+3 - Dar % a cada k segun distancia
+    Hacer NB de los k
+ 

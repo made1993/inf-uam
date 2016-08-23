@@ -1,0 +1,42 @@
+leonardo.martin@mail.gob:lomnmb757
+fernando.lopez@mail.gob:folzmb747
+oscar.casals@mail.gob:orcsmb457
+elvis.domingo@mail.gob:esdomb467
+ramon.levi@mail.gob:rnlimb437
+javier.pereira@mail.gob:jrpamb567
+guillermo.moreno@mail.gob:gomomb857
+miguel.moreno@mail.gob:mlmomb557
+manuel.alonso@mail.gob:mlaomb557
+oscar.alonso@mail.gob:oraomb457
+elvira.cabrera@mail.gob:eacamb567
+javier.ondoetxea@mail.gob:jroamb587
+susana.pujol@mail.gob:saplmb547
+elvis.pujol@mail.gob:esplmb447
+jesus.cordero@mail.gob:jscomb467
+elvis.cordero@mail.gob:escomb467
+elvira.torres@mail.gob:eatsmb557
+benjamin.guecher@mail.gob:bngrmb767
+
+
+	case 14:
+	         		System.out.println(usr.listarGruposEstudio());
+	         		System.out.println("Elija un grupo o 0:");
+	         		i= retOpcion();
+	         		if(i==0||i>=usr.getListaGrupos().size())
+	         			break;
+	         		System.out.println("Escriba el mensaje:");
+	         		String msj= retString();
+	         		
+	         		GrupoEstudio gestudio= new GrupoEstudio(0, null, false, null, null);
+	         		gestudio= (GrupoEstudio) gestudio.cargarGrupo(usr.getListaGrupos().get(i-1).getNombre());
+	         		for(Usuario u: gestudio.getListaUsuarios()){
+	         			System.out.println("¿Quieres mandar este mensaje? si(0 enter) no (1):");
+						if(retOpcion()==1){
+	         				break;
+	         			}
+						u=u.cargarUsuario(u.getCorreo());
+	         			MensajeUsuario msg= new MensajeUsuario(0, u, msj, Calendar.getInstance(), gestudio.getNombre(), usr);
+	         			u.addMensajeBuzon(msg);
+						u.guardarUsuario();
+	         		}
+	         		break;

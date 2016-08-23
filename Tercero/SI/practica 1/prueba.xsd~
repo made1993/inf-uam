@@ -1,0 +1,6 @@
+<!DOCTYPE helloworld
+[
+<!ELEMENT helloworld (person)>
+<!ELEMENT person (name)>
+<!ELEMENT name (#PCDATA)>
+]>

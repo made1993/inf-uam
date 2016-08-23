@@ -1,0 +1,20 @@
+.TH "inicializar_nivel__s_s_l" 3 "Mon Apr 27 2015" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+inicializar_nivel__s_s_l \- \fBinicializar_nivel_SSL\fP 
+inicializa el nivel SSL
+.SH "SYNOPSIS"
+.PP
+\fB#include\fP \fB'conexion\&.h'\fP 
+.PP
+\fBSSL_CTX*\fP \fBinicializar_nivel_SSL\fP \fB\fP(\fBint\fP * sock\fB\fP)
+.SH "DESCRIPCIÓN"
+.PP
+Esta función se encargará de realizar todas las llamadas necesarias para que la aplicación pueda usar la capa segura SSL\&.
+.SH "RETORNO"
+.PP
+Devuelve NULL en caso de error o la estructrua SSL_CTX* en caso de exito \&.
+.SH "VER TAMBIÉN"
+.PP
+\fBfijar_contexto_SSL(3)\fP, \fBconectar_canal_seguro_SSL(3)\fP, \fBaceptar_canal_seguro_SSL(3)\fP, \fBevaluar_post_connectar_SSL(3)\fP, \fBenviar_datos_SSL(3)\fP, \fBrecibir_datos_SSL(3)\fP, \fBcerrar_canal_SSL(3)\fP \fB\fP  authors AUTOR Mario Valdemaro Garcia Roque (mariov.garcia@estudiante.uam.es) Roberto Garcia Teodoro (roberto.garciat@estudiante.uam.es) 

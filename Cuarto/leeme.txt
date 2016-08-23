@@ -1,0 +1,4 @@
+En general todas la practicas que estan subidas estan aprobadas y con buena nota, pero hay cosas comentables:
+
+La ultima practica de busqueda y mineria creo recordar que tiene un fallo
+Aprendizaje estan bien hechas pero el codigo es muy confuso sobre todo en las utimas practicas

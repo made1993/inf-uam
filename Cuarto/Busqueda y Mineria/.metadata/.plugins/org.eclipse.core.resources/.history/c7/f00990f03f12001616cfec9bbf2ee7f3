@@ -1,0 +1,201 @@
+package es.uam.eps.bmi.recomendacion;
+
+import java.util.*;
+
+import es.uam.eps.bmi.recomendacion.lectores.UserRatedMovies;
+
+
+/**
+ * Clase que recomineda una pelicula segun los distintos algorimos colaborativos
+ * 
+ * @author Mario Valdemaro Garcia Roque <mariov.garcia@estudiante.uam.es> y
+ *         Angel Fuente Ortega <angel.fuente@estudiante.uam.es>
+ *
+ */
+public class RecomendadorColaborativo {
+
+	private UserRatedMovies urm;
+	private int k;
+	
+	/**
+	 * Especifica que algortimo se va a usar para calculuar la evaluacion
+	 * y genera/carga las similitudes.
+	 * 
+	 * @param path
+	 *          lugar donde se encuentran los archivos
+	 * 
+	 * @param k
+	 * 			tamaño del vencindario
+	 * 
+	 * @param func
+	 * 			algoritmo que se va usar para recomendar
+	 * 			1 --> Colaborativo Coseno
+	 * 			2 --> Colaborativo Pearson		
+	 * 	
+	 *            
+	 * @return la estructura incializada
+	 */
+	public RecomendadorColaborativo(String path, int k, int func) {
+		urm = new UserRatedMovies();
+		this.k = k;
+		urm.leerDatos(path+"/user_ratedmovies.dat");
+		if (func ==1)
+			urm.cargarDatos("sims/similitudUsersCoseno.dat");
+		else if (func ==2)
+			urm.cargarDatos("sims/similitudUsersPearson.dat");
+	}
+	
+	/**
+	 * Calcula las similitudes mediante pearson
+	 */
+	public void pearsonColaborativo(){
+		urm.similitudPearson();
+	}
+	/**
+	 * Calcula las similitudes mediante coseno
+	 */
+	public void cosenoColaborativo(){
+		urm.similitudCoseno();
+	}
+	
+	/**
+	 * Devuelve el rating de una pelicula
+	 * @param user usario al que recomendaremos la pelicula
+	 * @param movie pelicula que recomendaremos
+	 * @return valore del rating
+	 */
+	
+	public double getRatingUser(int user,int movie){
+		return this.urm.getDatos().get(user).get(movie);
+	}
+	/**
+	 * Calcula el raintg medio de una pelicula
+	 * @param movieId la pelicula
+	 * @return el valor del rating estimado
+	 */
+	public double media(int movieId){
+		double media=0;
+		int size=0;
+		for(HashMap<Integer, Double> peliculas: urm.getDatos().values()){
+			Double rate= peliculas.get(movieId);
+			if(rate!=null){
+				media+= rate;
+				size++;
+			}
+				
+		}
+		if(media==0)
+			return 0;
+		return media/size;
+	}
+	/**
+	 * Devuelve el rating estimado de una pelicula
+	 * @param user usario al que recomendaremos la pelicula
+	 * @param movie pelicula que recomendaremos
+	 * @return valore que recomendaremos
+	 */
+	public double knnColaborativo(int userId, int movieId){
+		
+		if(urm.getDatos().get(userId)==null){
+			System.out.println("El usuario o la pelicua no existen por tanto no se puede calcular el rating");
+			return 0;
+		}
+		int col=0;
+		int ln =urm.getUserIds().get(userId);
+		ArrayList<Integer> maxSimKey= new ArrayList<>();
+		ArrayList<Double> maxSimValue= new ArrayList<>();
+		for(int i=0; i<k; i++){
+			maxSimKey.add(0);
+			maxSimValue.add(0.0);
+		}
+		
+		double val;
+		int keyAux;
+		for(Integer key :urm.getUserIds().keySet()){
+			if(key.equals(userId) || !urm.getDatos().get(key).containsKey(movieId))
+				continue;
+			val=urm.getSimilitudes()[ln][urm.getUserIds().get(key)];
+			
+			if(maxSimValue.get(k-1) < val ){
+				maxSimValue.set(k-1, val);
+				maxSimKey.set(k-1, key);
+				for(int i= k-1; i>0; i--){
+					if(maxSimValue.get(i-1) > maxSimValue.get(i)){
+						break;
+					}
+					val=maxSimValue.get(i-1);
+					maxSimValue.set(i-1, maxSimValue.get(i));
+					maxSimValue.set(i, val);
+					
+					keyAux=maxSimKey.get(i-1);
+					maxSimKey.set(i-1, maxSimKey.get(i));
+					maxSimKey.set(i, keyAux);
+				}
+			}
+		}
+		
+		double rating=0;
+		double simTot=0;
+		if(maxSimValue.get(0)==0)
+			return media(movieId);
+		for(int i=0; i< maxSimKey.size(); i++){
+			
+			if(maxSimKey.get(i)==0)
+				break;
+			if(urm.getDatos().get(maxSimKey.get(i)).containsKey(movieId))
+				rating+=urm.getDatos().get(maxSimKey.get(i)).get(movieId) * maxSimValue.get(i);
+			simTot+= maxSimValue.get(i);
+		}
+		return rating/simTot;
+	}
+
+	
+	/**
+	 * @return the urm
+	 */
+	public UserRatedMovies getUrm() {
+		return urm;
+	}
+
+	/**
+	 * @param urm the urm to set
+	 */
+	public void setUrm(UserRatedMovies urm) {
+		this.urm = urm;
+	}
+
+	/**
+	 * @return the k
+	 */
+	public int getK() {
+		return k;
+	}
+
+	/**
+	 * @param k the k to set
+	 */
+	public void setK(int k) {
+		this.k = k;
+	}
+
+	public static void main(String [] args){
+		Scanner reader = new Scanner(System.in);
+		System.out.println("Numero de vecinos:");
+		int k = reader.nextInt();
+		System.out.println("1 para coseno 2 para pearson:");
+		int func = reader.nextInt();
+		RecomendadorColaborativo r = new RecomendadorColaborativo("hetrec2011-movielens-2k-v2", k, func);
+		while (true){
+			System.out.println("UserId:");
+			int userId = reader.nextInt();
+			System.out.println("MovieId:");
+			int movieId = reader.nextInt();
+			System.out.println(r.knnColaborativo(userId, movieId));
+			System.out.println("Fin?: SI -> 1, NO -> 2");
+			if(reader.nextInt()==1){
+				break;
+			}
+		}
+		reader.close();
+	}
+}

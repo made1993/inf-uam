@@ -1,0 +1,2 @@
+Resultado: 33.329445
+Tiempo: 0.003503

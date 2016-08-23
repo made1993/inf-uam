@@ -1,0 +1,486 @@
+package es.uam.eps.bmi.search.indexing;
+
+import java.io.*;
+import java.util.*;
+import java.util.zip.*;
+
+import org.jsoup.Jsoup;
+
+import es.uam.eps.bmi.search.TextDocument;
+import es.uam.eps.bmi.search.parsing.*;
+
+/**
+ * Clase que implementa la interfaz index, creando un indice básico de un buscador.
+ * 
+ * @author Mario Valdemaro Garcia Roque <mariov.garcia@estudiante.uam.es> y
+ * Angel Fuente Ortega <angel.fuente@estudiante.uam.es>
+ *
+ */
+public class BasicIndexing implements Index, Serializable{
+	private HashMap<String, List<Posting>> indices;
+
+	private HashSet<String> indicesDisco;
+	private int ndocs;
+	private HashMap<String, Double> modulos;
+	private ArrayList<String> docIds;
+	private String inputPath;
+	private List<TextDocument> textDocs;
+	private Runtime rt;
+	public BasicIndexing() {
+		super();
+		this.indices= new HashMap<>();
+		this.modulos= new HashMap<>();
+		this.docIds= new ArrayList<>();
+		indicesDisco=null;
+		textDocs= new ArrayList<>();
+		rt= Runtime.getRuntime();
+	}
+
+	public String readZips(ZipEntry z, ZipFile zf){
+		try{
+			docIds.add(z.getName());
+			BufferedReader br= new BufferedReader(new InputStreamReader(zf.getInputStream(z)));
+			String line;
+			String doc= new String();
+			int ln=0;
+			while( (line=br.readLine()) !=null ){
+				if(ln>14){
+					doc=doc.concat(line+"\n");
+				}
+				ln++;
+
+			}
+			TextDocument td = new TextDocument();
+			Integer id=textDocs.size(); 
+			td.setId(id.toString());
+			td.setName(z.getName());
+			textDocs.add(td);
+			
+			return doc;
+		}catch(Exception e){
+			
+		}
+		return null;
+	}
+	
+	
+	/** Leemos los datos sin necesidad de extraerlos del zip
+	 * 
+	 * @param input string que nos indica donde está el zip para leerlo
+	 * @return array de string con los documentos que hay en el zip
+	 */
+	public String[] readZips2(String input){
+		File f = new File(input);
+		String[] docs= null;
+		try {
+			ZipFile zf= new ZipFile(f);
+			Enumeration<? extends ZipEntry> zs = zf.entries();
+			
+			System.out.println("size:"+zf.size());
+			docs= new String[zf.size()];
+			int i=0;
+			while(zs.hasMoreElements()){
+				ZipEntry z=zs.nextElement();
+				docIds.add(z.getName());
+				BufferedReader br= new BufferedReader(new InputStreamReader(zf.getInputStream(z)));
+				String line;
+				String doc= new String();
+				int ln=0;
+				while( (line=br.readLine()) !=null ){
+					if(ln>14){
+						doc=doc.concat(line+"\n");
+					}
+					ln++;
+				}
+				docs[i]=doc;
+				System.out.println(z.getName());
+				TextDocument td = new TextDocument();
+				Integer id=textDocs.size(); 
+				td.setId(id.toString());
+				td.setName(z.getName());
+				textDocs.add(td);
+				i++;
+			}
+			zf.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return docs;
+	}
+	public void build2(String inputCollectionPath, String outputIndexPath, TextParser textParser) {
+		
+		String doc=null;
+		File f = new File(inputCollectionPath);
+		try {
+			ZipFile zf= new ZipFile(f);
+			Enumeration<? extends ZipEntry> zs = zf.entries();
+			Integer i=0;
+			while(zs.hasMoreElements()){
+
+				i++;
+				ZipEntry z= zs.nextElement();
+				//System.out.println(z.getName()+" ocupa:"+z.getSize());
+				docIds.add(z.getName());
+				doc=readZips(z, zf);
+				doc=textParser.parse(doc);
+				String[] tokens=null;
+				tokens=normalizar(doc);
+				textDocs.get(i-1).setDoc(doc.substring(0, 255));
+				long pos=0;
+				for(String token: tokens){
+					List<Posting> lposts=indices.get(token);
+					if(lposts==null){
+						lposts= new ArrayList<>();
+						Posting post= new Posting(i.toString());
+						post.insertPos(pos);
+						lposts.add( post);
+						indices.put(token, lposts);
+					}
+					else{
+						Posting post=lposts.get(lposts.size()-1);
+						if(post==null || !post.getDocId().equals(i.toString())){
+							post= new Posting(i.toString());
+							post.insertPos(pos);
+							lposts.add(post);
+							
+						}else{
+							post.insertPos(pos);
+						}
+							
+					}
+					pos++;
+				}
+				
+			}
+			doc=null;
+			
+			double tf,idf;
+			Iterator<String> claves = indices.keySet().iterator();
+			Double maux= null;
+			while(claves.hasNext()){
+				String key = claves.next();
+				List<Posting> lpost = indices.get(key);
+				for(Posting p: lpost){
+					tf = 1+(Math.log(p.getTermFrequency())/Math.log(2.0));
+					idf = (Math.log(ndocs/lpost.size())/Math.log(2.0));
+					maux=modulos.get(p.getDocId());
+					if(maux==null){
+						maux=new Double(Math.pow(tf*idf, 2.0));
+					}else{
+						maux+=Math.pow(tf*idf, 2.0);
+					}
+					modulos.put(p.getDocId(), maux);
+				}
+			}
+
+			//Hacemos la raiz cuadrada
+			claves = modulos.keySet().iterator();
+			while(claves.hasNext()){
+				String key = claves.next();
+				modulos.put(key, Math.sqrt(modulos.get(key)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+ 	}
+
+	/** Metodo que nos devuelve los módulos de los documentos del índice
+	 * 
+	 * @return hashMap donde las claves son el id del documento, y el valor el módulo
+	 */	
+	@Override
+	public HashMap<String, Double> getModulos() {
+		return this.modulos;
+	}
+	
+	/** Normalizamos las palabras antes de crear el índice con ellas
+	 * 
+	 * @param s documento leido del zip
+	 * @return array con cada una de las palabras del documento normalizadas
+	 */
+	public String[] normalizar(String s){
+		String [] ret=s.split("[^a-zA-Z0-9]+");
+		for(int i=0; i< ret.length; i++)
+				ret[i]=ret[i].toLowerCase();
+			
+	    return ret;
+	}
+	
+	/** Creamos un índice básico con un cojunto de datos
+	 * 
+	 * @param inputCollectionPath ruta donde se encuentran los documentos para crear el índice
+	 * @param outputIndexPath ruta donde queremos guardar el índice
+	 * @param textParser parseador de texto que usamos para analizar los documentos
+	 */
+	@Override
+	public void build(String inputCollectionPath, String outputIndexPath, TextParser textParser) {
+		
+		String [] docs= null;
+ 		long time=0;
+		try {
+			time=System.nanoTime();
+			docs=readZips2(inputCollectionPath);
+			time= System.nanoTime()-time;
+			System.out.println("se leen los documentos en:"+time/Math.pow(10, 9));
+
+			time=System.nanoTime();
+			for (int i=0; i<docs.length; i++){
+				docs[i]=textParser.parse(docs[i]);
+
+				textDocs.get(i).setDoc(docs[i].substring(0, 255));
+			}
+
+			time= System.nanoTime()-time;
+			System.out.println("Se quitaron caracteres html de la entrada en:"+time/Math.pow(10, 9));
+		
+			time=System.nanoTime();
+			ndocs=docs.length;
+			for (Integer i=0; i<docs.length; i++){
+				//String [] tokens=docs[i].split(" |\n|\r|\t");	
+				String [] tokens=normalizar(docs[i]);
+				long pos=0;
+				for (String token: tokens){
+					List<Posting> lposts=indices.get(token);
+					if(lposts==null){
+						lposts= new ArrayList<>();
+						Posting post= new Posting(i.toString());
+						post.insertPos(pos);
+						lposts.add( post);
+						indices.put(token, lposts);
+					}
+					else{
+						Posting post=lposts.get(lposts.size()-1);
+						if(post==null || !post.getDocId().equals(i.toString())){
+							post= new Posting(i.toString());
+							post.insertPos(pos);
+							lposts.add(post);
+							
+						}else{
+							post.insertPos(pos);
+						}
+							
+					}
+					pos++;
+				}
+			}
+			docs=null;
+			time= System.nanoTime()-time;
+			System.out.println("Se crean los indices en:"+time/Math.pow(10, 9));
+			
+			double tf,idf;
+			Iterator<String> claves = indices.keySet().iterator();
+			Double maux= null;
+			while(claves.hasNext()){
+				String key = claves.next();
+				List<Posting> lpost = indices.get(key);
+				for(Posting p: lpost){
+					tf = 1+(Math.log(p.getTermFrequency())/Math.log(2.0));
+					idf = (Math.log(ndocs/lpost.size())/Math.log(2.0));
+					maux=modulos.get(p.getDocId());
+					if(maux==null){
+						maux=new Double(Math.pow(tf*idf, 2.0));
+					}else{
+						maux+=Math.pow(tf*idf, 2.0);
+					}
+					modulos.put(p.getDocId(), maux);
+				}
+			}
+
+			//Hacemos la raiz cuadrada
+			claves = modulos.keySet().iterator();
+			while(claves.hasNext()){
+				String key = claves.next();
+				modulos.put(key, Math.sqrt(modulos.get(key)));
+			}
+			
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		
+		System.out.println("ocupada:"+((rt.totalMemory()-rt.freeMemory())/ Math.pow(2, 20)));
+		if((rt.totalMemory()-rt.freeMemory())/ Math.pow(2, 20)>=2048 ){
+			time= System.nanoTime();
+			
+			File fout= new File(outputIndexPath);
+			
+			fout.mkdir();
+			
+			for(String s:indices.keySet()){
+				//System.out.println(outputIndexPath+"/"+s);
+				if(s.length()==0 || s.length()>255)
+					continue;
+				try {
+					
+					 ObjectOutputStream fos=new ObjectOutputStream(new FileOutputStream(outputIndexPath+"/"+s));
+				      fos.writeObject(indices.get(s));
+				      fos.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			indices=null;
+			
+			
+			time= System.nanoTime()-time;
+			System.out.println("Se escriben los indices a disco:"+time/Math.pow(10, 9));
+		}	
+		
+		//System.out.println("Numero de indices:"+indices.size());
+		System.out.println("Numero de modulos:"+ modulos.size());
+		System.out.println("tiempo norm:"+time/Math.pow(10, 9));
+		
+		return;
+	}
+	
+	/** Cargamos un indice creado con anterioridad con una ruta que nos pasan
+	 * 
+	 * @param indexPath ruta donde se encuentra el documento
+	 */
+	@Override
+	public void load(String indexPath) {
+		File fin= new File(indexPath);
+		inputPath=indexPath;
+		indicesDisco= new HashSet<>();
+		for (File f:fin.listFiles()){
+			indicesDisco.add(f.getName());
+		}
+		
+	}
+
+	/** Obtenemos la ruta de un indice creado previamente
+	 * 
+	 * @return ruta del indice creado con anterioridad
+	 */
+	@Override
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/** Obtenemos los identificadores de todos los documentos que hemos cargado en el indice
+	 * 
+	 * @return List<String> lista con todos los identificadores de los documentos cargados en el indice 
+	 */
+	@Override
+	public List<String> getDocIds() {
+		
+		return docIds;
+	}
+
+	/** Nos devuelve un TextDocument asociado a un documento del índice
+	 * 
+	 * @param docId identificador del documento del cual queremos el TextDocument
+	 * @return TextDocument asociado con el documento del índice
+	 */
+	@Override
+	public TextDocument getDocument(String docId) {
+		
+		Integer i= Integer.parseInt(docId);
+		return this.textDocs.get(i);
+	}
+
+	/** Nos devuelve todos los términos de todos los documentos del indice
+	 * 
+	 * @return List<String> lista con todos los términos que hay en el índice 
+	 */
+	@Override
+	public List<String> getTerms() {
+		List<String> terms= new ArrayList<>();
+		if(indicesDisco!=null)
+			terms=new ArrayList<String>(indicesDisco);
+		else{
+			for(String s:this.indices.keySet())
+				terms.add(s);
+		}
+		return terms;
+	}
+
+	/** Obtenemos los posting de una termino que nos pasan por argumento
+	 * 
+	 * @param term término del cual queremos obtener sus postings
+	 * @return List<Posting> lista con todos los postings de un término 
+	 */
+	@Override
+	public List<Posting> getTermPostings(String term) {
+		if(indicesDisco!=null){
+			if(!indicesDisco.contains(term))
+				return null;
+			try {
+				ObjectInputStream ois=new ObjectInputStream(new FileInputStream(inputPath+"/"+term));
+				List<Posting> ret = (List) ois.readObject();
+				ois.close();
+				return ret;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		System.out.println(indices.get(term));
+		return this.indices.get(term);
+	}
+	
+	/** Función que nos permite leer un xml con la información de donde guardar el índice y donde están los ficheros
+	 *  para crearlo
+	 * 
+	 * 	@return lista con la ruta hasta los documentos, y donde guardar el índice
+	 */
+	public List<String> lectorXML(){
+		List<String> paths = new ArrayList<>();
+		try {
+			String sCadena = null;
+			BufferedReader bf = new BufferedReader(new FileReader("index-settings.xml"));
+		    while ((sCadena = bf.readLine())!=null) 
+		    	if(!Jsoup.parse(sCadena).text().equals(""))
+		    		paths.add(Jsoup.parse(sCadena).text());
+		    bf.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return paths;
+	}
+	
+	public static void main (String[] args){
+		BasicIndexing i= new BasicIndexing();
+		//i.readZips2("/home/tron/Descargas/clueweb-1K/docs.zip");
+		
+		long time=0;
+		Runtime r=Runtime.getRuntime();
+		System.out.println("Maxima memoria a ocupar:"+r.maxMemory()/Math.pow(2,20) +" MB");
+		time=System.nanoTime();
+		i.build("/home/tron/Descargas/clueweb-1K/docs.zip", "/home/tron/1k", new HTMLSimpleParser());
+		time= System.nanoTime()-time;
+		System.out.println("Ocupada al final:"+(r.totalMemory()/Math.pow(2,20)-r.freeMemory()/Math.pow(2,20))+" MB");
+		//i.load("/home/tron/1k");
+		r.getRuntime().gc();
+		System.out.println("tiempo:"+time/Math.pow(10, 9));
+		
+		System.out.println("Ocupada por el indice:"+(r.totalMemory()/Math.pow(2,20)-r.freeMemory()/Math.pow(2,20))+" MB");
+		System.out.println("Libre:"+r.freeMemory()/Math.pow(2,20)+" MB");
+		//System.out.println(i.getDocIds().get(0));
+		System.out.println("Numero de terminos:"+i.getTerms().size());
+		
+		System.out.println(i.getDocument("0"));
+		
+		//System.out.println(i.getTerms());
+		/*long time=0;
+		Runtime r=Runtime.getRuntime();
+		Set<String> voc=null;
+		time=System.nanoTime();
+		i.build("/home/flyn/Descargas/clueweb-1K/docs.zip","", new HTMLSimpleParser());
+		time= System.nanoTime()-time;
+		System.out.println("tiempo:"+time/Math.pow(10, 9));
+		System.out.println("Ocupada:"+r.totalMemory()/Math.pow(2,20)+" MB");
+		System.out.println("Libre:"+r.freeMemory()/Math.pow(2,20)+" MB");
+		System.out.println("Vocabulario: "+i.getVocabulario().size());
+		for(String s: i.getVocabulario()){
+			System.out.println("palabra:["+s+"]"+" size:"+s.length());
+			System.out.println("Posts:"+ i.getTermPostings(s));
+			break;
+		}*/
+	}
+
+}

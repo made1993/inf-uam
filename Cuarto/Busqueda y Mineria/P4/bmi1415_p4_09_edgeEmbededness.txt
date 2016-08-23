@@ -1,0 +1,44 @@
+small1 3-2 1.0
+small1 11-12 1.0
+small1 6-8 0.6666666666666666
+small1 3-4 0.5
+small1 2-4 0.5
+small1 1-11 0.5
+small1 1-12 0.5
+small1 7-8 0.5
+small1 9-8 0.5
+
+small2 7-6 0.3333333333333333
+small2 5-4 0.3333333333333333
+small2 6-5 0.3333333333333333
+small2 2-1 0.3333333333333333
+small2 2-4 0.3333333333333333
+small2 1-9 0.3333333333333333
+small2 7-8 0.3333333333333333
+small2 9-8 0.3333333333333333
+small2 3-4 0.2857142857142857
+
+twitter swarthmoreSwatAlum 1.0232558139534884
+twitter BUYNFCTAGS_NFC_ 1.0
+twitter bandagranpoderGjConcepcion 0.9444444444444444
+twitter bandagranpoderBandaS_SPadul 0.9047619047619048
+twitter TresCaidasGrBandaS_SPadul 0.9047619047619048
+twitter bandagranpoderBandasDeGranada 0.8947368421052632
+twitter SnipresApathy_sB 0.875
+twitter toCarlos_huevosCensoredTM 0.8724489795918368
+twitter ffemsAlanaMurrin 0.8571428571428571
+
+facebook 36953883 1.0
+facebook 36493883 1.0
+facebook 309135 1.0
+facebook 659658 1.0
+facebook 36953649 1.0
+facebook 1776910 1.0
+facebook 30912671 1.0
+facebook 34793883 1.0
+facebook 34793695 1.0
+
+erdos  0.0
+
+barabasi  0.0
+

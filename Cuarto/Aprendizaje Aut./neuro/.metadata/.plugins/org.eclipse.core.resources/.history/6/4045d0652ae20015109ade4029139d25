@@ -1,0 +1,98 @@
+package clasificadores;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+
+import javax.swing.plaf.DesktopPaneUI;
+
+import datos.Datos;
+import redNeuronal.RedNeuronal;
+
+public class ClasificadorRetropropagacion extends Clasificador{
+
+	
+	private RedNeuronal red;
+	private int epocas;
+	private int epoca;
+	private ArrayList<Integer> capas;
+	private double tasa;
+	private ArrayList<Double> res;
+	public ClasificadorRetropropagacion(ArrayList<Integer> capas, double tasa, int epocas) {
+		this.capas=capas;
+		this.tasa=tasa;
+		this.epocas=epocas;
+		this.epoca=0;
+	}
+
+	public boolean paradaEpocas(){
+		//if(epoca%100==0)
+			System.out.println("epoca "+epoca+" de "+epocas);
+		if(epoca==epocas)
+			return false;
+		epoca++;
+		return true;
+	}
+	@Override
+	public void entrenamiento(Datos datosTrain) {
+		red=new RedNeuronal(capas, tasa);
+		red.iniRed();
+		
+		while(paradaEpocas()){
+			for(int i=0; i<datosTrain.getNumDatos();i++){
+				ArrayList<Double> atributos= new ArrayList<>();
+				for(int j=0; j<datosTrain.getSizeCountAtributos(); j++){
+					atributos.add(datosTrain.getDato(i, j));
+				}
+				
+				ArrayList<Double> clases= new ArrayList<>();
+				for(int j=0; j<datosTrain.getClases().size(); j++){
+					clases.add(-1.0);
+				}
+				double indice=datosTrain.getDato(i, datosTrain.getSizeCountAtributos()-1);
+				clases.set(datosTrain.getClases().get(indice), 1.0);
+				red.actualizaSalidaRed(atributos);
+				red.actualizaDeltas(clases);
+				red.actualizaPesos();
+			}
+				
+			
+		}
+		this.epoca=0;
+		
+	}
+
+	@Override
+	public ArrayList<Double> clasifica(Datos datosTest) {
+		ArrayList<Double> res= new ArrayList<>();
+		for(int i=0; i<datosTest.getNumDatos();i++){
+			//System.out.println("dato:"+i);
+			ArrayList<Double> atributos= new ArrayList<>();
+			for(int j=0; j<datosTest.getSizeCountAtributos(); j++){
+				atributos.add(datosTest.getDato(i, j));
+			}
+			
+			red.actualizaSalidaRed(atributos);
+			
+			int clase=red.neuronaActivada();
+			double prediccion=0;
+			Enumeration<Double> keys= datosTest.getClases().keys();
+			while(keys.hasMoreElements()){
+				Double key= keys.nextElement();
+				if(datosTest.getClases().get(key).equals(clase)){
+					prediccion=key;
+					break;
+				}
+			}
+			res.add(prediccion);
+ 		}
+		this.res=res;
+		red=null;
+		return res;
+	}
+
+	@Override
+	public ArrayList<Double> getResultado() {
+		return res;
+	}
+
+}

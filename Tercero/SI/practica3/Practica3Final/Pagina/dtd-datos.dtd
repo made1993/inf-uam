@@ -1,0 +1,15 @@
+<!DOCTYPE peliculas
+[
+<!ELEMENT datos(peliculas, usuarios)>
+<!ELEMENT peliculas (pelicula)>
+<!ELEMENT pelicula (titulo,id,precio,categoria,fecha,art)>
+<!ELEMENT titulo (#PCDATA)>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT precio (#PCDATA)>
+<!ELEMENT categoria (#PCDATA)>
+<!ELEMENT fecha (#PCDATA)>
+<!ELEMENT art (#PCDATA)>
+<!ELEMENT usuarios (usuario)>
+<!ELEMENT usuario (nombre)>
+<!ELEMENT nombre (#PCDATA)>
+]>

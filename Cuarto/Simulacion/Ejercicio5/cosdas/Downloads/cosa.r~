@@ -1,0 +1,43 @@
+
+
+myrexp <- function(n, lambda=1) {
+	
+	unif <- runif(n, 0, 1)
+	unif <- -unif + 1
+	unif <- log(unif)
+	unif <- unif/lambda
+	unif <- -unif
+
+	return(unif)
+}
+
+
+mydiscreta <- function(valores, probs, n) {	
+
+	salida <- vector(,n)
+	apply(salida, 1, ftoapply, valores, probs)
+
+	return(salida)
+
+}
+
+ftoapply <- function(#valores, probs) {
+	){
+
+	valores <- c(1,2,3,4)
+	probs <- c(.2,.1,.4,.3)
+	s <- probs[1]
+	u <- runif(1,0,1)
+
+
+	for( x in 1:length(valores)) {
+		if(u <= s) {
+			return(valores[x]) 		
+		} else {
+			s <- s + probs[x]
+			u <- runif(1,0,1)
+		}
+	}
+
+
+}

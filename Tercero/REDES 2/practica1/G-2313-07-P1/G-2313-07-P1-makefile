@@ -1,0 +1,28 @@
+ob= obj/
+pref=G-2313-07-P1
+
+chat : libreria
+	@echo "\033[32;01mEnlazando\033[00m"
+	@gcc  -o $(pref)chat  src/$(pref)chat.c `pkg-config --libs gtk+-2.0` `pkg-config --cflags gtk+-2.0` -lpthread  -Llib -l$(pref)p1 -lircredes
+
+libreria: $(ob)$(pref)ficheros.o $(ob)$(pref)conexion.o $(ob)$(pref)chat_funcs.o
+	@echo "\033[32;01mCreando librerias\033[00m"
+	ar r lib/lib$(pref)p1.a $(ob)$(pref)conexion.o $(ob)$(pref)chat_funcs.o  $(ob)$(pref)ficheros.o
+	
+$(ob)$(pref)ficheros.o: srclib/$(pref)ficheros.c
+	@echo "\033[32;01mCompilando ficheros.c\033[00m"
+	@gcc -Wall  srclib/$(pref)ficheros.c -c -o $(ob)$(pref)ficheros.o
+
+$(ob)$(pref)conexion.o : srclib/$(pref)conexion.c
+	@echo "\033[32;01mCompilando conexion.c\033[00m"
+	@gcc -Wall  srclib/$(pref)conexion.c -c -o $(ob)$(pref)conexion.o
+
+$(ob)$(pref)chat_funcs.o : srclib/$(pref)chat_funcs.c  
+	@echo "\033[32;01mCompilando chat_funcs.c\033[00m"
+	@gcc -Wall -lircredes -lpthread srclib/$(pref)chat_funcs.c -c -o $(ob)$(pref)chat_funcs.o `pkg-config --cflags gtk+-2.0` `pkg-config --libs gtk+-2.0`  
+
+comprimir:
+	tar -cvf $(pref).tar ../$(pref)
+	
+mrProper:
+	rm -f $(ob)*.o lib/*.a $(pref)chat

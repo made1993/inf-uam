@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Extract local variable &apos;keySet&apos; from expression &apos;(List&lt;String&gt;)this.indices.keySet()&apos;&#x0A;- Original project: &apos;P2&apos;&#x0A;- Variable name: &apos;keySet&apos;&#x0A;- Destination method: &apos;es.uam.eps.bmi.search.indexing.BasicIndexing.getTerms()&apos;&#x0A;- Variable expression: &apos;(List&lt;String&gt;)this.indices.keySet()&apos;" description="Extract local variable &apos;keySet&apos;" final="false" id="org.eclipse.jdt.ui.extract.temp" input="/src&lt;es.uam.eps.bmi.search.indexing{BasicIndexing.java" name="keySet" replace="false" selection="4517 36" stamp="1457002103982" version="1.0"/>
+</session>

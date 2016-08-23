@@ -1,0 +1,31 @@
+package clasesAlgoritmoGentecio;
+
+import java.util.Random;
+
+import interfacesAlgoritmoGenetico.*;
+
+public class RecombinarUnPuntoTicTac implements Recombinar{
+
+	@Override
+	public Poblacion recombinar(Poblacion p, double cruce) {
+		Poblacion rec= new Poblacion();
+		Random r= new Random();
+		int i1,i2, corte;
+		for (int i=0; i < p.getIndividuos().size(); i+=2){
+			i1=r.nextInt(p.getIndividuos().size());
+			i2=r.nextInt(p.getIndividuos().size());
+			if(r.nextDouble()<cruce){
+				corte=r.nextInt(p.getIndividuos().get(0).sizeRegla()-2)+1;
+				rec.addIndividuo(p.cruceEnPunto(i1, i2, corte));
+				rec.addIndividuo(p.cruceEnPunto(i2, i1, corte));
+			
+			}
+			else{
+				rec.addIndividuo(p.getIndividuos().get(i1));
+				rec.addIndividuo(p.getIndividuos().get(i2));
+			}
+		}
+		return rec;
+	}
+
+}

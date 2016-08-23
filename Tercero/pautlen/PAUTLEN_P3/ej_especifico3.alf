@@ -1,0 +1,24 @@
+main
+{
+    array int[4] vector1;
+    int apariciones, i;
+
+
+	i=0;
+	apariciones =0;
+
+	while ((i<4))
+	{
+		scanf x;
+		vector1[i]=x;
+	}
+	scanf x;
+	while ((i<4))
+	{
+		if ((vector1[i]==x))
+		{
+			apariciones = apariciones + 1;
+		}
+	}
+	printf apariciones;
+}

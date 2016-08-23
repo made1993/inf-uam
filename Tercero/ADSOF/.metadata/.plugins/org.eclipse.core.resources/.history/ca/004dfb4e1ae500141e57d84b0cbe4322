@@ -1,0 +1,72 @@
+package grafo;
+
+
+public class Edge<E> {
+	private static int numEdges = 0;
+	private int id;
+	private E info;
+	private Graph<?,E> graph=null;
+	private Node<?> origen;
+	private Node<?> destino;
+	
+	public Edge(E i){
+		this.info=i;
+		this.id=Edge.numEdges++;
+	}
+
+	public static int getNumEdges() {
+		return numEdges;
+	}
+
+	public static void setNumEdges(int numEdges) {
+		Edge.numEdges = numEdges;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public E getInfo() {
+		return info;
+	}
+
+	public void setInfo(E info) {
+		this.info = info;
+	}
+
+	public Graph<?, E> getGraph() {
+		return graph;
+	}
+
+	public void setGraph(Graph<?, E> graph) {
+		this.graph = graph;
+	}
+
+	public Node<?> getOrigen() {
+		return origen;
+	}
+
+	public void setOrigen(Node<?> origen) {
+		this.origen = origen;
+	}
+
+	public Node<?> getDestino() {
+		return destino;
+	}
+
+	public void setDestino(Node<?> destino) {
+		this.destino = destino;
+	}
+	
+
+	public boolean isConnnected(Node <?> o,Node <?> d){
+		if(o.equals(origen)&&d.equals(destino))
+			return true;
+		return false;
+	}
+
+}

@@ -1,0 +1,47 @@
+package es.uam.eps.bmi.search.indexing;
+
+import java.util.*;
+
+public class Posting {
+
+	private String DocId;
+	private int termFrequency;
+	private List<Long> TermPositions;
+	
+	public Posting(String docId, int termFrequency, List<Long> termPositions) {
+		super();
+		DocId = docId;
+		this.termFrequency = termFrequency;
+		TermPositions = termPositions;
+	}
+
+	/**
+	 * @return the docId
+	 */
+	public String getDocId() {
+		return DocId;
+	}
+	/**
+	 * @param docId the docId to set
+	 */
+	public void setDocId(String docId) {
+		DocId = docId;
+	}
+	/**
+	 * @return the termFrequency
+	 */
+	public int getTermFrequency() {
+		return termFrequency;
+	}
+	/**
+	 * @param termFrequency the termFrequency to set
+	 */
+	public void setTermFrequency(int termFrequency) {
+		this.termFrequency = termFrequency;
+	}
+	
+	public List<Long> getTermPositions() {
+		return this.TermPositions;
+	}
+
+}

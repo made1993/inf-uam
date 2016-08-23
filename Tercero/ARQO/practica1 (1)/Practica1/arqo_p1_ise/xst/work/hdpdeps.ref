@@ -1,0 +1,36 @@
+V3 26
+FL D:/arqo_p1_ise/ALUMIPS.vhd 2014/10/02.11:31:17 P.20131013
+EN work/AluMIPS 1412246137 FL D:/arqo_p1_ise/ALUMIPS.vhd PB ieee/std_logic_1164 1381692176 \
+      PB ieee/std_logic_arith 1381692177 PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/AluMIPS/Compleja 1412246138 \
+      FL D:/arqo_p1_ise/ALUMIPS.vhd EN work/AluMIPS 1412246137
+FL D:/arqo_p1_ise/memoria.vhd 2014/10/01.16:09:32 P.20131013
+EN work/memoria 1412246143 FL D:/arqo_p1_ise/memoria.vhd LB STD PB std/TEXTIO 1381692176 \
+      PB ieee/std_logic_1164 1381692176 PB ieee/std_logic_arith 1381692177 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179 PB ieee/STD_LOGIC_TEXTIO 1381692180
+AR work/memoria/Behavioral 1412246144 \
+      FL D:/arqo_p1_ise/memoria.vhd EN work/memoria 1412246143
+FL D:/arqo_p1_ise/procesador.vhd 2014/10/02.12:34:58 P.20131013
+EN work/procesador 1412246141 FL D:/arqo_p1_ise/procesador.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/procesador/procesador_arq 1412246142 \
+      FL D:/arqo_p1_ise/procesador.vhd EN work/procesador 1412246141 CP RegsMIPS \
+      CP ALUMIPS CP UnidadControlMIPS
+EN work/procesador_tb 0 FL D:/arqo_p1_ise/procesador_TB.vhd PB ieee/std_logic_1164 1381692176 \
+      PB ieee/std_logic_arith 1381692177 PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/procesador_tb/TB_ARCHITECTURE 0 \
+      FL D:/arqo_p1_ise/procesador_TB.vhd EN work/procesador_tb 0 CP procesador \
+      CP memoria
+CF work/TESTBENCH_FOR_procesador 0 \
+      FL D:/arqo_p1_ise/procesador_TB.vhd AR work/procesador/procesador 0 \
+      AR work/procesador_tb/TB_ARCHITECTURE 0
+FL D:/arqo_p1_ise/RegsMIPS.vhd 2014/10/02.12:34:03 P.20131013
+EN work/RegsMIPS 1412246135 FL D:/arqo_p1_ise/RegsMIPS.vhd PB ieee/std_logic_1164 1381692176 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179 PB ieee/std_logic_arith 1381692177
+AR work/RegsMIPS/Practica 1412246136 \
+      FL D:/arqo_p1_ise/RegsMIPS.vhd EN work/RegsMIPS 1412246135
+FL D:/arqo_p1_ise/UnidadControl.vhd 2014/10/01.16:09:26 P.20131013
+EN work/UnidadControlMIPS 1412246139 FL D:/arqo_p1_ise/UnidadControl.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/UnidadControlMIPS/UC 1412246140 \
+      FL D:/arqo_p1_ise/UnidadControl.vhd EN work/UnidadControlMIPS 1412246139

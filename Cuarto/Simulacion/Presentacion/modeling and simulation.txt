@@ -1,0 +1,56 @@
+
+1 WHAT IS MODELING?
+
+Modeling is the process of producing a model; a model
+is a representation of the construction and working of
+some system of interest
+
+One purpose of a
+model is to enable the analyst to predict the effect of
+changes to the system
+
+An important issue in
+modeling is model validity. Model validation techniques
+include simulating the model under known input
+conditions and comparing model output with system
+output.
+
+2 WHAT IS SIMULATION?
+
+A simulation of a system is the operation of a model of
+the system. The model can be reconfigured and
+experimented with; usually, this is impossible, too
+expensive or impractical to do in the system it represents.
+
+Simulation is used before an existing system is
+altered or a new system built, to reduce the chances of
+failure to meet specifications, to eliminate unforeseen
+bottlenecks, to prevent under or over-utilization of
+resources, and to optimize system performance.
+
+3 HOW TO DEVELOP A SIMULATION MODEL?
+
+Simulation models consist of the following components:
+system entities, input variables, performance measures,
+and functional relationships.
+
+Modeling is arguably the most important
+part of a simulation study. 
+
+Simulation modeling
+comprises the following steps: (pasos...)
+
+4 HOW TO DESIGN A SIMULATION EXPERIMENT?
+
+A simulation experiment is a test or a series of tests in
+which meaningful changes are made to the input
+variables of a simulation model so that we may observe
+and identify the reasons for changes in the performance
+measures.
+
+Design of a simulation
+experiment involves answering the question: what data
+need to be obtained, in what form, and how much?
+
+5 HOW TO PERFORM SIMULATION ANALYSIS?
+

@@ -1,0 +1,160 @@
+demo()
+?load
+x <- 3
+x
+ls()
+x <- 7
+x
+x
+source("/Users/alberto/Code/R test/test.r")
+x
+source("/Users/alberto/Code/R test/test.r")
+y
+ls()
+?data
+data()
+attatch("quakes")
+attach("quakes")
+attach(quakes)
+ls()
+quakes
+auakes[,5]
+quakes[,5]
+quakes[1:5,]
+summary(quakes$depth)
+summary(quakes$mag)
+x <- cbind(quakes$depth, quakes$mag)
+x
+summary(x)
+summary(quakes$depth)
+summary(quakes$mag)
+summary(quakes)
+summary(quakes$depth, quakes$mag)
+x <- matrix(c(3,2,-1,1), byrow=T)
+x
+x <- matrix(c(3,2,-1,1), byrow=T, nrow?2)
+x <- matrix(c(3,2,-1,1), byrow=T, nrow=2)
+x
+y <- matrix(c(1,4,0,0,1,-1), nrow=2, byrow=T)
+y
+x[1,]
+x[2,]
+x[,2]
+x[1,2]
+y[,2:3]
+y[1,2:3]
+summary(quakes$depth)
+apply(quakes, 1, summary)
+apply(quakes, 2, summary)
+?apply
+apply(quakes, summary)
+apply(quakes, 2, summary)
+x <- cbind(quakes$depth, quakes$mag)
+summary(x)
+y
+apply(y[,2:3], 1, mean)
+dnorm(x,3,2)
+x
+dnorm(5,3,2)
+x<-seq(-5,10,by=.1)
+x
+dnorm(x,3,2)
+pnorm(x,3,2)
+qnorm(x,3,2)
+dnorm?
+?dnorm
+?dnorm
+rnorm(100,3,2)
+x<-rnorm(100,3,2)
+x
+dnorm(x, 3, 2)
+dnorm(0.5, 2, 0.25)
+dnorm(0.5, 2, 0.5)
+pnorm(0.5, 2, 0.5)
+?par
+par(mfrow=c(2,2))
+hist(Height)
+data()
+ls()
+attach(trees)
+hist(Heights)
+hist(Height)
+boxplot(Height)
+hist(Volume)
+trees[1:5,]
+boxplot(Volume)
+apply(trees, 2, summary)
+par(mfrow=c(1,1))
+plot(Height, Volume)
+pairs(trees)
+plot(trees)
+data(nhtemp)
+plot(nhtem)
+plot(nhtemp)
+data(faithful)
+plot(faithful)
+data(HairEyeColor)
+plot(HairEyeColor)
+HairEyeColor[1:10,]
+HairEyeColor[1:10]
+HairEyeColor
+x<-rnorm(100)
+x
+hist(x)
+boxplot(x)
+par(mfrow=c(1,2))
+hist(x)
+boxplot(x)
+?hist
+hist(x, col=blue)
+hist(x, col="BLUE")
+hist(x, col="BLUE", main="titulo")
+hist(x, col="BLUE", main="titulo", xlab="xlabel")
+hist(x, col="BLUE", main="titulo")
+x<-(-10):10
+x
+x<--10:10
+x
+n<-lenght(x)
+n<-length(x)
+y<-rnorm(n,x,4)
+y
+y<-rnorm(n,x,4)
+y
+plot(x,y)
+abline(0,1)
+data(nhtemp)
+plot(nhtemp)
+nhtem
+nhtemp
+temp<-as.vector(nhtemp)
+temp
+plot(temp)
+plot(1912:1990, temp)
+plot(1912:1971, temp)
+plot(1912:1971, temp, type='l')
+?plot
+plot(1912:1971, temp, type='b')
+plot(1912:1971, temp, type='c')
+plot(1912:1971, temp, type='o')
+plot(1912:1971, temp, type='h')
+plot(1912:1971, temp, type='s')
+plot(1912:1971, temp, type='n')
+sd <- function(x) sqrt(var(x))
+x<-c(9,5,2,3,7)
+sd(x)
+var(x)
+sqrt(var(x))
+fix(sd)
+?par
+fix(several.plots)
+mymean(x)
+fix(several.plots)
+several.plots(faithful)
+fix(sevaral.plots)
+several.plots(faithful)
+fix(sevaral.plots)
+several.plots(faithful)
+fix(several.plots)
+fix(several.plots)
+fix(several.plots)

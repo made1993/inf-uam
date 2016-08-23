@@ -1,0 +1,326 @@
+m255
+K4
+z2
+13
+cModel Technology
+Z0 dD:/arqo_p1_ise
+!s112 0.1
+!i10d 8192
+!i10e 25
+!i10f 100
+T_opt
+Z1 !s110 1412246653
+VDOoZ09>a[gQHZkzgQ4M8`2
+04 13 15 work procesador_tb tb_architecture 1
+=1-7427eabae1ea-542d2c7d-11a-368
+Z2 o-quiet -auto_acc_if_foreign -work work +acc
+n@_opt
+Z3 OL;O;10.2e;57
+T_opt1
+V3QWndIb61N:To79K=5j5_0
+Z4 04 10 14 work procesador procesador_arq 1
+=1-7427eabae1ea-542d2a5e-18-fb8
+R2
+n@_opt1
+R3
+Z5 dD:/arqo_p1_ise
+!s110 1412246110
+T_opt2
+VSDHfNC_nWn:AH=[`^3DDb2
+R4
+=1-7427eabae1ea-542d297a-35f-788
+R2
+n@_opt2
+R3
+R5
+!s110 1412245882
+Ealumips
+Z6 w1412242277
+Z7 DPx4 ieee 18 std_logic_unsigned 0 22 @_jbHPR7i^Jh?`2fDCO`m3
+Z8 DPx4 ieee 15 std_logic_arith 0 22 I`lKR?Ob>E^B_e2VdVLiQ0
+Z9 DPx3 std 6 textio 0 22 Y8d?=bLj9m4jiPLbo;>GT0
+Z10 DPx4 ieee 14 std_logic_1164 0 22 1bm?@Gd;P>[>_lN8Do9gP3
+R5
+Z11 8ALUMIPS.vhd
+Z12 FALUMIPS.vhd
+l0
+L19
+V@][^Gin6im_a_SGRM3;AB0
+Z13 OL;C;10.2e;57
+31
+Z14 !s110 1412246652
+Z15 !s108 1412246652.747000
+Z16 !s90 -reportprogress|300|-explicit|-93|ALUMIPS.vhd|
+Z17 !s107 ALUMIPS.vhd|
+Z18 o-explicit -93
+Z19 tExplicit 1
+!s100 c=FUj4JScD^BGA2KNdl5m1
+!i10b 1
+!i111 0
+Acompleja
+R7
+R8
+R9
+R10
+DEx4 work 7 alumips 0 22 @][^Gin6im_a_SGRM3;AB0
+l33
+L30
+Vf5df;YDL445?JVLAmKKeU2
+R13
+31
+R14
+R15
+R16
+R17
+R18
+R19
+!s100 3d9KmPNNE4<iWWLGz8`aV2
+!i10b 1
+!i111 0
+Ememoria
+Z20 w1412172572
+Z21 DPx4 ieee 16 std_logic_textio 0 22 E=LR>a2bb_I?VV>QDdAdh3
+R7
+R8
+R10
+R9
+R5
+Z22 8memoria.vhd
+Z23 Fmemoria.vhd
+l0
+L15
+VZ]D5`LieW57^^9RUOKW633
+R13
+31
+R14
+Z24 !s108 1412246652.944000
+Z25 !s90 -reportprogress|300|-explicit|-93|memoria.vhd|
+Z26 !s107 memoria.vhd|
+R18
+R19
+!s100 HQ5MeQWWG[J_jB[;a`C0_2
+!i10b 1
+!i111 0
+Abehavioral
+R21
+R7
+R8
+R10
+R9
+Z27 DEx4 work 7 memoria 0 22 Z]D5`LieW57^^9RUOKW633
+l35
+L30
+VOCB7zej924O`Ql_2oCD0Z1
+R13
+31
+R14
+R24
+R25
+R26
+R18
+R19
+!s100 [h00SZbiaPJ?D6Zl?V<j13
+!i10b 1
+!i111 0
+Eprocesador
+Z28 w1412246633
+R8
+R7
+R9
+R10
+R5
+Z29 8procesador.vhd
+Z30 Fprocesador.vhd
+l0
+L5
+Vad?_PHn6XV>cLVhPFmiKE1
+R13
+31
+R14
+Z31 !s108 1412246652.841000
+Z32 !s90 -reportprogress|300|-explicit|-93|procesador.vhd|
+Z33 !s107 procesador.vhd|
+R18
+R19
+!s100 VN:>9ZXlN[n5>h]=CiJ7D3
+!i10b 1
+!i111 0
+Aprocesador_arq
+R8
+R7
+R9
+R10
+Z34 DEx4 work 10 procesador 0 22 ad?_PHn6XV>cLVhPFmiKE1
+l79
+L20
+VbGXPe5Gk7UTPR8zC1_W^^2
+R13
+31
+R14
+R31
+R32
+R33
+R18
+R19
+!s100 ;O9D_SE>O0;C<=:0j41bi1
+!i10b 1
+!i111 0
+Eprocesador_tb
+Z35 w1412172570
+R7
+R8
+R9
+R10
+R5
+Z36 8procesador_TB.vhd
+Z37 Fprocesador_TB.vhd
+l0
+L28
+V4>5Bm?;`PgT7a^`>I;[on3
+R13
+31
+R1
+Z38 !s108 1412246653.036000
+Z39 !s90 -reportprogress|300|-explicit|-93|procesador_TB.vhd|
+Z40 !s107 procesador_TB.vhd|
+R18
+R19
+!s100 5Tl]KbMS94HeSC7Jj^8RY1
+!i10b 1
+!i111 0
+Atb_architecture
+R7
+R8
+R9
+R10
+Z41 DEx4 work 13 procesador_tb 0 22 4>5Bm?;`PgT7a^`>I;[on3
+l77
+L31
+V7gLY;AICD>2IZFNGQJF[N2
+R13
+31
+R1
+R38
+R39
+R40
+R18
+R19
+!s100 kWcABkF2>1X7D]@60e?0i3
+!i10b 1
+!i111 0
+Eregsmips
+Z42 w1412246043
+R8
+R7
+R9
+R10
+R5
+Z43 8RegsMIPS.vhd
+Z44 FRegsMIPS.vhd
+l0
+L19
+VFU4nhzOHW:`B2S0zkQf?Z0
+R13
+31
+R14
+Z45 !s108 1412246652.646000
+Z46 !s90 -reportprogress|300|-explicit|-93|RegsMIPS.vhd|
+Z47 !s107 RegsMIPS.vhd|
+R18
+R19
+!s100 zI]Gb[LQk^;<2gM]Gk=>>1
+!i10b 1
+!i111 0
+Apractica
+R8
+R7
+R9
+R10
+DEx4 work 8 regsmips 0 22 FU4nhzOHW:`B2S0zkQf?Z0
+l47
+L33
+V^oaDGa@TjgW;]?[JU8Vn`0
+R13
+31
+R14
+R45
+R46
+R47
+R18
+R19
+!s100 7>44Y;S?SHW_OFGm0B:c53
+!i10b 1
+!i111 0
+Ctestbench_for_procesador
+eprocesador_tb
+aTB_ARCHITECTURE
+R21
+R27
+R34
+DAx4 work 13 procesador_tb 15 tb_architecture 22 7gLY;AICD>2IZFNGQJF[N2
+R7
+R8
+R9
+R10
+R41
+R35
+R5
+R36
+R37
+l0
+L146
+V^LzkcS;7N;2:M7<38:oWH1
+R13
+31
+R1
+R38
+R39
+R40
+R18
+R19
+!s100 `E[ZKHfoIX>?a5S7R2fIQ0
+!i10b 1
+!i111 0
+Eunidadcontrolmips
+Z48 w1412172566
+R8
+R7
+R9
+R10
+R5
+Z49 8UnidadControl.vhd
+Z50 FUnidadControl.vhd
+l0
+L18
+VQC0AOcGWFamNi[V^`ekR53
+R13
+31
+R14
+Z51 !s108 1412246652.559000
+Z52 !s90 -reportprogress|300|-explicit|-93|UnidadControl.vhd|
+Z53 !s107 UnidadControl.vhd|
+R18
+R19
+!s100 7NRzzQMId5j^GV:EP6;j[3
+!i10b 1
+!i111 0
+Auc
+R8
+R7
+R9
+R10
+DEx4 work 17 unidadcontrolmips 0 22 QC0AOcGWFamNi[V^`ekR53
+l38
+L36
+VeWBT^[jn_g5VNh0VFnjN_2
+R13
+31
+R14
+R51
+R52
+R53
+R18
+R19
+!s100 j4QTz^KnV0nKA4CDeAHcL0
+!i10b 1
+!i111 0

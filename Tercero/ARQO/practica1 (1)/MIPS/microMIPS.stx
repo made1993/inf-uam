@@ -1,0 +1,41 @@
+Release 14.1 - xst P.15xf (nt64)
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to C:/Users/Franjo/Desktop/P5-EC/practica5/xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.08 secs
+ 
+--> Parameter xsthdpdir set to C:/Users/Franjo/Desktop/P5-EC/practica5/xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.08 secs
+ 
+--> WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Users/Franjo/Desktop/P5-EC/practica5/RegsMIPS.vhd" in Library work.
+Architecture practica of Entity regsmips is up to date.
+Compiling vhdl file "C:/Users/Franjo/Desktop/P5-EC/practica5/ALUMIPS.vhd" in Library work.
+Architecture compleja of Entity alumips is up to date.
+Compiling vhdl file "C:/Users/Franjo/Desktop/P5-EC/practica5/UnidadControl.vhd" in Library work.
+Architecture uc of Entity unidadcontrolmips is up to date.
+Compiling vhdl file "C:/Users/Franjo/Desktop/P5-EC/practica5/microMIPS.vhd" in Library work.
+Entity <micromips> compiled.
+Entity <micromips> (Architecture <mips>) compiled.
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.15 secs
+ 
+--> 
+
+Total memory usage is 206140 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

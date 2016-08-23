@@ -1,0 +1,23 @@
+x1<- scan(paste("error", 1, sep=""))
+x2<- scan(paste("error", 2, sep=""))
+x3<- scan(paste("error", 3, sep=""))
+x4<- scan(paste("error", 4, sep=""))
+x5<- scan(paste("error", 5, sep=""))
+x6<- scan(paste("error", 6, sep=""))
+x7<- scan(paste("error", 7, sep=""))
+x8<- scan(paste("error", 8, sep=""))
+x9<- scan(paste("error", 9, sep=""))
+#x10<- scan(paste("error",10 , sep=""))
+
+par(mfrow =c(3,3))
+hist(x1,col="blue", main="error DEu reasignacion", xlab="error")
+hist(x2,col="blue", main="error DEu realocalizacion", xlab="error")
+hist(x3,col="blue", main="error DEu rondas", xlab="error")
+
+hist(x4, col="blue", main="error DMh reasignacion", xlab="error")
+hist(x5, col="blue", main="error DMh relocalizacion", xlab="error")
+hist(x6, col="blue", main="error DMh rondas", xlab="error")
+
+hist(x7, col="blue", main="error DCh reasignacion", xlab="error")
+hist(x8, col="blue", main="error DCh relocalizacion", xlab="error")
+hist(x9, col="blue", main="error DCh rondas", xlab="error")

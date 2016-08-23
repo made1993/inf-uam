@@ -1,0 +1,279 @@
+package es.uam.eps.bmi.search.indexing;
+
+import java.io.*;
+import java.util.*;
+import java.util.zip.*;
+
+import org.jsoup.Jsoup;
+
+import es.uam.eps.bmi.search.TextDocument;
+import es.uam.eps.bmi.search.parsing.*;
+
+public class BasicIndexing implements Index, Serializable{
+	private HashMap<String, List<Posting>> indices;
+
+	private HashMap<String, List<Posting>> indicesDisco;
+	private int ndocs;
+	private HashMap<String, Double> modulos;
+	private ArrayList<String> docIds;
+	public BasicIndexing() {
+		super();
+		this.indices= new HashMap<>();
+		this.modulos= new HashMap<>();
+		this.docIds= new ArrayList<>();
+	}
+
+
+
+	
+	public String[] readZips2(String input){
+		File f = new File(input);
+		String[] docs= null;
+		try {
+			ZipFile zf= new ZipFile(f);
+			Enumeration<? extends ZipEntry> zs = zf.entries();
+			
+			System.out.println("size:"+zf.size());
+			docs= new String[zf.size()];
+			int i=0;
+			while(zs.hasMoreElements()){
+				ZipEntry z=zs.nextElement();
+				docIds.add(z.getName());
+				BufferedReader br= new BufferedReader(new InputStreamReader(zf.getInputStream(z)));
+				String line;
+				String doc= new String();
+				int ln=0;
+				while( (line=br.readLine()) !=null ){
+					if(ln>14){
+						doc=doc.concat(line+"\n");
+					}
+					ln++;
+				}
+				docs[i]=doc;
+				i++;
+			}
+			zf.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return docs;
+	}
+	
+	@Override
+	public HashMap<String, Double> getModulos() {
+		return this.modulos;
+	}
+	
+
+	public String[] normalizar(String s){
+		String [] ret=s.split("[^a-zA-Z0-9]+");
+		for(int i=0; i< ret.length; i++)
+			ret[i]=ret[i].toLowerCase();
+	    return ret;
+	}
+	
+	@Override
+	public void build(String inputCollectionPath, String outputIndexPath, TextParser textParser) {
+		
+		String [] docs= null;
+ 		long time=0;
+		try {
+			time=System.nanoTime();
+			docs=readZips2(inputCollectionPath);
+			time= System.nanoTime()-time;
+			System.out.println("se leen los documentos en:"+time/Math.pow(10, 9));
+
+			time=System.nanoTime();
+			for (int i=0; i<docs.length; i++){
+				docs[i]=textParser.parse(docs[i]);				
+			}
+
+			time= System.nanoTime()-time;
+			System.out.println("Se quitaron caracteres html de la entrada en:"+time/Math.pow(10, 9));
+			
+			time=System.nanoTime();
+			/*for (int i=0; i<docs.length; i++){
+				docs[i]=normalizar(docs[i]);				
+			}*/
+			time= System.nanoTime()-time;
+			
+			
+			System.out.println("Se normalizo la entrada en:"+time/Math.pow(10, 9));
+			time=System.nanoTime();
+			ndocs=docs.length;
+			for (Integer i=0; i<docs.length; i++){
+				//String [] tokens=docs[i].split(" |\n|\r|\t");	
+				String [] tokens=normalizar(docs[i]);
+				long pos=0;
+				for (String token: tokens){
+					List<Posting> lposts=indices.get(token);
+					if(lposts==null){
+						lposts= new ArrayList<>();
+						Posting post= new Posting(i.toString());
+						post.insertPos(pos);
+						lposts.add( post);
+						indices.put(token, lposts);
+					}
+					else{
+						Posting post=lposts.get(lposts.size()-1);
+						if(post==null || !post.getDocId().equals(i.toString())){
+							post= new Posting(i.toString());
+							post.insertPos(pos);
+							lposts.add(post);
+							
+						}else{
+							post.insertPos(pos);
+						}
+							
+					}
+					pos++;
+				}
+			}
+			docs=null;
+			time= System.nanoTime()-time;
+			System.out.println("Se crean los indices en:"+time/Math.pow(10, 9));
+			
+			double tf,idf;
+			Iterator<String> claves = indices.keySet().iterator();
+			Double maux= null;
+			while(claves.hasNext()){
+				String key = claves.next();
+				List<Posting> lpost = indices.get(key);
+				for(Posting p: lpost){
+					tf = 1+(Math.log(p.getTermFrequency())/Math.log(2.0));
+					idf = (Math.log(ndocs/lpost.size())/Math.log(2.0));
+					maux=modulos.get(p.getDocId());
+					if(maux==null){
+						maux=new Double(Math.pow(tf*idf, 2.0));
+					}else{
+						maux+=Math.pow(tf*idf, 2.0);
+					}
+					modulos.put(p.getDocId(), maux);
+				}
+			}
+
+			//Hacemos la raiz cuadrada
+			claves = modulos.keySet().iterator();
+			while(claves.hasNext()){
+				String key = claves.next();
+				modulos.put(key, Math.sqrt(modulos.get(key)));
+			}
+			
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		File fout= new File(outputIndexPath);
+		
+		fout.mkdir();
+		
+		for(String s:indices.keySet()){
+			try {
+				 ObjectOutputStream fos=new ObjectOutputStream(new FileOutputStream(outputIndexPath+"/"+s));
+			      fos.writeObject(indices.get(s));
+			      salida.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Numero de indices:"+indices.size());
+		System.out.println("Numero de modulos:"+ modulos.size());
+		System.out.println("tiempo norm:"+time/Math.pow(10, 9));
+		
+		return;
+	}
+	
+	
+	@Override
+	public void load(String indexPath) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getDocIds() {
+		
+		return docIds;
+	}
+
+	@Override
+	public TextDocument getDocument(String docId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getTerms() {
+		List<String> terms= new ArrayList<>();
+		for(String s:this.indices.keySet())
+			terms.add(s);
+		return terms;
+	}
+
+	@Override
+	public List<Posting> getTermPostings(String term) {
+		return this.indices.get(term);
+	}
+	
+	public List<String> lectorXML(){
+		List<String> paths = new ArrayList<>();
+		try {
+			String sCadena = null;
+			BufferedReader bf = new BufferedReader(new FileReader("index-settings.xml"));
+		    while ((sCadena = bf.readLine())!=null) 
+		    	if(!Jsoup.parse(sCadena).text().equals(""))
+		    		paths.add(Jsoup.parse(sCadena).text());
+		    bf.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return paths;
+	}
+	
+	public static void main (String[] args){
+		BasicIndexing i= new BasicIndexing();
+		//i.readZips2("/home/tron/Descargas/clueweb-1K/docs.zip");
+		
+		long time=0;
+		Runtime r=Runtime.getRuntime();
+		System.out.println("Maxima memoria a ocupar:"+r.maxMemory()/Math.pow(2,20) +" MB");
+		time=System.nanoTime();
+		i.build("/home/flyn/Descargas/clueweb-1K/docs.zip", "/home/flyn/1k", new HTMLSimpleParser());
+		time= System.nanoTime()-time;
+		System.out.println("Ocupada al final:"+(r.totalMemory()/Math.pow(2,20)-r.freeMemory()/Math.pow(2,20))+" MB");
+		
+		r.getRuntime().gc();
+		System.out.println("tiempo:"+time/Math.pow(10, 9));
+		
+		System.out.println("Ocupada por el indice:"+(r.totalMemory()/Math.pow(2,20)-r.freeMemory()/Math.pow(2,20))+" MB");
+		System.out.println("Libre:"+r.freeMemory()/Math.pow(2,20)+" MB");
+		//System.out.println(i.getDocIds().get(0));
+		System.out.println("Numero de terminos:"+i.getTerms().size());
+		System.out.println(i.getTermPostings("obama").size());
+		//System.out.println(i.getTerms());
+		/*long time=0;
+		Runtime r=Runtime.getRuntime();
+		Set<String> voc=null;
+		time=System.nanoTime();
+		i.build("/home/flyn/Descargas/clueweb-1K/docs.zip","", new HTMLSimpleParser());
+		time= System.nanoTime()-time;
+		System.out.println("tiempo:"+time/Math.pow(10, 9));
+		System.out.println("Ocupada:"+r.totalMemory()/Math.pow(2,20)+" MB");
+		System.out.println("Libre:"+r.freeMemory()/Math.pow(2,20)+" MB");
+		System.out.println("Vocabulario: "+i.getVocabulario().size());
+		for(String s: i.getVocabulario()){
+			System.out.println("palabra:["+s+"]"+" size:"+s.length());
+			System.out.println("Posts:"+ i.getTermPostings(s));
+			break;
+		}*/
+	}
+
+}

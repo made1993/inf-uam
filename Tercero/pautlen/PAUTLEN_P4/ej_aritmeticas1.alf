@@ -1,0 +1,87 @@
+// Tratamiento de vectores. Sobre dos vectores de 10 componentes calcula el cuadrado de su norma, el producto escalar y el vector suma.
+
+main
+{
+// Declaraciones
+
+    array int[10] vector1;
+    array int[10] vector2;
+    array int[10] suma;
+    int x, i, norma1, norma2, escalar;
+
+
+// Sentencias
+	norma1=0;
+	norma2=0;
+	escalar=0;
+
+	// Leer vector1:
+	i = 0;
+	while ((i<10))
+	{
+		scanf x;
+		vector1[i]=x;
+		i = i + 1;
+	}
+
+	// Leer vector2:
+	i = 0;
+	while ((i<10))
+	{
+		scanf x;
+		vector2[i]=x;
+		i = i + 1;
+	}
+
+	// Inicializar suma:
+	i = 0;
+	while ((i<10))
+	{
+		suma[i] = 0;
+		i = i + 1;
+	}
+
+	// Realizar calculos:
+	i = 0;
+	while ((i<10))
+	{
+		norma1 = norma1 + (vector1[i]*vector1[i]);
+		norma2 = norma2 + (vector2[i]*vector2[i]);
+		escalar = escalar + (vector1[i]*vector2[i]);
+		suma[i] = vector1[i] + vector2[i];
+		i = i + 1;
+	}
+
+	// Imprimir:
+	i = 0;
+	while ((i<10))
+	{	
+		printf suma[i];
+		i = i + 1;
+	}
+	printf norma1;
+	printf norma2;
+	printf escalar;
+}// Tratamiento de operaciones aritmeticas
+
+main
+{
+// Declaraciones
+
+    int x;
+
+// Sentencias
+
+	x=0;
+	printf x;
+
+	
+
+
+
+}
+
+
+
+
+

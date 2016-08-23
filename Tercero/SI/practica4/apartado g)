@@ -1,0 +1,18 @@
+a. insertamos en username lo siguiente : gatsby' or password like '%
+	esta insercionde codigo hace que para el usuario gatsby no 
+	haga falta tener la contaseña para conectarnos ya que la query
+	nos quedaria algo como esto: select fistname, lastname from customers 
+	where username like 'gatsby' or password like '%' and password like '';
+	
+	por tanto no nos hace falta la contaseña para conectarnos
+
+b. con insertar esto en el campo usuario funcionaria: ' or username like '%' or password like '%
+	el problema es que haremos login como todos los usuarios 
+	siendo el unico valido el ultimo, si la pagina mantiene informacion de usuarios
+	que no es el caso
+
+c. En principio esto se podria evitar haciendo que cada vez que detecte que
+	se han introducido valores como ('), (%), etc insertase a su izquierda
+	un salsh, es decir /', esto lo soluciona ya que nos impediria que lo
+	que se inserta tenga efecto ya que todo quedaria dentro de un quote
+	y por tanto solo se compararia eso con un username, contraseña, etc.

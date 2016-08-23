@@ -1,0 +1,13 @@
+EN regsmips NULL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/RegsMIPS.vhd" sub00/vhpl00 1366007739
+AR unidadcontrolmips uc "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/UnidadControl.vhd" sub00/vhpl05 1366007744
+AR memprogmips simple "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemProgMIPS.vhd" sub00/vhpl09 1366007748
+EN micromipstb NULL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MicroMIPSTb.vhd" sub00/vhpl12 1366007751
+EN micromips NULL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/microMIPS.vhd" sub00/vhpl06 1366007745
+AR alumips compleja "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/ALUMIPS.vhd" sub00/vhpl03 1366007742
+EN memdatamips NULL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemDataMIPS.vhd" sub00/vhpl10 1366007749
+EN unidadcontrolmips NULL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/UnidadControl.vhd" sub00/vhpl04 1366007743
+EN alumips NULL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/ALUMIPS.vhd" sub00/vhpl02 1366007741
+AR micromips mips "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/microMIPS.vhd" sub00/vhpl07 1366007746
+AR regsmips practica "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/RegsMIPS.vhd" sub00/vhpl01 1366007740
+EN memprogmips NULL "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemProgMIPS.vhd" sub00/vhpl08 1366007747
+AR memdatamips simple "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemDataMIPS.vhd" sub00/vhpl11 1366007750

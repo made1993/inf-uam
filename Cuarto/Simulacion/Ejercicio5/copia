@@ -1,0 +1,126 @@
+
+
+#DES application: M/M/1 queue,arrival rate 0.5,servicerate 1.0 
+
+
+# initializes global variables specific to this app
+
+mm1initglbls <- function(apppars) {
+  mm1glbls <<- list()
+  
+  #simulation parameters
+  mm1glbls$oldpercent <<- 0.4
+  mm1glbls$arrvrate <<- apppars$arrvrate
+  mm1glbls$srvrate  <<- apppars$srvrate
+ 
+  # server queue, consisting of arrival times of queued job
+  mm1glbls$srvq <<- vector(length=0)
+
+  # statistics 
+   mm1glbls$njobsdone <<- 0   # jobs done so far
+   mm1glbls$totwait   <<- 0.0 # total wait time so far
+
+  # set up first event, an arrival; the application-specifc data for each event 
+  # will consist of its arrival time, which we need to record in order to 
+  #  calculate the job's residence time in the system 
+ 
+  # First client arrivel time
+  #arrvtime <- rpois(1, mm1glbls$arrvrate)
+  #schedevnt(arrvtime,"arrv",list(arrvtime=arrvtime))
+  schednewarrv()
+}
+
+schednewarrv <- function() {
+
+  arrvtime <- sim$currtime + rpois(1,mm1glbls$arrvrate)
+
+  #Generate number 0-1, test if greater than oldpercent
+  if(runif(1, 0, 1) > mm1glbls$oldpercent) {
+    print("Generado new")
+    type <- "new"
+  } else {
+    type <- "old"
+    print("Generado old")
+    #print(type)
+  }
+  schedevnt(arrvtime,"arrv",list(arrvtime=arrvtime, type=type))
+}
+
+reactarrival <- function(head) {
+  # if server free, start service, else add to queue (added to queue
+  # even if empty, for convenience)
+
+  if (length(mm1glbls$srvq) == 0) {
+    mm1glbls$srvq <<- head$arrvtime
+    srvdonetime <- sim$currtime + rexp(1,mm1glbls$srvrate)
+    schedevnt(srvdonetime,"srvdone",list(arrvtime=head$arrvtime, type=head$type))
+  } 
+  else mm1glbls$srvq <<- c(mm1glbls$srvq,head$arrvtime)
+  # generate next arrival
+  schednewarrv()
+}
+
+reactdone1 <- function(head) {
+  # process job that just finished do accounting
+  mm1glbls$njobsdone <<- mm1glbls$njobsdone + 1
+  mm1glbls$totwait <<- mm1glbls$totwait + sim$currtime - head$arrvtime
+
+  if(head$type == "old"){
+    print("Done OLD")
+  } else {
+    print("Done NEW")
+  }
+  # remove from queue
+  mm1glbls$srvq <<- mm1glbls$srvq[-1]
+
+  # more still in the queue?
+  if (length(mm1glbls$srvq) > 0) {
+
+  # schedule new service
+    srvdonetime <- sim$currtime + rexp(1,mm1glbls$srvrate)
+    schedevnt(srvdonetime,"srvdone",list(arrvtime=mm1glbls$srvq[1], type=head$type))
+  }
+}
+
+reactdone2 <- function(head) {
+
+}
+#application-specific event processing function called by dosim() in the general DES library
+# arguments:
+#   head: event to be proccesed 
+				
+ mm1reactevnt <- function(head) {
+  if (head$evnttype == "arrv") { # arrival event
+    reactarrival(head)
+  } 
+
+  else if (head$evnttype == "srvdone"){ # service done event (Ventanilla 1)
+    reactdone1(head)
+  }
+  else { #srvdone de servidor viejos
+    reactdone2(head)
+  }
+}
+
+mm1prntrslts <- function() {
+  print("mean wait:")
+  print(mm1glbls$totwait/mm1glbls$njobsdone)
+}
+
+#################### Ejemplo PROGRAMA PRINCIPAL  
+if (TRUE) {
+ source("rurtinasRsimulacion.r")  # cargo el script de la libreria DES
+ source("rnormT.r")
+ # direct output to a file, output also send to terminal. 
+ sink("kk.txt", append=FALSE, split=TRUE)
+
+ # Run the simulation: 
+ # DES application: 
+     # M/M/1 queue, arrival rate 0.5, servicerate 1.0, maxsimtime=100  
+ dosim (mm1initglbls, mm1reactevnt, mm1prntrslts, maxsimtime=5.0, 
+     list(arrvrate=0.5,srvrate=10.0), dbg=FALSE)
+
+ # return output to the terminal
+ sink()
+}
+

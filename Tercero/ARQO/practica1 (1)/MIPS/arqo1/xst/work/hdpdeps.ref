@@ -1,0 +1,29 @@
+V3 19
+FL C:/Users/eps/Desktop/arqo1/ALU.vhd 2014/10/06.19:10:31 P.20131013
+EN work/ALU 1412615440 FL C:/Users/eps/Desktop/arqo1/ALU.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/std_logic_arith 1381692177 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/ALU/Compleja 1412615441 \
+      FL C:/Users/eps/Desktop/arqo1/ALU.vhd EN work/ALU 1412615440
+FL C:/Users/eps/Desktop/arqo1/control.vhd 2014/10/06.19:09:46 P.20131013
+EN work/control 1412615442 FL C:/Users/eps/Desktop/arqo1/control.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/control/UC 1412615443 \
+      FL C:/Users/eps/Desktop/arqo1/control.vhd EN work/control 1412615442
+FL C:/Users/eps/Desktop/arqo1/procesador.vhd 2014/10/06.15:34:50 P.20131013
+EN work/procesador 1412615444 FL C:/Users/eps/Desktop/arqo1/procesador.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/std_logic_arith 1381692177 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/procesador/procesador_arq 1412615445 \
+      FL C:/Users/eps/Desktop/arqo1/procesador.vhd EN work/procesador 1412615444 \
+      CP registros CP ALU CP control
+FL C:/Users/eps/Desktop/arqo1/registros.vhd 2014/10/06.15:34:40 P.20131013
+EN work/registros 1412615438 FL C:/Users/eps/Desktop/arqo1/registros.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179 \
+      PB ieee/std_logic_arith 1381692177
+AR work/registros/Practica 1412615439 \
+      FL C:/Users/eps/Desktop/arqo1/registros.vhd EN work/registros 1412615438
+FL C:/Users/eps/Desktop/Practica1/arqo1/ALU.vhd 2014/10/06.16:56:37 P.20131013
+FL C:/Users/eps/Desktop/Practica1/arqo1/control.vhd 2014/10/06.16:45:51 P.20131013
+FL C:/Users/eps/Desktop/Practica1/arqo1/procesador.vhd 2014/10/06.17:07:31 P.20131013
+FL C:/Users/eps/Desktop/Practica1/arqo1/registros.vhd 2014/10/06.16:47:34 P.20131013

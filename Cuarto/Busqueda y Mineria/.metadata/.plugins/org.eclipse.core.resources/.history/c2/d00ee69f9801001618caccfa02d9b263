@@ -1,0 +1,28 @@
+package es.uam.eps.bmi.recomendacion;
+
+import java.io.*;
+
+public class MovieTags {
+	
+	
+	private HashMap<Integer, Integer> datos;
+	
+	public void leerDatos(String file){
+		BufferedReader br;
+		try {
+			
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public static void main(String [] args){
+		MovieTags mt = new MovieTags();
+		mt.leerDatos("hetrec2011-movielens-2k-v2/movie_tags.dat");
+	}
+	
+	
+	
+
+}

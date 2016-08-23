@@ -1,0 +1,165 @@
+package es.uam.eps.bmi.recomendacion;
+
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+public class MovieTags {
+	
+	//HashMap de peliculas que contiene un HashMap de tags que contiene pesos
+	private HashMap<Integer, HashMap<Integer, Integer>> datos= new HashMap<>();
+	private HashMap<Integer, SortedMap<Integer, Double>> similitudes = new HashMap<>(); 
+	
+	public void leerDatos(String file){
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader (new File (file)));
+			String linea;
+			linea=br.readLine();
+			String[] data;
+			while((linea=br.readLine())!=null){
+				 data= linea.split(" |\t|\n|\r");
+				 for(int i=0; i<data.length; i++){
+					 HashMap<Integer, Integer> pelicula= datos.get(Integer.parseInt(data[0]));
+					 if(pelicula==null){
+						 pelicula= new HashMap<>();
+						 pelicula.put(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+					 }
+					 else{
+						 pelicula.put(Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+					 }
+					 datos.put(Integer.parseInt(data[0]), pelicula);
+				 }
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	//TODO: revisar que este bien
+	public void similitudBinJaccard(){
+
+		int numTags=0;
+		int tamCol2=0;
+		TreeMap<Integer, Double> similitud= null;
+		int tamCol1=0;
+		for(Entry<Integer, HashMap<Integer, Integer>> pelicula1: datos.entrySet()){
+			similitud= new TreeMap<>();
+			tamCol1= pelicula1.getValue().size();
+			System.out.println(pelicula1.getKey()+" "+pelicula1.getValue().size());
+			for(Entry<Integer, HashMap<Integer, Integer>> pelicula2: datos.entrySet()){
+				numTags=0;
+				tamCol2= pelicula2.getValue().size();
+				for(Integer tag: pelicula1.getValue().keySet()){
+					if(pelicula2.getValue().containsKey(tag)){
+						numTags++;
+					}	
+				}
+				similitud.put(pelicula2.getKey(), (double)numTags/(tamCol1+tamCol2 -numTags));
+			}
+			similitudes.put(pelicula1.getKey(), similitud);
+		}
+		
+	}
+
+	//TODO: revisar que este bien
+	public void similitudBinCoseno(){
+
+		for(Entry<Integer, HashMap<Integer, Integer>> pelicula1: datos.entrySet()){
+			TreeMap<Integer, Double> similitud= new TreeMap<>();
+			int denom1=0;
+			System.out.println(pelicula1.getKey()+" "+pelicula1.getValue().size());
+			for(Integer tag: pelicula1.getValue().values()){
+				denom1+=tag*tag;
+			}
+			for(Entry<Integer, HashMap<Integer, Integer>> pelicula2: datos.entrySet()){
+				int numTags=0;
+				for(Integer tag: pelicula1.getValue().keySet()){
+					if(pelicula2.getValue().containsKey(tag)){
+						numTags+=pelicula2.getValue().get(tag)*pelicula1.getValue().get(tag);
+					}	
+				}
+				int denom2=0;
+				for(Integer tag: pelicula2.getValue().values()){
+					denom2+=tag*tag;
+				}
+
+				similitud.put(pelicula2.getKey(), (double)numTags/(Math.sqrt(denom1)+Math.sqrt(denom2)));
+			}
+			similitudes.put(pelicula1.getKey(), similitud);
+		}
+		
+	}
+	
+
+	//TODO: hacer bien tf idf
+	public void similitudTfIdf(){
+
+		for(Entry<Integer, HashMap<Integer, Integer>> pelicula1: datos.entrySet()){
+			TreeMap<Integer, Double> similitud= new TreeMap<>();
+			int tamCol1= pelicula1.getValue().size();
+			System.out.println(pelicula1.getKey());
+			for(Entry<Integer, HashMap<Integer, Integer>> pelicula2: datos.entrySet()){
+				int numTags=0;
+				int tamCol2= pelicula2.getValue().size();
+				for(Integer tag: pelicula1.getValue().keySet()){
+					System.out.print("2 ");
+					if(pelicula2.getValue().containsKey(tag)){
+						numTags++;
+					}	
+					similitud.put(pelicula2.getKey(), (double)numTags/(tamCol1+tamCol2 -numTags));
+				}
+			}
+			similitudes.put(pelicula1.getKey(), similitud);
+		}
+	}
+		
+	
+	/**
+	 * @return the datos
+	 */
+	public HashMap<Integer, HashMap<Integer, Integer>> getDatos() {
+		return datos;
+	}
+
+
+	/**
+	 * @param datos the datos to set
+	 */
+	public void setDatos(HashMap<Integer, HashMap<Integer, Integer>> datos) {
+		this.datos = datos;
+	}
+
+
+	/**
+	 * @return the similitudes
+	 */
+	public HashMap<Integer, SortedMap<Integer, Double>> getSimilitudes() {
+		return similitudes;
+	}
+
+
+	/**
+	 * @param similitudes the similitudes to set
+	 */
+	public void setSimilitudes(HashMap<Integer, SortedMap<Integer, Double>> similitudes) {
+		this.similitudes = similitudes;
+	}
+
+
+	public static void main(String [] args){
+		MovieTags mt = new MovieTags();
+		mt.leerDatos("hetrec2011-movielens-2k-v2/movie_tags.dat");
+		//mt.similitudBinJaccard();
+	}
+	
+	
+	
+
+}

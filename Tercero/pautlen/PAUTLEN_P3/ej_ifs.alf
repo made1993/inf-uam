@@ -1,0 +1,33 @@
+main
+{
+
+
+    int x, y;
+
+
+	scanf x;
+	scanf y;
+	if ((x>0))
+	{
+		if ((y>0))
+		{
+			printf cuadrante1;
+		}
+		else
+		{
+			printf cuadrante4;
+		}
+	}
+	else
+	{
+		if ((y>0))
+		{
+			printf cuadrante2;
+		}
+		else
+		{
+			printf cuadrante3;
+		}
+
+	}
+}

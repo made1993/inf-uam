@@ -1,0 +1,19 @@
+;D:	main
+;D:	{
+;D:	int
+;R10:	<tipo> ::= int
+;R9:	<clase_escalar> ::= <tipo>
+;R5:	<clase> ::= <clase_escalar>
+;D:	x
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;D:	;
+;R18:	<identificadores> ::= <identificador>
+;R4:	<declaracion> ::= <clase> <identificadores> ;
+;D:	scanf
+;R2:	<declaraciones> ::= <declaracion>
+;R21:	<funciones> ::=
+;D:	x
+;R108:	<identificador> ::= TOK_IDENTIFICADOR
+;R54:	<lectura> ::= scanf <identificador>
+;R35:	<sentencia_simple> ::= <lectura>
+;D:	printf

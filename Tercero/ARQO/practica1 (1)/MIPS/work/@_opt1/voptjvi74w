@@ -1,0 +1,293 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\Documents and Settings\e283096\Escritorio\Dropbox\Estructura de Computadores\P5-EC\practica5
+T_opt
+VzeY0n2z`VLNKeAhPB:A@R0
+Z1 04 11 4 work micromipstb test 1
+=1-4487fc945ad8-516b9f24-261-ef4
+Z2 o-quiet -auto_acc_if_foreign -work work +acc
+n@_opt
+Z3 OE;O;10.1a;51
+Z4 dC:\Documents and Settings\e283096\Escritorio\Dropbox\Estructura de Computadores\P5-EC\practica5
+T_opt1
+V;_5h9UJKG:Bzi^mHz5YXO1
+R1
+=1-4487fc945ad8-516b9ff5-31c-ee8
+R2
+n@_opt1
+R3
+Ealumips
+Z5 w1362158976
+Z6 DPx4 ieee 18 std_logic_unsigned 0 22 RYmj;=TK`k=k>D@Cz`zoB3
+Z7 DPx4 ieee 15 std_logic_arith 0 22 4`Y?g_lkdn;7UL9IiJck01
+Z8 DPx3 std 6 textio 0 22 5>J:;AW>W0[[dW0I6EN1Q0
+Z9 DPx4 ieee 14 std_logic_1164 0 22 5=aWaoGZSMWIcH0i^f`XF1
+R4
+Z10 8ALUMIPS.vhd
+Z11 FALUMIPS.vhd
+l0
+L19
+V3C_blIMEo9@McQ`@^_Zk52
+Z12 OE;C;10.1a;51
+31
+Z13 !s108 1366007796.546000
+Z14 !s90 -reportprogress|300|-explicit|-93|ALUMIPS.vhd|
+Z15 !s107 ALUMIPS.vhd|
+Z16 o-explicit -93
+Z17 tExplicit 1
+!s100 c=FUj4JScD^BGA2KNdl5m1
+!i10b 1
+Acompleja
+R6
+R7
+R8
+R9
+DEx4 work 7 alumips 0 22 3C_blIMEo9@McQ`@^_Zk52
+l34
+L30
+V7[4JUAFOB6eB?BD?MbcAG1
+R12
+31
+R13
+R14
+R15
+R16
+R17
+!s100 <J9=7=1^:feGV9ML6LB7^0
+!i10b 1
+Ememdatamips
+Z18 w1363609588
+R7
+R6
+R8
+R9
+R4
+Z19 8MemDataMIPS.vhd
+Z20 FMemDataMIPS.vhd
+l0
+L19
+V24BPikazQH3TnR;W0Al9b1
+R12
+31
+Z21 !s108 1366007797.109000
+Z22 !s90 -reportprogress|300|-explicit|-93|MemDataMIPS.vhd|
+Z23 !s107 MemDataMIPS.vhd|
+R16
+R17
+!s100 ?NO:L4KP]35UO1gRACa;M0
+!i10b 1
+Asimple
+R7
+R6
+R8
+R9
+DEx4 work 11 memdatamips 0 22 24BPikazQH3TnR;W0Al9b1
+l37
+L30
+VGdEA4K;82ReACo^]TT?MO0
+R12
+31
+R21
+R22
+R23
+R16
+R17
+!s100 :X_bV6FFAbjUh]O^o7<SJ2
+!i10b 1
+Ememprogmips
+Z24 w1361984674
+R6
+R7
+R8
+R9
+R4
+Z25 8MemProgMIPS.vhd
+Z26 FMemProgMIPS.vhd
+l0
+L20
+Va1c<MZEfgjCI8_Gc3DPY]2
+R12
+31
+Z27 !s108 1366007796.874000
+Z28 !s90 -reportprogress|300|-explicit|-93|MemProgMIPS.vhd|
+Z29 !s107 MemProgMIPS.vhd|
+R16
+R17
+!s100 N`4;8Hboh:=zB]mVhoefY3
+!i10b 1
+Asimple
+R6
+R7
+R8
+R9
+DEx4 work 11 memprogmips 0 22 a1c<MZEfgjCI8_Gc3DPY]2
+l29
+L27
+V>74VH95cfh_aW<d_Fl5z^2
+R12
+31
+R27
+R28
+R29
+R16
+R17
+!s100 7T^=5`h_=X@H73d2laj^]1
+!i10b 1
+Emicromips
+Z30 w1366007738
+R7
+R6
+R8
+R9
+R4
+Z31 8microMIPS.vhd
+Z32 FmicroMIPS.vhd
+l0
+L18
+VX=1[@:DMfUe?e7`Uo9B300
+R12
+31
+Z33 !s108 1366007796.671000
+Z34 !s90 -reportprogress|300|-explicit|-93|microMIPS.vhd|
+Z35 !s107 microMIPS.vhd|
+R16
+R17
+!s100 P`EFXc7]Tz5i[CeI9:<dU3
+!i10b 1
+Amips
+R7
+R6
+R8
+R9
+DEx4 work 9 micromips 0 22 X=1[@:DMfUe?e7`Uo9B300
+l93
+L33
+V9I5z<RCXiIac[bA?WW_kI2
+R12
+31
+R33
+R34
+R35
+R16
+R17
+!s100 1aVz^2UY2=ciH;Z<_De`=1
+!i10b 1
+Emicromipstb
+Z36 w1359488368
+R7
+R6
+R8
+R9
+R4
+Z37 8MicroMIPSTb.vhd
+Z38 FMicroMIPSTb.vhd
+l0
+L20
+V99[]@^;n4bjFVj>11S;X;0
+R12
+31
+Z39 !s108 1366007797.374000
+Z40 !s90 -reportprogress|300|-explicit|-93|MicroMIPSTb.vhd|
+Z41 !s107 MicroMIPSTb.vhd|
+R16
+R17
+!s100 5hH]_VY>HEnG=:YY9CB4i0
+!i10b 1
+Atest
+R7
+R6
+R8
+R9
+DEx4 work 11 micromipstb 0 22 99[]@^;n4bjFVj>11S;X;0
+l78
+L23
+VW9Bif4cn>[M1mLYojzHXb0
+!s100 i4]dZGU_8X:aBT?cne5J^1
+R12
+31
+R39
+R40
+R41
+R16
+R17
+!i10b 1
+Eregsmips
+Z42 w1362233672
+R7
+R6
+R8
+R9
+R4
+Z43 8RegsMIPS.vhd
+Z44 FRegsMIPS.vhd
+l0
+L19
+VF=O<77BHE^V^iKIDhaCf:0
+R12
+31
+Z45 !s108 1366007796.390000
+Z46 !s90 -reportprogress|300|-explicit|-93|RegsMIPS.vhd|
+Z47 !s107 RegsMIPS.vhd|
+R16
+R17
+!s100 hQ34JVF;D@H7c4@N8]GGb2
+!i10b 1
+Apractica
+R7
+R6
+R8
+R9
+DEx4 work 8 regsmips 0 22 F=O<77BHE^V^iKIDhaCf:0
+l47
+L33
+Vbe7E>U<mcJU8^Va8;DGaZ1
+R12
+31
+R45
+R46
+R47
+R16
+R17
+!s100 ;Xl2lZK3>lWGkiXakRWfG2
+!i10b 1
+Eunidadcontrolmips
+Z48 w1366006414
+R7
+R6
+R8
+R9
+R4
+Z49 8UnidadControl.vhd
+Z50 FUnidadControl.vhd
+l0
+L18
+VTb]9WDO^gTB78J=?=N>f41
+R12
+31
+Z51 !s108 1366007796.249000
+Z52 !s90 -reportprogress|300|-explicit|-93|UnidadControl.vhd|
+Z53 !s107 UnidadControl.vhd|
+R16
+R17
+!s100 ;>Rb]iaWo374SnN@fcl;;0
+!i10b 1
+Auc
+R7
+R6
+R8
+R9
+DEx4 work 17 unidadcontrolmips 0 22 Tb]9WDO^gTB78J=?=N>f41
+l38
+L36
+VINVEIFYA4kc^E[i]hEF@=0
+R12
+31
+R51
+R52
+R53
+R16
+R17
+!s100 HH1A1nm<IL[`5Qi<:Vmzf1
+!i10b 1

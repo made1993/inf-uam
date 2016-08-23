@@ -1,0 +1,35 @@
+package es.uam.eps.bmi.crawling;
+
+import java.io.*;
+import java.net.*;
+import java.sql.*;
+
+public class GenericCrawler {
+	public static void main (String args[]){
+		String surl = "www.googl.es";
+		HttpURLConnection connection = null;
+		URL url = null;
+		try {
+			 url=new URL(surl);
+		} catch (MalformedURLException e) {
+			System.out.println(surl+"no es una direccion valida");
+			e.printStackTrace();
+		}
+		try {
+			connection= (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+		    connection.setRequestProperty("Content-Type", 
+		        "application/x-www-form-urlencoded");
+
+		    connection.setRequestProperty("Content-Length", 
+		        Integer.toString(urlParameters.getBytes().length));
+		    connection.setRequestProperty("Content-Language", "en-US");  
+
+		    connection.setUseCaches(false);
+		    connection.setDoOutput(true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

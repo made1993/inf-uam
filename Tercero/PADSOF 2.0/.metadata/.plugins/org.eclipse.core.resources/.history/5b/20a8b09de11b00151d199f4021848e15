@@ -1,0 +1,31 @@
+package pruebasJUnit;
+
+import static org.junit.Assert.*;
+import mensaje.Pregunta;
+
+import org.junit.Test;
+
+import usuario.Estudiante;
+
+public class testPregunta {
+
+	@Test
+	public void testGetRespuestaDe() {
+		Pregunta p = new Pregunta("testGetRespuestaDe", null);
+		Estudiante u= new Estudiante("testGetRespuestaDe", "testGetRespuestaDe",
+				"testGetRespuestaDe", "testGetRespuestaDe");
+		p.addRespuesta("testGetRespuestaDe", u);
+	}
+
+	@Test
+	public void testAddRespuesta() {
+		fail("Not yet implemented");
+	}
+
+
+	@Test
+	public void testListarRespuestas() {
+		fail("Not yet implemented");
+	}
+
+}

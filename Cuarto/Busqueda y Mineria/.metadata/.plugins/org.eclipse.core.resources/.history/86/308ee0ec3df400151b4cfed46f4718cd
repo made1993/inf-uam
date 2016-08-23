@@ -1,0 +1,8 @@
+package es.uam.eps.bmi.crawling;
+
+import java.net.Socket;
+
+public class GenericCrawler {
+	String host = new String("www.google.es");
+	Socket s= new Socket(host, 80);
+}

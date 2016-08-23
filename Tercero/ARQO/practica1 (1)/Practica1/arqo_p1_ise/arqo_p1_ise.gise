@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<generated_project xmlns="http://www.xilinx.com/XMLSchema" xmlns:xil_pn="http://www.xilinx.com/XMLSchema">
+
+  <!--                                                          -->
+
+  <!--             For tool use only. Do not edit.              -->
+
+  <!--                                                          -->
+
+  <!-- ProjectNavigator created generated project file.         -->
+
+  <!-- For use in tracking generated file and other information -->
+
+  <!-- allowing preservation of process status.                 -->
+
+  <!--                                                          -->
+
+  <!-- Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved. -->
+
+  <version xmlns="http://www.xilinx.com/XMLSchema">11.1</version>
+
+  <sourceproject xmlns="http://www.xilinx.com/XMLSchema" xil_pn:fileType="FILE_XISE" xil_pn:name="arqo_p1_ise.xise"/>
+
+  <files xmlns="http://www.xilinx.com/XMLSchema">
+    <file xil_pn:fileType="FILE_LSO" xil_pn:name=".lso"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="AluMIPS.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="AluMIPS.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="AluMIPS.xst"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="RegsMIPS.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="RegsMIPS.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="RegsMIPS.xst"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="UnidadControlMIPS.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="UnidadControlMIPS.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="UnidadControlMIPS.xst"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="memoria.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="memoria.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="memoria.xst"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_MODELSIM_CMD" xil_pn:name="procesador.fdo"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="procesador.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="procesador.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="procesador.xst"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_MODELSIM_CMD" xil_pn:name="procesador_tb.fdo"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="procesador_tb.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="procesador_tb.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="procesador_tb.xst"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_MODELSIM_LOG" xil_pn:name="vsim.wlf"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="work"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xst"/>
+  </files>
+
+  <transforms xmlns="http://www.xilinx.com/XMLSchema">
+    <transform xil_pn:end_ts="1412242640" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1412242640">
+      <status xil_pn:value="SuccessfullyRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1412246646" xil_pn:in_ck="-4089692260885907874" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1412246646">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="ALUMIPS.vhd"/>
+      <outfile xil_pn:name="RegsMIPS.vhd"/>
+      <outfile xil_pn:name="UnidadControl.vhd"/>
+      <outfile xil_pn:name="memoria.vhd"/>
+      <outfile xil_pn:name="procesador.vhd"/>
+      <outfile xil_pn:name="procesador_TB.vhd"/>
+    </transform>
+    <transform xil_pn:end_ts="1412246386" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="8225196199954979557" xil_pn:start_ts="1412246386">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1412246386" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="7479032941199278119" xil_pn:start_ts="1412246386">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1412242640" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-6646022887810812090" xil_pn:start_ts="1412242640">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1412246646" xil_pn:in_ck="-4089692260885907874" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1412246646">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="ALUMIPS.vhd"/>
+      <outfile xil_pn:name="RegsMIPS.vhd"/>
+      <outfile xil_pn:name="UnidadControl.vhd"/>
+      <outfile xil_pn:name="memoria.vhd"/>
+      <outfile xil_pn:name="procesador.vhd"/>
+      <outfile xil_pn:name="procesador_TB.vhd"/>
+    </transform>
+    <transform xil_pn:end_ts="1412246647" xil_pn:in_ck="-4089692260885907874" xil_pn:name="TRAN_MSimulateBehavioralModel" xil_pn:prop_ck="1085604711667550006" xil_pn:start_ts="1412246646">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="procesador_tb.fdo"/>
+      <outfile xil_pn:name="vsim.wlf"/>
+      <outfile xil_pn:name="work"/>
+    </transform>
+  </transforms>
+
+</generated_project>

@@ -1,0 +1,219 @@
+ls()
+?exp
+?dexp
+rexp(1000)
+x <- rexp(1000)
+summary(x)
+?ln
+?log
+log(0.5)
+plot(dexp)
+?dexp
+plot(qexp)
+plot(pexp)
+plot(dexp)
+plot(pexp)
+plot(dexp)
+plot(pexp)
+plot(qexp)
+plot(pexp)
+plot(dexp)
+plot(pexp)
+plot(dexp)
+plot(pexp)
+plot(dexp)
+?load
+c(1,2)
+x <<- c(1,2)
+x
+x <<<<- c(1,2)
+x << c(1,2)
+x <<- c(1,2)
+x
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/rurtinasRsimulacion.r")
+?binsearch
+binsearch
+rnorm
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+#DES application: M/M/1 queue,arrival rate 0.5,servicerate 1.0 #
+if (TRUE) {#
+ load("")#
+ dosim (mm1initglbls, mm1reactevnt, mm1prntrslts,10000.0, #
+     list(arrvrate=0.5,srvrate=1.0))#
+}#
+#
+# initializes global variables specific to this app#
+#
+mm1initglbls <- function(apppars) {#
+  mm1glbls <<- list()#
+  #simulation parameters#
+#
+  mm1glbls$arrvrate <<- apppars$arrvrate#
+  mm1glbls$srvrate  <<- apppars$srvrate#
+  # server queue, consisting of arrival times of queued job#
+  mm1glbls$srvq <<- vector(length=0)#
+#
+  # statistics #
+   mm1glbls$njobsdone <<- 0   # jobs done so far#
+   mm1glbls$totwait   <<- 0.0 # total wait time so far#
+#
+  # set up first event, an arrival; the application-specifc data for each event #
+  # will consist of its arrival time, which we need to record in order to #
+  #  calculate the job's residence time in the system #
+  arrvtime <- rexp(1, mm1glbls$arrvrate)#
+  schedevnt(arrvtime,"arrv",list(arrvtime=arrvtime))#
+}#
+#
+mm1reactevnt <- function(head) {#
+#
+  if (head$evnttype == "arrv") {  #Arrival#
+#
+    if (length(mm1glbls$srvq ) == 0) {#
+      #If server free, start service (generar exponencial, schedule event con tiempo de la exponencial)#
+      mm1glbls$srvq <<- head$arrvtime#
+      srvdonetime <- sim$currtime + rexp(1, mm1glbls$srvrate)#
+      schedevnt(srvdonetime, "srvdone", list(arrvtime=head$arrvtime))#
+#
+    } else mm1glbls <<- c(mm1glbls$srvq, head$arrvtime)#
+#
+    arrvtime <- sim$currtime + rexp(1, mm1glbls$arrvrate)#
+    schedevnt(arrvtime, "arrv", list(arrvtime=arrvtime))#
+#
+  } else {#Service done#
+#
+    mm1glbls$njobsdone <<- mm1glbls$njobsdone + 1#
+    mm1glbls$totwait <<- sim$currtime - head$arrvtime#
+#
+    #Remove from queue#
+    mm1glbls$srvq <<- mm1glbls$srvq[-1]#
+#
+    #More still in queue?#
+    if (length(mm1glbls$srvq) > 0) {#
+      srvdonetime <- sim$currtime + rexp(1, mm1glbls$srvrate)#
+      schedevnt(srvdonetime, "srvdone", list(arrvtime=mm1glbls$srvq[1]))#
+    }#
+#
+  }#
+}#
+mm1prntrslts <- function() {#
+  print("Tiempo medio de espera:")#
+  print(mm1glbls$totwait/mm1glbls$njobsdone)#
+#
+}
+mm1prntrslts
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+x << list()
+x <<- list()
+x
+is.atomic(x)
+x$arrvrate << 1
+x$arrvrate <<- 1
+x
+x$arrvrate
+x
+x$arrvrate = c(1, 2)
+x
+x$arrvrate <- c(1, 2)
+x$arrvrate <- 1
+x
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+mm1initglbls(list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+mm1initglbls(list(arrvrate=0.5, srvrate=1.0))
+mm1glbls
+mm1initglbls(list(arrvrate=0.5, srvrate=1.0))
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1initglbls
+?reload
+?load
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1reactevnt
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1initglbls
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+list()$asd
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1glbls
+mm1initglbls
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+dosim(mm1initglbls, mm1reactevnt, mm1prntrslts, 10000.0, list(arrvrate=0.5, srvrate=1.0))
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+mm1glbls
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+dosim (mm1initglbls, mm1reactevnt, mm1prntrslts,10000.0, #
+     list(arrvrate=0.5,srvrate=1.0), TRUE)
+?edit
+edit(mm1reactevnt)
+dosim (mm1initglbls, mm1reactevnt, mm1prntrslts,10000.0, #
+     list(arrvrate=0.5,srvrate=1.0), TRUE)
+mm1reactevnt
+source("/Users/alberto/Dropbox/Simulacion/Ejercicio3/mm1.r")
+setWD("/Dropbox/Simulacion")
+source("mm3.r")
+plot(mm1glbls1$queuesize)
+plot(mm1glbls$queuesize)
+?plot
+plot(mm1glbls$queuesize[1000:2000])
+plot(mm1glbls$queuesize[400:600])
+plot(mm1glbls$queuesize)
+plot(mm1glbls$queuesize[1500:2000])
+plot(mm1glbls$queuesize[1900:2000])
+plot(mm1glbls$queuesize[1900:2000], type="b")
+plot(mm1glbls$queuesize[1900:2000], type="b", pch = 20)
+plot(mm1glbls$queuesize[1900:2000], type="b", pch = 20, main="Tamaño de cola", sub="zoom para indice entre 1900-2000")
+plot(mm1glbls$queuesize, type="b", pch = 20, main="Tamaño de cola", sub="zoom para indice entre 1900-2000")
+plot(mm1glbls$queuesize, type="l", pch = 20, main="Tamaño de cola", sub="zoom para indice entre 1900-2000")
+p
+plot(mm1glbls$queuesize, type="p", pch = 20, main="Tamaño de cola", sub="zoom para indice entre 1900-2000")
+plot(mm1glbls$queuesize, type="b", pch = 20, main="Tamaño de cola", sub="zoom para indice entre 1900-2000")
+plot(mm1glbls$queuesize, type="b", pch = 20, main="Tamaño de cola")
+lambda
+lambda <- 1/4
+Mu <- 1/3
+lambda/(3*Mu)
+15/60
+c(1,0,0)
+1/4*3.069
+source("mm1.r")
+source("mm1.r")
+lambda
+mu
+Mu
+1/(Mu-lambda)
+source("mm3.r")
+source("mm3.r")
+plot(mm1glbls$queuesize)
+3.025743/4
+fit.cont
+source("mm3.r")
+mm1glbls$tencola
+hist(mm1glbls$tencola)
+source("mm3.r")
+hist(mm1glbls$tensistema)
+mm1glbls$tensistema
+source("mm3.r")
+mm1glbls$tensistema
+mm1glbls
+source("mm3.r")
+mm1glbls$tensistema
+mm1glbls$tencola
+hist(mm1glbls$tensistema)
+mm1glbls$tencola
+mm1glbls$tensistema
+mm1glbls$njobsdone
+source("mm3.r")
+mm1glbls$njobsdone
+mm1glbls$tencola
+mm1glbls$tensistema
+mm1glbls$tencola
+hist(mm1glbls$tencola)
+hist(mm1glbls$tensistema)
+hist(mm1glbls$tencola)
+hist(mm1glbls$tensistema)

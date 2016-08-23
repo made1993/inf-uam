@@ -1,0 +1,9 @@
+
+def dijkstraMAllPairs(mG):
+
+    size = len(mG)
+    mat = np.zeros(shape=(size, size))
+
+    for x in range (size):
+        mat[x] = dijkstraM(mG, x)[1]
+    return list

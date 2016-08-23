@@ -1,0 +1,62 @@
+Release 14.1 - xst P.15xf (nt)
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.17 secs
+ 
+--> Parameter xsthdpdir set to C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.17 secs
+ 
+--> WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+WARNING:HDLParsers:3607 - Unit work/microMIPS is now defined in a different file.  It was defined in "C:/Users/Franjo/Desktop/P5-EC/practica5/microMIPS.vhd", and is now defined in "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/microMIPS.vhd".
+WARNING:HDLParsers:3607 - Unit work/microMIPS/MIPS is now defined in a different file.  It was defined in "C:/Users/Franjo/Desktop/P5-EC/practica5/microMIPS.vhd", and is now defined in "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/microMIPS.vhd".
+WARNING:HDLParsers:3607 - Unit work/AluMIPS is now defined in a different file.  It was defined in "C:/Users/Franjo/Desktop/P5-EC/practica5/ALUMIPS.vhd", and is now defined in "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/ALUMIPS.vhd".
+WARNING:HDLParsers:3607 - Unit work/AluMIPS/Compleja is now defined in a different file.  It was defined in "C:/Users/Franjo/Desktop/P5-EC/practica5/ALUMIPS.vhd", and is now defined in "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/ALUMIPS.vhd".
+WARNING:HDLParsers:3607 - Unit work/RegsMIPS is now defined in a different file.  It was defined in "C:/Users/Franjo/Desktop/P5-EC/practica5/RegsMIPS.vhd", and is now defined in "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/RegsMIPS.vhd".
+WARNING:HDLParsers:3607 - Unit work/RegsMIPS/Practica is now defined in a different file.  It was defined in "C:/Users/Franjo/Desktop/P5-EC/practica5/RegsMIPS.vhd", and is now defined in "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/RegsMIPS.vhd".
+WARNING:HDLParsers:3607 - Unit work/UnidadControlMIPS is now defined in a different file.  It was defined in "C:/Users/Franjo/Desktop/P5-EC/practica5/UnidadControl.vhd", and is now defined in "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/UnidadControl.vhd".
+WARNING:HDLParsers:3607 - Unit work/UnidadControlMIPS/UC is now defined in a different file.  It was defined in "C:/Users/Franjo/Desktop/P5-EC/practica5/UnidadControl.vhd", and is now defined in "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/UnidadControl.vhd".
+Compiling vhdl file "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/RegsMIPS.vhd" in Library work.
+Architecture practica of Entity regsmips is up to date.
+Compiling vhdl file "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/ALUMIPS.vhd" in Library work.
+Architecture compleja of Entity alumips is up to date.
+Compiling vhdl file "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/UnidadControl.vhd" in Library work.
+Entity <unidadcontrolmips> compiled.
+Entity <unidadcontrolmips> (Architecture <uc>) compiled.
+Compiling vhdl file "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/microMIPS.vhd" in Library work.
+Entity <micromips> compiled.
+Entity <micromips> (Architecture <mips>) compiled.
+Compiling vhdl file "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemProgMIPS.vhd" in Library work.
+Entity <MemProgMIPS> compiled.
+Entity <MemProgMIPS> (Architecture <Simple>) compiled.
+Compiling vhdl file "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MemDataMIPS.vhd" in Library work.
+Entity <MemDataMIPS> compiled.
+Entity <MemDataMIPS> (Architecture <Simple>) compiled.
+Compiling vhdl file "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MicroMIPSTb.vhd" in Library work.
+Entity <MicroMIPSTb> compiled.
+ERROR:HDLParsers:1015 - "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MicroMIPSTb.vhd" Line 116. Wait for statement unsupported.
+ERROR:HDLParsers:1015 - "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MicroMIPSTb.vhd" Line 118. Wait for statement unsupported.
+ERROR:HDLParsers:1015 - "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MicroMIPSTb.vhd" Line 130. Wait for statement unsupported.
+ERROR:HDLParsers:1015 - "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/MicroMIPSTb.vhd" Line 132. Wait for statement unsupported.
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.34 secs
+ 
+--> 
+
+Total memory usage is 130372 kilobytes
+
+Number of errors   :    4 (   0 filtered)
+Number of warnings :    9 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

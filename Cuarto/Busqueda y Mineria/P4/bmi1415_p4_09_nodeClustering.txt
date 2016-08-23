@@ -1,0 +1,44 @@
+small1 9 1.0
+small1 7 1.0
+small1 1 1.0
+small1 2 1.0
+small1 3 1.0
+small1 12 0.6666666666666666
+small1 11 0.6666666666666666
+small1 8 0.6666666666666666
+small1 4 0.3333333333333333
+
+small2 8 0.6666666666666666
+small2 9 0.6666666666666666
+small2 4 0.6666666666666666
+small2 5 0.6666666666666666
+small2 6 0.6666666666666666
+small2 7 0.6666666666666666
+small2 1 0.6666666666666666
+small2 2 0.6666666666666666
+small2 3 0.2857142857142857
+
+twitter dearestsierra 1.0
+twitter BuryYourDead 1.0
+twitter yourlooksucks 1.0
+twitter grumblebee 1.0
+twitter ryleewallace23 1.0
+twitter CunninghamPiano 1.0
+twitter adbot 1.0
+twitter rojas2772 1.0
+twitter gcffran 1.0
+
+facebook 572 1.0
+facebook 571 1.0
+facebook 2100 1.0
+facebook 2980 1.0
+facebook 0 1.0
+facebook 1856 1.0
+facebook 2902 1.0
+facebook 2167 1.0
+facebook 2168 1.0
+
+erdos  0.0
+
+barabasi  0.0
+

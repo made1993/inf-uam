@@ -1,0 +1,50 @@
+V3 34
+FL C:/Users/eps/Desktop/arqo1/ALU.vhd 2014/10/07.15:54:30 P.20131013
+FL C:/Users/eps/Desktop/arqo1/control.vhd 2014/10/07.15:21:17 P.20131013
+FL C:/Users/eps/Desktop/arqo1/procesador.vhd 2014/10/07.19:35:14 P.20131013
+FL C:/Users/eps/Desktop/arqo1/registros.vhd 2014/10/06.17:15:06 P.20131013
+FL C:/Users/eps/Desktop/arqo1BUENO/ALU.vhd 2014/10/16.10:56:54 P.20131013
+EN work/ALU 1413995246 FL C:/Users/eps/Desktop/arqo1BUENO/ALU.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/std_logic_arith 1381692177 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/ALU/Compleja 1413995247 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/ALU.vhd EN work/ALU 1413995246
+FL C:/Users/eps/Desktop/arqo1BUENO/control.vhd 2014/10/16.10:56:46 P.20131013
+EN work/control 1413995248 FL C:/Users/eps/Desktop/arqo1BUENO/control.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/control/UC 1413995249 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/control.vhd EN work/control 1413995248
+FL C:/Users/eps/Desktop/arqo1BUENO/memoria.vhd 2014/10/16.10:56:38 P.20131013
+EN work/memoria 0 FL C:/Users/eps/Desktop/arqo1BUENO/memoria.vhd LB STD \
+      PB std/TEXTIO 1381692176 PB ieee/std_logic_1164 1381692176 \
+      PB ieee/std_logic_arith 1381692177 PB ieee/STD_LOGIC_UNSIGNED 1381692179 \
+      PB ieee/STD_LOGIC_TEXTIO 1381692180
+AR work/memoria/Behavioral 0 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/memoria.vhd EN work/memoria 0
+FL C:/Users/eps/Desktop/arqo1BUENO/procesador.vhd 2014/10/22.18:27:19 P.20131013
+EN work/procesador 1413995250 FL C:/Users/eps/Desktop/arqo1BUENO/procesador.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/std_logic_arith 1381692177 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/procesador/procesador_arq 1413995251 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/procesador.vhd EN work/procesador 1413995250 \
+      CP registros CP ALU CP control
+FL C:/Users/eps/Desktop/arqo1BUENO/procesador_TB.vhd 2014/10/16.10:56:28 P.20131013
+EN work/procesador_tb 0 FL C:/Users/eps/Desktop/arqo1BUENO/procesador_TB.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/std_logic_arith 1381692177 \
+      PB ieee/STD_LOGIC_UNSIGNED 1381692179
+AR work/procesador_tb/TB_ARCHITECTURE 0 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/procesador_TB.vhd EN work/procesador_tb 0 \
+      CP procesador CP memoria
+CF work/TESTBENCH_FOR_procesador 0 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/procesador_TB.vhd \
+      AR work/procesador/procesador 0 AR work/procesador_tb/TB_ARCHITECTURE 0
+FL C:/Users/eps/Desktop/arqo1BUENO/registros.vhd 2014/10/22.09:55:26 P.20131013
+EN work/registros 1413995244 FL C:/Users/eps/Desktop/arqo1BUENO/registros.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/STD_LOGIC_UNSIGNED 1381692179 \
+      PB ieee/std_logic_arith 1381692177
+AR work/registros/Practica 1413995245 \
+      FL C:/Users/eps/Desktop/arqo1BUENO/registros.vhd EN work/registros 1413995244
+FL C:/Users/eps/Desktop/Practica1/arqo1/ALU.vhd 2014/10/06.16:56:37 P.20131013
+FL C:/Users/eps/Desktop/Practica1/arqo1/control.vhd 2014/10/06.16:45:51 P.20131013
+FL C:/Users/eps/Desktop/Practica1/arqo1/procesador.vhd 2014/10/06.17:07:31 P.20131013
+FL C:/Users/eps/Desktop/Practica1/arqo1/registros.vhd 2014/10/06.16:47:34 P.20131013

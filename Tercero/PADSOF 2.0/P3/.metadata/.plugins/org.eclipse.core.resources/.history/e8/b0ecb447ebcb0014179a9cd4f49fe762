@@ -1,0 +1,186 @@
+package grupo;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import mensaje.MensajeGrupo;
+import mensaje.MensajeUsuario;
+import usuario.Usuario;
+
+/** 
+ * @author Antonio Gomez lucas, Mario Valdemaro Garcia Roque
+ * 
+ * Clase Grupo
+ */
+
+public class Grupo {
+
+	private String SUJETOMODERAR="Para moderar grupo: ";
+	
+	private int idGrupo;
+	private String nombre;
+	private boolean privado;
+	private Usuario  moderador;
+	private ArrayList<String> listaUsuarios;
+	private ArrayList<MensajeGrupo> listaMensajes; //TODO REVISAR SI ES MENSAJE GRUPO
+	private ArrayList<Grupo> subGrupos;
+	
+	
+	/**
+	 * Constructor de grupo
+	 * @param idGrupo
+	 * @param nombre
+	 * @param privado
+	 * @param moderador
+	 */
+	public Grupo(int idGrupo, String nombre, boolean privado, Usuario moderador) {
+		this.idGrupo = idGrupo;
+		this.nombre = nombre;
+		this.privado = privado;
+		this.moderador = moderador;
+		this.listaUsuarios = new ArrayList<String>();
+		this.listaMensajes = new ArrayList<MensajeGrupo>();
+		this.subGrupos = new ArrayList<Grupo>();
+	}
+	
+	/**
+	 * @return the listaUsuarios
+	 */
+	public ArrayList<String> getListaUsuarios() {
+		return listaUsuarios;
+	}
+	
+	/**
+	 * @param listaUsuarios the listaUsuarios to set
+	 */
+	public void setListaUsuarios(ArrayList<String> listaUsuarios) {
+		this.listaUsuarios = listaUsuarios;
+	}
+	
+	/**
+	 * @return the listaMensajes
+	 */
+	public ArrayList<MensajeGrupo> getListaMensajes() {
+		return listaMensajes;
+	}
+	
+	/**
+	 * @param listaMensajes the listaMensajes to set
+	 */
+	public void setListaMensajes(ArrayList<MensajeGrupo> listaMensajes) {
+		this.listaMensajes = listaMensajes;
+	}
+	
+	/**
+	 * @return the idGrupo
+	 */
+	public int getIdGrupo() {
+		return idGrupo;
+	}
+	
+	/**
+	 * @param idGrupo the idGrupo to set
+	 */
+	public void setIdGrupo(int idGrupo) {
+		this.idGrupo = idGrupo;
+	}
+	
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+	
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	/**
+	 * @return the privado
+	 */
+	public boolean isPrivado() {
+		return privado;
+	}
+	
+	/**
+	 * @param privado the privado to set
+	 */
+	public void setPrivado(boolean privado) {
+		this.privado = privado;
+	}
+	
+	/**
+	 * @return the moderador
+	 */
+	public Usuario getModerador() {
+		return moderador;
+	}
+	
+	/**
+	 * @param moderador the moderador to set
+	 */
+	public void setModerador(Usuario moderador) {
+		this.moderador = moderador;
+	}
+	
+	/**
+	 * Añade un subgrupo
+	 * @param nombreSubgrupo
+	 * @param privado
+	 * @param idModerador
+	 * @return true si añade el subgrupo false si no
+	 */
+	public boolean addSubgrupo(String nombreSubgrupo,boolean privado, Usuario moderador,int idGrupo){
+		for(Grupo g:subGrupos){
+			if(g.nombre.equals(nombreSubgrupo))
+				return false;
+		}
+		return subGrupos.add(new Grupo(idGrupo, nombreSubgrupo, privado, moderador));
+	}
+	
+	/**
+	 * Añade un usuario a un grupo
+	 * @param usuario
+	 * @return true si añade a un usuario false si no
+	 */
+	public boolean addUsuario(Usuario usuario){
+		if(getListaUsuarios().contains(usuario.getNombre()))
+			return false;
+		return listaUsuarios.add(usuario.getNombre());
+	}
+	
+	/**
+	 * Elimina a un usuario de un grupo
+	 * @param idUsuario
+	 * @return true si lo elimina false si no
+	 */
+	public boolean removeUsuario(Usuario usuario){
+		for(Usuario u: listaUsuarios)
+			if(u.getCorreo().equals(usuario.getCorreo()))
+				return listaUsuarios.remove(u);
+		return false;
+	}
+	
+	/**
+	 * Añade un mensaje a un grupo
+	 * @param cuerpo
+	 * @param sujeto
+	 * @return true si añade el mensaje false si no
+	 */
+	public boolean addMensaje(int id,String cuerpo, Usuario remitente){//TODO REVISAR
+		if(moderador==null)
+			return listaMensajes.add(new MensajeGrupo(id,cuerpo, Calendar.getInstance(),this ,remitente));
+		else //TODO poner a false si hay moderador ??¿¿
+			return remitente.addMensajeBuzon(new MensajeUsuario(id,moderador,cuerpo,Calendar.getInstance(),SUJETOMODERAR+getNombre(),remitente));
+	}
+	
+	/**
+	 * @return true si lo es false si no
+	 */
+	public boolean isGrupoEstudio() {
+		return false;
+	}
+}

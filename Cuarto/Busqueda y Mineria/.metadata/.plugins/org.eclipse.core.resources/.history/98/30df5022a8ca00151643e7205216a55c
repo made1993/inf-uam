@@ -1,0 +1,6 @@
+package es.uam.eps.bmi.search.searching;
+
+
+public class ScoredTextDocument{
+	
+}

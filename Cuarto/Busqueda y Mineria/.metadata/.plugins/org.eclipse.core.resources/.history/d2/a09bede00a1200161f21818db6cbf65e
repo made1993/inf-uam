@@ -1,0 +1,130 @@
+package es.uam.eps.bmi.recomendacion;
+
+import java.util.*;
+import java.util.Map.Entry;
+
+import es.uam.eps.bmi.recomendacion.lectores.UserRatedMovies;
+
+public class Evaluacion {
+
+	private double part;
+
+	private HashMap<Integer, HashMap<Integer, Double>> datosTrain;
+	private HashMap<Integer, HashMap<Integer, Double>> datosTest;
+	private RecomendadorContenido recCon;
+	private RecomendadorColaborativo recCol ;
+	private int func;
+	
+	public Evaluacion(double part, String path, int k, int func) {
+		this.part=part;
+		datosTest= new HashMap<>();
+		datosTrain= new HashMap<>();
+		this.func= func;
+		if(func > 2)
+			recCon= new RecomendadorContenido(path, k, 0);
+		else
+			recCol= new RecomendadorColaborativo(path, k, 0);
+	}
+
+	public void particion() {
+		
+		Random r = new Random();
+		UserRatedMovies urm = null;
+		if(recCon!=null)
+			urm = recCon.getUrm();
+		else
+			urm = recCol.getUrm();
+		for(Entry<Integer, HashMap<Integer,Double>> peliculas: urm.getDatos().entrySet()){
+			for(Entry<Integer,Double> pelicula: peliculas.getValue().entrySet()){
+				if (r.nextDouble()<part){
+					HashMap<Integer, Double> peliculasTrain = datosTrain.get(peliculas.getKey());
+					
+					if(peliculasTrain ==null){
+						peliculasTrain = new HashMap<>();
+						peliculasTrain.put(pelicula.getKey(), pelicula.getValue());
+						datosTrain.put(peliculas.getKey(), peliculasTrain);
+					}
+					else{
+						peliculasTrain.put(pelicula.getKey(),pelicula.getValue());
+					}
+						
+				}
+				else{
+					HashMap<Integer, Double> peliculasTest = datosTest.get(peliculas.getKey());
+					
+					if(peliculasTest ==null){
+						peliculasTest = new HashMap<>();
+						peliculasTest.put(pelicula.getKey(), pelicula.getValue());
+						datosTest.put(peliculas.getKey(), peliculasTest);
+					}
+					else{
+						peliculasTest.put(pelicula.getKey(),pelicula.getValue());
+					}
+				}
+			}
+		}
+		
+		
+	}
+	
+	/**
+	 * Por ahora esta hecho coseno pero es facil cambiar por otra
+	 * funcion que calcule las nuevas similitudes.
+	 */
+	public void train(){
+		if(func > 2){
+			recCol.getUrm().setDatos(datosTrain);
+			if(func == 3)
+				recCol.getUrm().similitudCoseno();
+			else if(func == 4)
+				recCol.getUrm().similitudPearson();
+		}
+		else{
+			recCon.getUrm().setDatos(datosTrain);
+			if(func == 1)
+				recCon.getUrm().similitudCoseno();
+			else if(func == 2)
+				recCon.getUrm().similitudPearson();
+		}
+	}
+
+	public double MAE() {
+
+		double mae = 0;
+		int size=0;
+		for(Entry<Integer, HashMap<Integer,Double>> peliculas: datosTest.entrySet()){
+			for(Entry<Integer,Double> pelicula: peliculas.getValue().entrySet()){
+				double fallo=0;
+				if(func>2)
+					
+				fallo=Math.abs(recomendador.knnColaborativo(peliculas.getKey(), pelicula.getKey()));
+				fallo -= pelicula.getValue();
+				mae += Math.abs(fallo);
+				size++;
+			}
+		}
+		return mae/size;
+	}
+
+	public double RMSE() {
+
+		double rmse = 0;
+		int size=0;
+		for(Entry<Integer, HashMap<Integer,Double>> peliculas: datosTest.entrySet()){
+			for(Entry<Integer,Double> pelicula: peliculas.getValue().entrySet()){
+				double fallo=Math.abs(recomendador.knnColaborativo(peliculas.getKey(), pelicula.getKey()));
+				fallo -= pelicula.getValue();
+				rmse += fallo*fallo;
+				size++;
+			}
+		}
+		return Math.sqrt(rmse/size);
+	}
+
+	public static void main(String[] args) {
+		Evaluacion ev= new Evaluacion(0.8, "hetrec2011-movielens-2k-v2", 40, 2);
+		ev.particion();
+		ev.train();
+		System.out.println(ev.MAE());
+	}
+}

@@ -1,0 +1,2 @@
+INDEX VERSION 1.127+/home/flyn/Dropbox/cuarto/Busqueda y Mineria/.metadata/.plugins/org.eclipse.jdt.core
+657819041.index

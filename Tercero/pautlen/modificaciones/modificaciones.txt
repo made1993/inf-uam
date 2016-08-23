@@ -1,0 +1,25 @@
+Mario Valdemaro Garcia Roque
+Grupo 1311
+
+Se han modificado 2 apartados del programa que estaban relacionados:
+
+1. En la linea 39 se ha añadido en el strtok el caratcter \r porque 
+por lo visto windows es especial y genera este simbolo ademas del \n
+al hacer un salto de linea.
+
+2. En el caso de que fuese una busqueda, esta tenia siempre un simbolo
+de mas \r (que casualidad) que me impidia hacer la busqueda de forma
+correcta, por tanto lo que hacia era no contar el ultimo simbolo.
+Pero ocurre que si haces una busqueda al final del fichero te va a
+quitar la ultima letra del simbolo que estas buscando. Por tanto 
+arreglado lo que que he puesto en el punto uno no me hace falta quitar
+el ultimo simbolo de una cadena.
+
+
+En principio ahora todo va bien he probado los fichero de salida y son
+iguales lo unico que hay que añadir es el archivo prueba_tabla.c, que
+adjunto en esta entrega, al programa que ya entregue y todo deberia
+funcionar. Si necesitas que made algo mas solo tienes que pedirlo.
+
+
+Perdon por las molestias.

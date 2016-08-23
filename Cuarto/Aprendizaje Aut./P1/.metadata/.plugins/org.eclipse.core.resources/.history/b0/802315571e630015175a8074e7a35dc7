@@ -1,0 +1,56 @@
+package clasificadores;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Set;
+
+import datos.*;
+
+public class ClasificadorAPriori extends Clasificador {
+	
+	private Double maxClase;
+	private ArrayList<Integer> resultado;
+	
+	
+	
+	public ArrayList<Integer> getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(ArrayList<Integer> resultado) {
+		this.resultado = resultado;
+	}
+
+	@Override
+	public void entrenamiento(Datos datostrain) {
+		double clase;
+		
+		Integer nClase=datostrain.getCountAtributos().get( datostrain.getCountAtributos().size()-1);
+		Hashtable<Double,Integer> repClase= new Hashtable<Double, Integer>();
+		System.out.println(datostrain.getDato(i));
+		for(int i=0; i<datostrain.getNumDatos(); i++){
+			clase = datostrain.getDato(i, datostrain.getSizeTipoAtributos()-1);
+			if(repClase.get(clase)==null)
+				repClase.put(clase, 0);
+			else
+				repClase.replace(clase, repClase.get(clase)+1);
+		}
+		Integer maxValue=0;
+		for (Double d:repClase.keySet()){
+			if (repClase.get(d)>maxValue){
+				maxValue =repClase.get(d); 
+				maxClase= d;
+			}
+		}	
+	}
+	
+	@Override
+	public ArrayList<Integer> clasifica(Datos datos) {
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		for(int i=0; i<datos.getNumDatos(); i++){
+			res.add(maxClase.intValue());
+		}
+		this.resultado=res;
+		return res;
+	}
+}

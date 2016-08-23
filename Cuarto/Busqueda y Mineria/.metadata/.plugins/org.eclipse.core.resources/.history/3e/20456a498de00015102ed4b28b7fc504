@@ -1,0 +1,76 @@
+package es.uam.eps.bmi.search.indexing;
+
+import java.util.*;
+/**
+ * Clase que nos da informacion sobre un termino.
+ * 
+ * @author Mario Valdemaro Garcia Roque <mariov.garcia@estudiante.uam.es> y
+ * Angel Fuente Ortega <angel.fuente@estudiante.uam.es>
+ *
+ */
+public class Posting {
+
+	private String DocId;
+	private int termFrequency;
+	private List<Long> TermPositions;
+	
+	public Posting(String docId) {
+		DocId = docId;
+		TermPositions= new ArrayList<>();
+	}
+	
+	public Posting(String docId, int termFrequency, List<Long> termPositions) {
+		DocId = docId;
+		this.termFrequency = termFrequency;
+		TermPositions = termPositions;
+	}
+
+	/**
+	 * @return the docId
+	 */
+	public String getDocId() {
+		return DocId;
+	}
+	/**
+	 * @param docId the docId to set
+	 */
+	public void setDocId(String docId) {
+		DocId = docId;
+	}
+	/**
+	 * @return the termFrequency
+	 */
+	public int getTermFrequency() {
+		return termFrequency;
+	}
+	/**
+	 * @param termFrequency the termFrequency to set
+	 */
+	public void setTermFrequency(int termFrequency) {
+		this.termFrequency = termFrequency;
+	}
+	/**
+	 * 
+	 * @return una lista con las posiciones donde se encuentra el termino
+	 */
+	public List<Long> getTermPositions() {
+		return this.TermPositions;
+	}
+
+	/**
+	 * @param termPositions the termPositions to set
+	 */
+	public void setTermPositions(List<Long> termPositions) {
+		TermPositions = termPositions;
+	}
+	public void insertPos(Long pos){
+		this.termFrequency++;
+		this.TermPositions.add(pos);
+	}
+	public String toString(){
+		return "DocID:"+this.DocId+"\n"+
+				"TermFreq:"+ this.termFrequency+"\n"+
+				"TermPositions:"+ this.TermPositions+"\n";
+	}
+
+}

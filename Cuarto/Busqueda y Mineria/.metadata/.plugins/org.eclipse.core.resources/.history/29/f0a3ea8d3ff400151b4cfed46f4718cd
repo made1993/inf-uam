@@ -1,0 +1,41 @@
+package es.uam.eps.bmi.crawling;
+
+import java.io.*;
+import java.net.Socket;
+import java.sql.Date;
+
+public class GenericCrawler {
+	public static void main (String args[]){
+	    String serverName = "exthost.csi.ull.es";
+	    int portNumber = 7;
+	    Socket echoSocket = null;
+	    PrintWriter out = null;
+	    BufferedReader in = null;
+
+	    try {
+	      echoSocket = new Socket(serverName, portNumber);
+	      out = new PrintWriter(echoSocket.getOutputStream(), true);
+	      in = new BufferedReader(new InputStreamReader( echoSocket.getInputStream()));
+	    } catch (UnknownHostException e) {
+	      System.err.println("Don't know about host: " + serverName);
+	      System.exit(1);
+	    } catch (IOException e) {
+	      System.err.println("Couldn't get I/O for " + "the connection to: " + serverName);
+	      System.exit(1);
+	    }
+
+	    BufferedReader stdIn = new BufferedReader( new InputStreamReader(System.in));
+	    String userInput;
+
+	    while ((userInput = stdIn.readLine()) != null) {
+	      out.println(userInput);
+	      System.out.println("echo: " + in.readLine());
+	    }
+
+	    out.close();
+	    in.close();
+	    stdIn.close();
+	    echoSocket.close();
+	  }
+	}
+}

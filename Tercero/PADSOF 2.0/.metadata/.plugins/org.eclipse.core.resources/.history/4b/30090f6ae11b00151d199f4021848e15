@@ -1,0 +1,29 @@
+package pruebasJUnit;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class testPregunta {
+
+	@Test
+	public void testGetRespuestaDe() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testAddRespuesta() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetRespuestas() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testListarRespuestas() {
+		fail("Not yet implemented");
+	}
+
+}

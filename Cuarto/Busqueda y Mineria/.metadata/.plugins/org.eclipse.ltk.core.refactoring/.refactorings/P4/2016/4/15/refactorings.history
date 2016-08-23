@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;es.uam.eps.bmi.recomendacion.lectorMovieTags.java&apos; to &apos;MovieTags.java&apos;&#x0A;- Original project: &apos;P4&apos;&#x0A;- Original element: &apos;es.uam.eps.bmi.recomendacion.lectorMovieTags.java&apos;&#x0A;- Renamed element: &apos;es.uam.eps.bmi.recomendacion.MovieTags.java&apos;" description="Rename compilation unit &apos;lectorMovieTags.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;es.uam.eps.bmi.recomendacion{lectorMovieTags.java" name="MovieTags.java" references="false" stamp="1460560325523" version="1.0"/>
+</session>

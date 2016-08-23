@@ -1,0 +1,20 @@
+.TH "recibir_datos__s_s_l" 3 "Mon Apr 27 2015" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+recibir_datos__s_s_l \- \fBrecibir_datos_SSL\fP 
+recibe un mensaje SSL
+.SH "SYNOPSIS"
+.PP
+\fB#include\fP \fB'conexion\&.h'\fP 
+.PP
+\fBint\fP \fBrecibir_datos_SSL\fP \fB\fP(\fBSSL*\fP ssl, \fBvoid*\fP buf\fB\fP)
+.SH "DESCRIPCIÓN"
+.PP
+Esta función será el equivalente a la función de lectura de mensajes que se realizó en la práctica 1, pero será utilizada para enviar datos a través del canal seguro\&. Es importante que sea genérica y pueda ser utilizada independientemente de los datos que se vayan a recibir\&.
+.SH "RETORNO"
+.PP
+Devuelve 0 en caso de error o el tamaño del mensaje recibido\&.
+.SH "VER TAMBIÉN"
+.PP
+\fBinicializar_nivel_SSL(3)\fP, \fBfijar_contexto_SSL(3)\fP, \fBconectar_canal_seguro_SSL(3)\fP, \fBaceptar_canal_seguro_SSL(3)\fP, \fBevaluar_post_connectar_SSL(3)\fP, \fBenviar_datos_SSL(3)\fP, \fBcerrar_canal_SSL(3)\fP \fB\fP  authors AUTOR Mario Valdemaro Garcia Roque (mariov.garcia@estudiante.uam.es) Roberto Garcia Teodoro (roberto.garciat@estudiante.uam.es) 

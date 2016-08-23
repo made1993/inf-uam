@@ -1,0 +1,30 @@
+
+means1<-c()
+means2<-c()
+means3<-c()
+for (i in seq(1, 40,by =1)){
+	x<- scan(paste("erroresKNN/error", i, ".data", sep =""))
+	means1<-rbind(means1, c(i,mean(x)))
+	x<- scan(paste("erroresKNNDW/error", i, ".data", sep =""))
+	means2<-rbind(means2, c(i,mean(x)))
+	x<- scan(paste("erroresKNNNB/error", i, ".data", sep =""))
+	means3<-rbind(means3, c(i,mean(x)))
+
+
+}
+x<- scan("erroresNB/errorNB1.data")
+mean1 <-mean(x)
+x<- scan("erroresNB/errorNB10.data")
+mean10 <-mean(x)
+
+x<- scan("erroresNB/errorNB100.data")
+mean100 <-mean(x)
+
+plot(means1, type="l", col ="red", ylim =c(0,1), ylab="error", xlab="k", main="KNN NB")
+lines(means2, col="blue")
+lines(means3, col="pink")
+abline(h=mean1, col="green")
+abline(h=mean10, col="black")
+abline(h=mean100, col="orange")
+
+legend(x= 25 , y=0.55,lty=c(1,1),lwd=c(2.5,2.5),col=c("blue","red", "green", "black", "orange","pink"), legend=c( "KNNDW", "KNN", "NB/1", "NB/10", "NB/100", "KNNNB/100"))

@@ -1,0 +1,19 @@
+package pruebasJUnit;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class testMensajeColaborativo {
+
+	@Test
+	public void testSetCerrado() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testBuscarMensaje() {
+		fail("Not yet implemented");
+	}
+
+}

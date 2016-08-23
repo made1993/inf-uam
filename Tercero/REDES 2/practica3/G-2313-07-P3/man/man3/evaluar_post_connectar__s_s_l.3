@@ -1,0 +1,20 @@
+.TH "evaluar_post_connectar__s_s_l" 3 "Mon Apr 27 2015" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+evaluar_post_connectar__s_s_l \- \fBevaluar_post_connectar_SSL\fP 
+evalua si se ha realizado la conexion SSL con exito
+.SH "SYNOPSIS"
+.PP
+\fB#include\fP \fB'conexion\&.h'\fP 
+.PP
+\fBint\fP \fBfijar_contexto_SSL\fP \fB\fP(\fBSSL_CTX*\fP ctx, \fBconst\fP char* CAfile, \fBconst\fP char* prvKeyFile, \fBconst\fP char* certFile\fB\fP)
+.SH "DESCRIPCIÓN"
+.PP
+Esta función comprobará una vez realizado el handshake que el canal de co- municación se puede considerar seguro\&.
+.SH "RETORNO"
+.PP
+Devuelve 0 en caso de error o 1 en caso de exito \&.
+.SH "VER TAMBIÉN"
+.PP
+\fBinicializar_nivel_SSL(3)\fP, \fBconectar_canal_seguro_SSL(3)\fP, \fBaceptar_canal_seguro_SSL(3)\fP, \fBfijar_contexto_SSL(3)\fP, \fBenviar_datos_SSL(3)\fP, \fBrecibir_datos_SSL(3)\fP, \fBcerrar_canal_SSL(3)\fP \fB\fP  authors AUTOR Mario Valdemaro Garcia Roque (mariov.garcia@estudiante.uam.es) Roberto Garcia Teodoro (roberto.garciat@estudiante.uam.es) 

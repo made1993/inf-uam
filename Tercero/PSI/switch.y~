@@ -1,0 +1,70 @@
+se necesitan estas variables
+
+int *cases=NULL;
+int ncase=0;
+
+
+
+bloque : condicional
+		{printf(";R40:\t<bloque> ::= <condicional>\n");}
+	| bucle	 
+		{printf(";R41:\t<bloque> ::= <bucle>\n");}
+	| switch 
+		{printf(";R41:\t<bloque> ::= <switch>\n");}
+
+switch: ini_switch TOK_SWITCH TOK_PARENTESISIZQUIERDO identificador TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA cases TOK_LLAVEDERECHA{
+			
+			fprintf(nasm, "ini_switch:\n");
+			if(NULL==(auxdato=hash_find_table(tlocal,tglobal,$4.lexema))){
+				fprintf(stderr,"****ERROR semantico en lin %d: Acceso a variable no declarada (%s).\n",ln,$4.lexema);
+				return;
+			}
+			if(auxdato->categoria==FUNCION){
+				
+				fprintf(stderr,"****ERROR semantico en lin %d: No se esperaba una fucion.\n",ln);
+				return;
+			}
+			/*generacion de codigo*/
+			if(auxdato->categoria==VARIABLE){
+				if(NULL==(auxdato=hash_find_table(NULL,tlocal,$4.lexema))){
+					fprintf(nasm,"mov edx,dword [_%s]\n",$4.lexema);
+				}
+				else{
+					fprintf(nasm,"mov edx, dword [ebp -%d]\n",4*auxdato->pvar);
+				}
+			}
+			else{
+				fprintf(nasm,"mov edx,dword [ebp +%d]\n",4+4*(auxdato->pparam));
+			}
+			for(j=0;j<ncase;j++){
+				fprintf(nasm, "mov eax, %d\n", j);
+				fprintf(nasm, "cmp eax, edx\n");
+				fprintf(nasm, "je near case%d\n",cases[j]);
+			}
+			fprintf(nasm, "fin_switch:\n");
+			fprintf(nasm, ";termina el switch\n");
+			free(cases);
+			ncase=0;
+		}
+
+cases: case cases
+	| case
+
+case: etiq_case sentencias TOK_BREAK TOK_PUNTOYCOMA
+		{
+			fprintf(nasm, "jmp near fin_switch\n");
+			fprintf(nasm, ";termina el case\n");
+		}
+ini_switch:{
+			fprintf(nasm, ";empieza el switch\n");
+			fprintf(nasm, "jmp near ini_switch\n");
+		}
+etiq_case:TOK_CASE	TOK_CONSTANTE_ENTERA TOK_DOSPUNTOS
+		{
+			fprintf(nasm, ";empieza el case\n");
+			fprintf(nasm,"case%d:\n",$2.valor_entero );
+			ncase++;
+			cases = (int*) realloc (cases, ncase*sizeof(int));
+			cases[ncase-1]=$2.valor_entero;
+
+		}

@@ -1,0 +1,233 @@
+package gui;
+
+import grupo.*;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+import mailUam.*;
+import mensaje.*;
+
+public class GUIVerGrupo extends GUIMenu{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private JButton botonPreguntas;
+	private JTextField campoEscribir;
+	private JButton botonEnviar;
+	private JLabel labelMensajes;
+	private JButton botonExpulsar;
+	private Grupo grupo;
+	
+	public GUIVerGrupo(MailUam modelo) {
+		super(modelo);
+		setLabelTituloText("Ver Grupo");
+		botonPreguntas = new JButton("Preguntas");
+		botonPreguntas.setEnabled(false);
+		botonExpulsar= new JButton("Expulsar Usuarios");
+		botonExpulsar.setEnabled(false);
+		campoEscribir = new JTextField("Escribe tu mensaje...");
+		botonEnviar = new JButton("Enviar");
+		labelMensajes = new JLabel();
+		
+		JPanel p1 = new JPanel( new GridBagLayout());
+		GridBagConstraints c= new GridBagConstraints();
+		
+		JScrollPane scroll = new JScrollPane(labelMensajes);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	    
+	    //c.fill = GridBagConstraints.HORIZONTAL;
+	    c.weightx= 1;	
+		c.gridx = 0;
+		c.gridy =0;
+	    p1.add(botonPreguntas,c);
+	    
+	    //c.fill = GridBagConstraints.HORIZONTAL;
+	    c.weightx= 7;	
+	    c.weighty=1;
+		c.gridx = 1;
+		c.gridy =0;
+	    p1.add(botonExpulsar);
+		
+	    //c.fill = GridBagConstraints.HORIZONTAL;
+	    c.weightx= 5;
+	    c.weighty= 5;
+		c.gridx = 0;
+		c.gridy =1;
+	    p1.add(scroll,c);
+		
+	    //c.fill = GridBagConstraints.HORIZONTAL;
+	    c.weightx= 7;
+	    c.weighty= 1;	
+		c.gridx = 0;
+		c.gridy =2;
+	    p1.add(campoEscribir,c);
+		
+		//c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx= 7;
+	    c.weighty= 1;	
+		c.gridx = 1;
+		c.gridy =2;
+	    p1.add(botonEnviar,c);
+		add(p1);
+	}
+	
+	
+	
+	/**
+	 * @return the botonPreguntas
+	 */
+	public JButton getBotonPreguntas() {
+		return botonPreguntas;
+	}
+
+
+
+	/**
+	 * @param botonPreguntas the botonPreguntas to set
+	 */
+	public void setBotonPreguntas(JButton botonPreguntas) {
+		this.botonPreguntas = botonPreguntas;
+	}
+
+
+
+	/**
+	 * @return the campoEscribir
+	 */
+	public JTextField getCampoEscribir() {
+		return campoEscribir;
+	}
+
+
+
+	/**
+	 * @param campoEscribir the campoEscribir to set
+	 */
+	public void setCampoEscribir(JTextField campoEscribir) {
+		this.campoEscribir = campoEscribir;
+	}
+
+
+
+	/**
+	 * @return the botonEnviar
+	 */
+	public JButton getBotonEnviar() {
+		return botonEnviar;
+	}
+
+
+
+	/**
+	 * @param botonEnviar the botonEnviar to set
+	 */
+	public void setBotonEnviar(JButton botonEnviar) {
+		this.botonEnviar = botonEnviar;
+	}
+
+
+
+	/**
+	 * @return the grupo
+	 */
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+
+
+	/**
+	 * @param grupo the grupo to set
+	 */
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+
+
+
+	/**
+	 * @return the labelMensajes
+	 */
+	public JLabel getLabelMensajes() {
+		return labelMensajes;
+	}
+
+
+
+	/**
+	 * @param labelMensajes the labelMensajes to set
+	 */
+	public void setLabelMensajes(JLabel labelMensajes) {
+		this.labelMensajes = labelMensajes;
+	}
+	
+
+
+	/**
+	 * @return the botonExpulsar
+	 */
+	public JButton getBotonExpulsar() {
+		return botonExpulsar;
+	}
+
+
+
+	/**
+	 * @param botonExpulsar the botonExpulsar to set
+	 */
+	public void setBotonExpulsar(JButton botonExpulsar) {
+		this.botonExpulsar = botonExpulsar;
+	}
+
+
+
+	public void setValores(Grupo g){
+		this.grupo=g;
+		System.out.println("Usuario");
+		System.out.println(g.getModerador());
+		System.out.println(getM().getLogged());
+		if(g.getModerador() !=null &&
+				getM().getLogged().getCorreo().equals(g.getModerador().getCorreo())){
+			botonExpulsar.setEnabled(true);
+		}else{
+			botonExpulsar.setEnabled(false);
+		}
+		String text="<html><body>---------------------------<br/>-"+g.getNombre()+"-<br/>---------------------------<br/><hr/>";
+		if(g.isGrupoColaborativo()){
+			text+="Falta Implementar";
+			for(MensajeGrupo mensaje:g.getListaMensajes()){
+				MensajeColaborativo m = (MensajeColaborativo)mensaje;
+				text+="Pregunta: "+m.getRemitente().getCorreo()+"<br/>"+m.getCuerpo()+"<br/><hr width=2/>";
+				for(MensajeColaborativo respuesta:m.getRespuestas()){
+					text+="Respuesta: "+m.getRemitente().getCorreo()+"<br/>"+m.getCuerpo()+"<br/><hr width=1/>";
+				}
+			}
+			labelMensajes.setText(text);
+		}else if(g.isGrupoEstudio()){
+			botonPreguntas.setEnabled(true);
+		}
+		for(MensajeGrupo m:g.getListaMensajes()){
+			text+=m.getRemitente().getCorreo()+"<br/>"+m.getCuerpo()+"<br/>";
+			text+="<hr/>";
+		}
+		text+="</body></html>";
+		labelMensajes.setText(text);
+	}
+
+	@Override
+	public void setControlador(ActionListener c) {
+		super.setControlador(c);
+		botonEnviar.addActionListener(c);
+		botonPreguntas.addActionListener(c);
+		botonExpulsar.addActionListener(c);
+	}
+	
+}

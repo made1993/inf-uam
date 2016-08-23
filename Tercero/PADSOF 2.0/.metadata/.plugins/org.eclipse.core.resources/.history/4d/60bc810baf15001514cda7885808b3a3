@@ -1,0 +1,17 @@
+package gui;
+
+import mailUam.MailUam;
+
+public class GUIExpulsarUsuario extends GUIMenu{
+
+	public GUIExpulsarUsuario(MailUam app) {
+		super(app);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+}

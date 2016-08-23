@@ -1,0 +1,18 @@
+	array_thr[1, 2, 3, 4];
+	array_num[1000,2000,5000,10000,20000,30000,40000,50000,100000];
+	rm par2_*
+	rm serie.*
+	rm tam.dat
+	for i in $(seq 0 1  8)do
+		./pescalar_serie $array_num[$i]	>>serie.txt
+		cat serie.txt| grep Tiempo: >>serie.dat
+		printf $array_num[$i] >> tam.txt
+	done
+	paste tam.txt serie.dat >tserie.dat
+	for(j=0; j<4; j++){
+		for(i=0; i<sizeof(array_num[]); i++){
+			./pescalar_par2 $array_thr[j] $array_num[i] >>par2_$array_num[i].txt
+			cat par2_$array_num[i].txt | grep Tiempo: >>par2_$array_num[i].dat
+		}
+		paste tam.txt par2_$array_num[i].dat >tpar2_$array_num[i].dat
+	}

@@ -1,0 +1,182 @@
+PRACTICA 3
+1 OPENSSL
+	openssl help
+	openssl -h aes-128-cbc
+	el comando -h no existe, es todo mentira. Aparece el mensaje por defecto de comando no existente, que es la ayuda.
+
+	ejemplo:
+
+-----------------------------------------
+
+e282725@6B-6-67-55:~$ openssl aes-128-cbc -h
+unknown option '-h'
+options are
+-in <file>     input file
+-out <file>    output file
+-pass <arg>    pass phrase source
+-e             encrypt
+-d             decrypt
+-a/-base64     base64 encode/decode, depending on encryption flag
+-k             passphrase is the next argument
+-kfile         passphrase is the first line of the file argument
+-md            the next argument is the md to use to create a key
+                 from a passphrase.  One of md2, md5, sha or sha1
+-S             salt in hex is the next argument
+-K/-iv         key/iv in hex is the next argument
+-[pP]          print the iv/key (then exit if -P)
+-bufsize <n>   buffer size
+-nopad         disable standard block padding
+-engine e      use engine e, possibly a hardware device.
+Cipher Types
+-aes-128-cbc               -aes-128-cbc-hmac-sha1     -aes-128-cfb              
+-aes-128-cfb1              -aes-128-cfb8              -aes-128-ctr              
+-aes-128-ecb               -aes-128-gcm               -aes-128-ofb              
+-aes-128-xts               -aes-192-cbc               -aes-192-cfb              
+-aes-192-cfb1              -aes-192-cfb8              -aes-192-ctr              
+-aes-192-ecb               -aes-192-gcm               -aes-192-ofb              
+-aes-256-cbc               -aes-256-cbc-hmac-sha1     -aes-256-cfb              
+-aes-256-cfb1              -aes-256-cfb8              -aes-256-ctr              
+-aes-256-ecb               -aes-256-gcm               -aes-256-ofb              
+-aes-256-xts               -aes128                    -aes192                   
+-aes256                    -bf                        -bf-cbc                   
+-bf-cfb                    -bf-ecb                    -bf-ofb                   
+-blowfish                  -camellia-128-cbc          -camellia-128-cfb         
+-camellia-128-cfb1         -camellia-128-cfb8         -camellia-128-ecb         
+-camellia-128-ofb          -camellia-192-cbc          -camellia-192-cfb         
+-camellia-192-cfb1         -camellia-192-cfb8         -camellia-192-ecb         
+-camellia-192-ofb          -camellia-256-cbc          -camellia-256-cfb         
+-camellia-256-cfb1         -camellia-256-cfb8         -camellia-256-ecb         
+-camellia-256-ofb          -camellia128               -camellia192              
+-camellia256               -cast                      -cast-cbc                 
+-cast5-cbc                 -cast5-cfb                 -cast5-ecb                
+-cast5-ofb                 -des                       -des-cbc                  
+-des-cfb                   -des-cfb1                  -des-cfb8                 
+-des-ecb                   -des-ede                   -des-ede-cbc              
+-des-ede-cfb               -des-ede-ofb               -des-ede3                 
+-des-ede3-cbc              -des-ede3-cfb              -des-ede3-cfb1            
+-des-ede3-cfb8             -des-ede3-ofb              -des-ofb                  
+-des3                      -desx                      -desx-cbc                 
+-id-aes128-GCM             -id-aes192-GCM             -id-aes256-GCM            
+-rc2                       -rc2-40-cbc                -rc2-64-cbc               
+-rc2-cbc                   -rc2-cfb                   -rc2-ecb                  
+-rc2-ofb                   -rc4                       -rc4-40                   
+-rc4-hmac-md5              -seed                      -seed-cbc                 
+-seed-cfb                  -seed-ecb                  -seed-ofb                 
+
+-----------------------------------------
+
+
+e282725@6B-6-67-55:~$ openssl ciphers -v
+ECDHE-RSA-AES256-GCM-SHA384 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AESGCM(256) Mac=AEAD
+ECDHE-ECDSA-AES256-GCM-SHA384 TLSv1.2 Kx=ECDH     Au=ECDSA Enc=AESGCM(256) Mac=AEAD
+ECDHE-RSA-AES256-SHA384 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AES(256)  Mac=SHA384
+ECDHE-ECDSA-AES256-SHA384 TLSv1.2 Kx=ECDH     Au=ECDSA Enc=AES(256)  Mac=SHA384
+ECDHE-RSA-AES256-SHA    SSLv3 Kx=ECDH     Au=RSA  Enc=AES(256)  Mac=SHA1
+ECDHE-ECDSA-AES256-SHA  SSLv3 Kx=ECDH     Au=ECDSA Enc=AES(256)  Mac=SHA1
+SRP-DSS-AES-256-CBC-SHA SSLv3 Kx=SRP      Au=DSS  Enc=AES(256)  Mac=SHA1
+SRP-RSA-AES-256-CBC-SHA SSLv3 Kx=SRP      Au=RSA  Enc=AES(256)  Mac=SHA1
+SRP-AES-256-CBC-SHA     SSLv3 Kx=SRP      Au=SRP  Enc=AES(256)  Mac=SHA1
+DHE-DSS-AES256-GCM-SHA384 TLSv1.2 Kx=DH       Au=DSS  Enc=AESGCM(256) Mac=AEAD
+DHE-RSA-AES256-GCM-SHA384 TLSv1.2 Kx=DH       Au=RSA  Enc=AESGCM(256) Mac=AEAD
+DHE-RSA-AES256-SHA256   TLSv1.2 Kx=DH       Au=RSA  Enc=AES(256)  Mac=SHA256
+DHE-DSS-AES256-SHA256   TLSv1.2 Kx=DH       Au=DSS  Enc=AES(256)  Mac=SHA256
+DHE-RSA-AES256-SHA      SSLv3 Kx=DH       Au=RSA  Enc=AES(256)  Mac=SHA1
+DHE-DSS-AES256-SHA      SSLv3 Kx=DH       Au=DSS  Enc=AES(256)  Mac=SHA1
+DHE-RSA-CAMELLIA256-SHA SSLv3 Kx=DH       Au=RSA  Enc=Camellia(256) Mac=SHA1
+DHE-DSS-CAMELLIA256-SHA SSLv3 Kx=DH       Au=DSS  Enc=Camellia(256) Mac=SHA1
+ECDH-RSA-AES256-GCM-SHA384 TLSv1.2 Kx=ECDH/RSA Au=ECDH Enc=AESGCM(256) Mac=AEAD
+ECDH-ECDSA-AES256-GCM-SHA384 TLSv1.2 Kx=ECDH/ECDSA Au=ECDH Enc=AESGCM(256) Mac=AEAD
+ECDH-RSA-AES256-SHA384  TLSv1.2 Kx=ECDH/RSA Au=ECDH Enc=AES(256)  Mac=SHA384
+ECDH-ECDSA-AES256-SHA384 TLSv1.2 Kx=ECDH/ECDSA Au=ECDH Enc=AES(256)  Mac=SHA384
+ECDH-RSA-AES256-SHA     SSLv3 Kx=ECDH/RSA Au=ECDH Enc=AES(256)  Mac=SHA1
+ECDH-ECDSA-AES256-SHA   SSLv3 Kx=ECDH/ECDSA Au=ECDH Enc=AES(256)  Mac=SHA1
+AES256-GCM-SHA384       TLSv1.2 Kx=RSA      Au=RSA  Enc=AESGCM(256) Mac=AEAD
+AES256-SHA256           TLSv1.2 Kx=RSA      Au=RSA  Enc=AES(256)  Mac=SHA256
+AES256-SHA              SSLv3 Kx=RSA      Au=RSA  Enc=AES(256)  Mac=SHA1
+CAMELLIA256-SHA         SSLv3 Kx=RSA      Au=RSA  Enc=Camellia(256) Mac=SHA1
+PSK-AES256-CBC-SHA      SSLv3 Kx=PSK      Au=PSK  Enc=AES(256)  Mac=SHA1
+ECDHE-RSA-DES-CBC3-SHA  SSLv3 Kx=ECDH     Au=RSA  Enc=3DES(168) Mac=SHA1
+ECDHE-ECDSA-DES-CBC3-SHA SSLv3 Kx=ECDH     Au=ECDSA Enc=3DES(168) Mac=SHA1
+SRP-DSS-3DES-EDE-CBC-SHA SSLv3 Kx=SRP      Au=DSS  Enc=3DES(168) Mac=SHA1
+SRP-RSA-3DES-EDE-CBC-SHA SSLv3 Kx=SRP      Au=RSA  Enc=3DES(168) Mac=SHA1
+SRP-3DES-EDE-CBC-SHA    SSLv3 Kx=SRP      Au=SRP  Enc=3DES(168) Mac=SHA1
+EDH-RSA-DES-CBC3-SHA    SSLv3 Kx=DH       Au=RSA  Enc=3DES(168) Mac=SHA1
+EDH-DSS-DES-CBC3-SHA    SSLv3 Kx=DH       Au=DSS  Enc=3DES(168) Mac=SHA1
+ECDH-RSA-DES-CBC3-SHA   SSLv3 Kx=ECDH/RSA Au=ECDH Enc=3DES(168) Mac=SHA1
+ECDH-ECDSA-DES-CBC3-SHA SSLv3 Kx=ECDH/ECDSA Au=ECDH Enc=3DES(168) Mac=SHA1
+DES-CBC3-SHA            SSLv3 Kx=RSA      Au=RSA  Enc=3DES(168) Mac=SHA1
+PSK-3DES-EDE-CBC-SHA    SSLv3 Kx=PSK      Au=PSK  Enc=3DES(168) Mac=SHA1
+ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AESGCM(128) Mac=AEAD
+ECDHE-ECDSA-AES128-GCM-SHA256 TLSv1.2 Kx=ECDH     Au=ECDSA Enc=AESGCM(128) Mac=AEAD
+ECDHE-RSA-AES128-SHA256 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AES(128)  Mac=SHA256
+ECDHE-ECDSA-AES128-SHA256 TLSv1.2 Kx=ECDH     Au=ECDSA Enc=AES(128)  Mac=SHA256
+ECDHE-RSA-AES128-SHA    SSLv3 Kx=ECDH     Au=RSA  Enc=AES(128)  Mac=SHA1
+ECDHE-ECDSA-AES128-SHA  SSLv3 Kx=ECDH     Au=ECDSA Enc=AES(128)  Mac=SHA1
+SRP-DSS-AES-128-CBC-SHA SSLv3 Kx=SRP      Au=DSS  Enc=AES(128)  Mac=SHA1
+SRP-RSA-AES-128-CBC-SHA SSLv3 Kx=SRP      Au=RSA  Enc=AES(128)  Mac=SHA1
+SRP-AES-128-CBC-SHA     SSLv3 Kx=SRP      Au=SRP  Enc=AES(128)  Mac=SHA1
+DHE-DSS-AES128-GCM-SHA256 TLSv1.2 Kx=DH       Au=DSS  Enc=AESGCM(128) Mac=AEAD
+DHE-RSA-AES128-GCM-SHA256 TLSv1.2 Kx=DH       Au=RSA  Enc=AESGCM(128) Mac=AEAD
+DHE-RSA-AES128-SHA256   TLSv1.2 Kx=DH       Au=RSA  Enc=AES(128)  Mac=SHA256
+DHE-DSS-AES128-SHA256   TLSv1.2 Kx=DH       Au=DSS  Enc=AES(128)  Mac=SHA256
+DHE-RSA-AES128-SHA      SSLv3 Kx=DH       Au=RSA  Enc=AES(128)  Mac=SHA1
+DHE-DSS-AES128-SHA      SSLv3 Kx=DH       Au=DSS  Enc=AES(128)  Mac=SHA1
+DHE-RSA-SEED-SHA        SSLv3 Kx=DH       Au=RSA  Enc=SEED(128) Mac=SHA1
+DHE-DSS-SEED-SHA        SSLv3 Kx=DH       Au=DSS  Enc=SEED(128) Mac=SHA1
+DHE-RSA-CAMELLIA128-SHA SSLv3 Kx=DH       Au=RSA  Enc=Camellia(128) Mac=SHA1
+DHE-DSS-CAMELLIA128-SHA SSLv3 Kx=DH       Au=DSS  Enc=Camellia(128) Mac=SHA1
+ECDH-RSA-AES128-GCM-SHA256 TLSv1.2 Kx=ECDH/RSA Au=ECDH Enc=AESGCM(128) Mac=AEAD
+ECDH-ECDSA-AES128-GCM-SHA256 TLSv1.2 Kx=ECDH/ECDSA Au=ECDH Enc=AESGCM(128) Mac=AEAD
+ECDH-RSA-AES128-SHA256  TLSv1.2 Kx=ECDH/RSA Au=ECDH Enc=AES(128)  Mac=SHA256
+ECDH-ECDSA-AES128-SHA256 TLSv1.2 Kx=ECDH/ECDSA Au=ECDH Enc=AES(128)  Mac=SHA256
+ECDH-RSA-AES128-SHA     SSLv3 Kx=ECDH/RSA Au=ECDH Enc=AES(128)  Mac=SHA1
+ECDH-ECDSA-AES128-SHA   SSLv3 Kx=ECDH/ECDSA Au=ECDH Enc=AES(128)  Mac=SHA1
+AES128-GCM-SHA256       TLSv1.2 Kx=RSA      Au=RSA  Enc=AESGCM(128) Mac=AEAD
+AES128-SHA256           TLSv1.2 Kx=RSA      Au=RSA  Enc=AES(128)  Mac=SHA256
+AES128-SHA              SSLv3 Kx=RSA      Au=RSA  Enc=AES(128)  Mac=SHA1
+SEED-SHA                SSLv3 Kx=RSA      Au=RSA  Enc=SEED(128) Mac=SHA1
+CAMELLIA128-SHA         SSLv3 Kx=RSA      Au=RSA  Enc=Camellia(128) Mac=SHA1
+PSK-AES128-CBC-SHA      SSLv3 Kx=PSK      Au=PSK  Enc=AES(128)  Mac=SHA1
+ECDHE-RSA-RC4-SHA       SSLv3 Kx=ECDH     Au=RSA  Enc=RC4(128)  Mac=SHA1
+ECDHE-ECDSA-RC4-SHA     SSLv3 Kx=ECDH     Au=ECDSA Enc=RC4(128)  Mac=SHA1
+ECDH-RSA-RC4-SHA        SSLv3 Kx=ECDH/RSA Au=ECDH Enc=RC4(128)  Mac=SHA1
+ECDH-ECDSA-RC4-SHA      SSLv3 Kx=ECDH/ECDSA Au=ECDH Enc=RC4(128)  Mac=SHA1
+RC4-SHA                 SSLv3 Kx=RSA      Au=RSA  Enc=RC4(128)  Mac=SHA1
+RC4-MD5                 SSLv3 Kx=RSA      Au=RSA  Enc=RC4(128)  Mac=MD5 
+PSK-RC4-SHA             SSLv3 Kx=PSK      Au=PSK  Enc=RC4(128)  Mac=SHA1
+EDH-RSA-DES-CBC-SHA     SSLv3 Kx=DH       Au=RSA  Enc=DES(56)   Mac=SHA1
+EDH-DSS-DES-CBC-SHA     SSLv3 Kx=DH       Au=DSS  Enc=DES(56)   Mac=SHA1
+DES-CBC-SHA             SSLv3 Kx=RSA      Au=RSA  Enc=DES(56)   Mac=SHA1
+
+
+
+---------------------------------
+Cifrado con claves débiles
+
+e282725@6B-6-67-55:~/Downloads$ openssl enc -des-ecb -K 0000000000000000 -in Downloads/cifrado.cosa -out Downloads/memoriadescifrada.odt
+e282725@6B-6-67-55:~/Downloads$ openssl enc -des-ecb -K 0000000000000000 -in Downloads/memoria.odt -out Downloads/cifrado.cosa
+
+
+e282725@6B-6-67-55:~/Downloads$ tail memoria.odt -n 1
+styles.xmlPK��F��h��
+
+                       9manifest.rdfPK��FJ:Configurations2/toolbar/PK��F�:Configurations2/menubar/PK��F�:Configurations2/floater/PK��F'�:Configurations2/accelerator/current.xmlPK��FC;Configurations2/images/Bitmaps/PK��F�;Configurations2/statusbar/PK��F�;Configurations2/toolpanel/PK��F�;Configurations2/progressbar/PK��F*<Configurations2/popupmenu/PK��F��w�,�b<META-INF/manifest.xmlPK��=e282725@6B-6-67-55:~/Downloads$ tail memoriadescifrada.odt -n 1
+styles.xmlPK��F��h��
+
+                       9manifest.rdfPK��FJ:Configurations2/toolbar/PK��F�:Configurations2/menubar/PK��F�:Configurations2/floater/PK��F'�:Configurations2/accelerator/current.xmlPK��FC;Configurations2/images/Bitmaps/PK��F�;Configurations2/statusbar/PK��F�;Configurations2/toolpanel/PK��F�;Configurations2/progressbar/PK��F*<Configurations2/popupmenu/PK��F��w�,�b<META-INF/manifest.xmlPK��=~B("w6fe282725@6B-6-67-55:~/Downloads$ 
+
+---------------------------------------
+
+Cifrado con clave normal, ver que no pasa.
+
+e282725@6B-6-67-55:~/Downloads$ openssl enc -des-ecb -K 0123456789ABCDEF -in memoria.odt  -out clavenormal.cosa
+e282725@6B-6-67-55:~/Downloads$ openssl enc -d -des-ecb -K 0123456789ABCDEF -out memorianormal.odt  -in clavenormal.cosa
+e282725@6B-6-67-55:~/Downloads$ openssl enc -des-ecb -K 0123456789ABCDEF -out memorianormalcifrada2veces.odt  -in clavenormal.cosa
+
+
+Cifrado con clave semidebil
+
+e282725@6B-6-67-55:~/Downloads$ openssl enc -des-ecb -K 01fe01fe01fe01fe -in memoria.odt -out semidebiles.cosa
+e282725@6B-6-67-55:~/Downloads$ openssl enc -des-ecb -K fe01fe01fe01fe01 -out memoriasemidebil.odt -in semidebiles.cosa
+
+

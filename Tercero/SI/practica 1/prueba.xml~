@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="prueba.xsl" ?>
+<helloworld
+xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation = "xsd-datos.xsd">
+
+		<person>
+			<name>Ruth</name>
+		</person>
+		<person>
+			<name>Alvaro</name>
+		</person>
+</helloworld>
+

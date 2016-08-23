@@ -1,0 +1,15 @@
+package pruebasJUnit;
+
+import static org.junit.Assert.*;
+import mensaje.*;
+
+import org.junit.Test;
+
+public class testMensaje {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

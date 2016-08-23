@@ -1,0 +1,40 @@
+Proyecto: Simulacion de la propagacion de un virus. 
+		Y si hay tiempo ver como afecta una vacuna..
+
+Variables a estudiar:
+	
+	-Tipo de poblacion a la que afecta(ciudad, pais, region) y como se propaga por esta.
+	-Inmunizacion ante el virus (vacunas, mutaciones, tratamientos).
+	-Como afecta el virus a la poblacion en funcion del tiempo.
+	-En que plazo hay que desarrollar una vacuna(opt).
+
+Como reflejar las variables:
+	
+	-Poblacion: Mediante una matriz de adyacencia || mediante un espacio euclideo.
+	-Virus: capacidad de contagio en funcion de la distancia entre individuos.
+
+Como relejar los eventos:
+	
+	-Modelo sincrono cada contagio, muerte, etc. supone un evento.
+
+Tipos de eventos:
+	
+	-Contagio.
+	-Muerte.
+	-Inmunizacion. (opt)
+	-Tratamiento. (opt)
+
+Tipos de indiviuduos:
+	
+	-Sano.
+	-Infectado (interesante ver en funcion del tiempo).
+	-En tratamiento. (opt)
+	-Inmune. (opt)
+	-Muerto.
+
+Estimaciones de tiempos y pasos del desarrollo:
+
+	-Desarrollar el sistema pare reflejar la poblacion. (varios dias)
+	-Desarrollar el sistema para el contagio. (par de dias)
+	-Desarrollar los sistemas para el cambio de estados de los individuos. (varios dias)
+	

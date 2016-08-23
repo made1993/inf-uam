@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/P3/src/es/uam/eps/bmi/search/ranking/graph/PageRank.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="es.uam.eps.bmi.search.ranking.graph.PageRank"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="P3"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx4096m -XX:MaxPermSize=256m"/>
+</launchConfiguration>

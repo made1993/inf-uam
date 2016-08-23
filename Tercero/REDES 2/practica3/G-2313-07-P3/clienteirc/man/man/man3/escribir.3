@@ -1,0 +1,23 @@
+.TH "escribir" 3 "Thu Feb 26 2015" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+escribir \- \fBescribir\fP 
+pone un socket en modo de escritura
+.SH "SYNOPSIS"
+.PP
+\fB#include\fP \fB'conexion\&.h'\fP 
+.PP
+\fBint\fP \fBescribir\fP \fB\fP(\fBint\fP sockfd ,\fBchar\fP * msg \fB\fP)
+.SH "DESCRIPCIÓN"
+.PP
+Envia un mensaje y gestiona los errores\&.
+.SH "RETORNO"
+.PP
+Devuelve -1 en caso de error y 0 en caso de exito\&.
+.SH "VER TAMBIÉN"
+.PP
+\fBabrirSocketTCP(3)\fP, \fBabrirSocketUDP(3)\fP, \fBabrirBind(3)\fP, \fBabrirListen(3)\fP, \fBabrirConnect(3)\fP, \fBaceptar(3)\fP\&. 
+.SH "AUTOR"
+.PP
+Mario Valdemaro Garcia Roque (mariov.garcia@estudiante.uam.es) Roberto Garcia Teodoro (roberto.garciat@estudiante.uam.es) 

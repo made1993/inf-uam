@@ -1,0 +1,112 @@
+package es.uam.eps.bmi.search.indexing;
+
+import java.io.*;
+import java.util.*;
+import java.util.zip.*;
+
+
+import es.uam.eps.bmi.search.*;
+import es.uam.eps.bmi.search.parsing.*;
+
+public class BasicIndexing implements Index{
+	/** Leemos los zips sin necesidad de extraerlos
+	 * 
+	 * @param zipIn ZipInputStream que hace referencia a un elemento dentro del zip para leerlo
+	 * @return string tokenizada y sin stopwords para meter en el indice
+	 */
+	private String readZips(ZipInputStream zipIn){
+		String linea = null;
+		String texto = new String();
+		try {
+			File f = new File ("src/doc.txt");
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("src/doc.txt"));
+			BufferedReader br = new BufferedReader(new FileReader(f));
+			byte[] bytesIn = new byte[4096];
+			int read = 0;
+	        while ((read = zipIn.read(bytesIn)) != -1) 
+	            bos.write(bytesIn, 0, read);
+	        bos.close();
+	        while((linea=br.readLine())!=null){
+	        	texto = texto.concat(linea+"\n");
+	        }
+	        br.close();
+	        f.delete();
+	        return texto;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
+	public String normalizar(String term){
+		
+		return term.toLowerCase();
+		
+	}
+	
+
+	@Override
+	public void build(String inputCollectionPath, String outputIndexPath, TextParser textParser) {
+		
+		Set<String> vocabulario = new HashSet<String>();
+		String[] palabros= null;
+		ZipInputStream zips=null;
+		String doc=null;
+		try {
+			zips= new ZipInputStream(new FileInputStream(inputCollectionPath));
+			ZipEntry entrada = null;
+			while((entrada = zips.getNextEntry())!=null ){
+				doc=readZips(zips);
+				doc=textParser.parse(doc);
+				palabros=doc.split(doc);
+				
+				for (String s: palabros){
+					
+				}
+				
+			}
+			
+		}catch (Exception e){
+		}
+		
+	}
+	
+	
+	@Override
+	public void load(String indexPath) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getDocIds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TextDocument getDocument(String docId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getTerms() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Posting> getTermPostings(String term) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,57 @@
+package es.uam.eps.bmi.recomendacion;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class Recomendador {
+	private UserRatedMovies urm;
+	private MovieTags mt;
+	private int k;
+	public Recomendador(String path, int k){
+		urm = new UserRatedMovies();
+		mt=new MovieTags();
+		this.k=k;
+		urm.leerDatos(path+"/user_ratedmovies.dat");
+		mt.leerDatos(path+"/movie_tags.dat");
+	}
+	
+	
+	public void binJaccard(){
+		mt.similitudBinJaccard();
+	}
+	public void binCoseno(){
+		mt.similitudBinCoseno();
+	}
+	public void binTfIdf(){
+		mt.similitudTfIdf();
+	}
+	
+	public void rochio(int userId, int movieId){
+		
+		
+	}
+	
+	//TODO: probar que funcione
+	public double knn(int userId, int movieId){
+			
+		int ln =mt.getMovieIds().get(movieId);
+		ArrayList<Integer> maxSimKey= new ArrayList<>();
+		ArrayList<Double> maxSimValue= new ArrayList<>();
+		for(int i=0; i<k; i++){
+			maxSimKey.add(0);
+			maxSimValue.add(0.0);
+		}
+		for(Integer mid :mt.getMovieIds().keySet()){
+			if(mid.equals(movieId));
+			
+		}
+		
+			//	rating+= mt.getSimilitudes().get(movieId).get(keys[i])
+	//					*urm.getDatos().get(userId).get(keys[i]);
+				//simTot+=mt.getSimilitudes().get(movieId).get(keys[i]);
+		return 0;
+	}
+
+}

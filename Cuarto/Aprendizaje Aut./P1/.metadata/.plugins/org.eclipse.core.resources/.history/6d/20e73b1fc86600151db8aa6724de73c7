@@ -1,0 +1,232 @@
+package datos;
+
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import particionado.Particion;
+public class  Datos {
+	
+	public enum TiposDeAtributos {Continuo, Nominal};
+	private ArrayList<Integer> countAtributos;
+	ArrayList<TiposDeAtributos> tipoAtributos;
+	private Hashtable<Double,Integer> clases;
+	double [][]datos;
+	int numDatos=0;
+	
+	public Datos(int numDatos, ArrayList<TiposDeAtributos> tipos) {
+		this.numDatos=numDatos;
+		tipoAtributos = tipos;
+		clases = new Hashtable<Double,Integer>();
+		countAtributos = new ArrayList<Integer>();
+		
+		datos = new double[numDatos][tipos.size()];
+	}
+	
+	
+	public Hashtable<Double, Integer> getClases() {
+		return clases;
+	}
+	public Integer getClasesValue(Double key) {
+		return clases.get(key);
+	}
+
+
+	public void setClases(Hashtable<Double, Integer> clases) {
+		this.clases = clases;
+	}
+
+
+	public ArrayList<Integer> getCountAtributos() {
+		return countAtributos;
+	}
+
+	public void setCountAtributos(ArrayList<Integer> countAtributos) {
+		this.countAtributos = countAtributos;
+	}
+
+	public ArrayList<TiposDeAtributos> getTipoAtributos() {
+		return tipoAtributos;
+	}
+
+	public void setTipoAtributos(ArrayList<TiposDeAtributos> tipoAtributos) {
+		this.tipoAtributos = tipoAtributos;
+	}
+
+	public double[][] getDatos() {
+		return datos;
+	}
+
+	public void setDatos(double[][] datos) {
+		this.datos = datos;
+	}
+
+	public void setNumDatos(int numDatos) {
+		this.numDatos = numDatos;
+	}
+
+	public double getDato(int i, int j){
+		return datos[i][j];
+	}
+	
+	public int getNumDatos(){
+		return numDatos;
+	}
+	
+	public int getSizeTipoAtributos(){
+		return tipoAtributos.size();
+	}
+	public int getSizeCountAtributos(){
+		return countAtributos.size();
+	}
+	
+	public Datos getParticion(ArrayList<Integer> indices){
+		Datos particion = new Datos(indices.size(), this.tipoAtributos);
+		for (int i=0, j=0;i<this.datos.length;i++){
+			if(indices.contains(i)){
+				particion.datos[j++]=this.datos[i];
+			}
+		}
+
+		particion.setNumDatos(indices.size());
+		particion.setTipoAtributos(this.getTipoAtributos());
+		particion.setCountAtributos(this.getCountAtributos());
+		particion.clases=this.clases;
+		Hashtable<Double, Integer> aux=new Hashtable<Double, Integer>();
+		for(int i=0, j=0; i<particion.numDatos; i++){
+			if(!aux.containsKey(particion.getDato(i, particion.getSizeTipoAtributos()-1))){
+				aux.put(particion.getDato(i, particion.getSizeTipoAtributos()-1), j++);
+			}
+		}
+		particion.setClases(aux);
+		return particion;
+	}
+	
+	public Datos extraeDatosTrain(Particion idx) {
+		ArrayList<Integer> indicesTrain = idx.getTrain();
+		Datos res = new Datos(indicesTrain.size(), tipoAtributos);
+		for(int i=0; i<indicesTrain.size(); i++){
+			for(int j=0; j<tipoAtributos.size(); j++){
+				res.datos[i][j]=this.getDato(indicesTrain.get(i), j);
+			}
+		}
+		Hashtable<Double, Integer> aux=new Hashtable<Double, Integer>();
+		int i=0,j=0;
+		while(res.getClases().size()==res.getCountAtributos().get(res.getSizeCountAtributos() -1)){
+			if(res.getClases().containsKey(res.getDato(res.getCountAtributos().get(res.getSizeCountAtributos() -1),i))){
+				res.getClases().put(res.getDato(res.getCountAtributos().get(res.getSizeCountAtributos() -1),i), j++);
+			}
+			i++;
+		}
+		res.setClases(aux);
+		return res;
+	}
+	
+	public Datos extraeDatosTest(Particion idx) {
+		ArrayList<Integer> indicesTest = idx.getTest();
+		Datos res = new Datos(indicesTest.size(), tipoAtributos);
+		for(int i=0; i<indicesTest.size(); i++){
+			for(int j=0; j<tipoAtributos.size(); j++){
+				res.datos[i][j]=this.getDato(indicesTest.get(i), j);
+			}
+		}
+		return res;
+	}
+
+	
+	/*Metodo no necesario porque ya se eligen indices aleatorios en la validacion*/
+	public void mezclarDatos(){
+		/*Obtener los indices mezclados aleatoriamente*/
+		int pos;
+		Stack <Integer> nums = new Stack <Integer> ();
+		double [][]datosNuevos = new double[numDatos][tipoAtributos.size()];
+		
+	    for (int i=0; i<numDatos ; i++) {
+	    	pos = (int) Math.floor(Math.random() * numDatos );
+	    	while (nums.contains(pos)) {
+	    		pos = (int) Math.floor(Math.random() * numDatos );
+	    	}
+	    	nums.push(pos);
+	    }
+	    
+	    /*Hacemos la nueva matriz de datos*/
+	    for (int i=0; i<numDatos; i++) {
+	    	datosNuevos[i]= datos[nums.pop()];
+	    }
+	    
+	    datos = datosNuevos;
+		return;
+	}
+	
+	public static Datos cargaDeFichero(String nombreDeFichero) {
+		BufferedReader br = null;
+		try {
+
+			String sCurrentLine;
+
+			br = new BufferedReader(new FileReader(nombreDeFichero));
+			int numDatos = Integer.parseInt(br.readLine());
+			sCurrentLine= br.readLine();
+	
+			sCurrentLine=br.readLine();
+			String [] parts = sCurrentLine.split(",");
+			ArrayList<TiposDeAtributos> tipos=new ArrayList<TiposDeAtributos>();
+			for(String s: parts){
+				if (s.equals("Nominal")){
+					tipos.add(TiposDeAtributos.Nominal);
+				}else if(s.equals("Continuo")){
+					tipos.add(TiposDeAtributos.Continuo);
+				}
+			}
+			
+			Datos data = new Datos(numDatos, tipos);
+			Hashtable<String, Double> simbolos = new Hashtable<String, Double>();
+			for(int i=0;i<parts.length;i++)
+				data.countAtributos.add(0);
+			int i =0;
+			double hashval=0;
+			while ((sCurrentLine = br.readLine()) != null) {
+				parts = sCurrentLine.split(",");
+				int j=0;
+				for (String s: parts){
+					try{
+						if (tipos.get(j) == TiposDeAtributos.Continuo){
+							//No hay que hace nada
+							data.datos[i][j] = Double.parseDouble(s);
+						}else{
+							//De tipo nominal
+							if(simbolos.get(s)==null){
+								//Nuevo valor
+								simbolos.put(s, hashval);
+								data.countAtributos.set(j, data.countAtributos.get(j)+1);
+								data.datos[i][j] = hashval;
+								hashval++;
+							}else{
+								//Ya existe el valor
+								data.datos[i][j] = simbolos.get(s);
+							}		
+						}
+					}
+					catch(NumberFormatException e){
+						
+					}
+					j++;
+				}
+				i++;
+			}
+			return data;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+}

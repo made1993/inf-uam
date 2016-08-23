@@ -1,0 +1,427 @@
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import mailUam.MailUam;
+import control.ControlLogin;
+
+public class Ventana extends JFrame{
+	
+	private String nombresGUI[] = { "salir", "Login","menuInicio", "menuGrupos",
+			"Perfil", "menuMensajes", "verGrupo", "crearGrupo",
+			"buscarGrupo", "verMensaje", "salirGrupo",
+			"anadirParticipantesGrupo", "buscarUsuarios", "crearMensaje",
+			"crearPregunta", "crearRespuesta", "verRespuestas" };	
+
+	private CardLayout cards;
+	private JPanel principal;
+	private MailUam modelo;
+	
+	private GUILogin login; // Diapositiva 1
+	private GUIMenu menu ; // Diapositiva 2
+	private GUIMenuGrupos menuGrupos;// Diapositiva 3
+	private GUIVerPerfil perfil; // Diapositiva 4
+	private GUIMensajes mensajes; // Diapositiva 5
+	private GUIVerGrupos verGrupos;// Diapositiva 6
+	private GUICrearGrupo crearGrupo;// Diapositiva 7
+	private GUIBuscarGrupos buscarGrupo;// Diapositiva 8
+	private GUIVerMensaje verMensaje;// Diapositiva 9
+	private GUISalirGrupo salirGrupo;// Diapositiva 10
+	private GUIAnadirParticipante anadirParticipante;// Diapositiva 11
+	private GUIBuscarUsuarios buscarUsuarios;// Diapositiva 12
+	private GUICrearMensaje  crearMensaje;// Diapositiva 13
+	private GUICrearPregunta crearPregunta;// Diapositiva 14
+	private GUICrearRespuesta crearRespuesta;// Diapositiva 15
+	private GUIListarPreguntas listarPreguntas;// Diapositiva 16
+	private GUIVerRespuesta verRespuesta;// Diapositiva 17
+	
+	public Ventana(MailUam modelo) {
+		cards = new CardLayout();
+		principal = new JPanel();
+		principal.setLayout(cards);
+		this.modelo = modelo;
+
+		setLayout(new BorderLayout());
+		add(new JLabel("Mail UAM"), BorderLayout.NORTH);
+
+		login = new GUILogin(); // Diapositiva 1
+		menu = new GUIMenu(modelo); // Diapositiva 2
+		// Diapositiva 3
+		// Diapositiva 4
+		// Diapositiva 5
+		// Diapositiva 6
+		// Diapositiva 7
+		// Diapositiva 8
+		// Diapositiva 9
+		// Diapositiva 10
+		// Diapositiva 11
+		// Diapositiva 12
+		// Diapositiva 13
+		// Diapositiva 14
+		// Diapositiva 15
+		// Diapositiva 16
+		// Diapositiva 17
+
+		ControlLogin controlLogin = new ControlLogin(this, modelo);
+		login.setControlador(controlLogin);
+
+		principal.add(login, nombresGUI[1]);
+		principal.add(menu,nombresGUI[2]);
+		// TODO principal.add(menu,nombresGUI[3]);
+		// TODO principal.add(menu,nombresGUI[4]);
+		// TODO principal.add(menu,nombresGUI[5]);
+		// TODO principal.add(menu,nombresGUI[6]);
+		// TODO principal.add(menu,nombresGUI[7]);
+		// TODO principal.add(menu,nombresGUI[8]);
+		// TODO principal.add(menu,nombresGUI[9]);
+		// TODO principal.add(menu,nombresGUI[10]);
+		// TODO principal.add(menu,nombresGUI[11]);
+		// TODO principal.add(menu,nombresGUI[12]);
+		// TODO principal.add(menu,nombresGUI[13]);
+		// TODO principal.add(menu,nombresGUI[14]);
+		// TODO principal.add(menu,nombresGUI[15]);
+		// TODO principal.add(menu,nombresGUI[16]);
+		// TODO principal.add(menu,nombresGUI[17]);
+
+		cards.show(principal, nombresGUI[1]);
+		add(principal, BorderLayout.CENTER);
+
+		pack();
+
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Mail-UAM");
+		setSize(800, 600);
+		setResizable(false);
+	}
+	
+	/**
+	 * @return the nombresGUI
+	 */
+	public String[] getNombresGUI() {
+		return nombresGUI;
+	}
+	
+	
+	/**
+	 * @param nombresGUI the nombresGUI to set
+	 */
+	public void setNombresGUI(String[] nombresGUI) {
+		this.nombresGUI = nombresGUI;
+	}
+	
+	
+	/**
+	 * @return the cards
+	 */
+	public CardLayout getCards() {
+		return cards;
+	}
+	
+	
+	/**
+	 * @param cards the cards to set
+	 */
+	public void setCards(CardLayout cards) {
+		this.cards = cards;
+	}
+	
+	
+	/**
+	 * @return the principal
+	 */
+	public JPanel getPrincipal() {
+		return principal;
+	}
+	
+	
+	/**
+	 * @param principal the principal to set
+	 */
+	public void setPrincipal(JPanel principal) {
+		this.principal = principal;
+	}
+	
+	
+	/**
+	 * @return the app
+	 */
+	public MailUam getApp() {
+		return modelo;
+	}
+	
+	
+	
+	/**
+	 * @return the login
+	 */
+	public GUILogin getLogin() {
+		return login;
+	}
+
+	/**
+	 * @return the menu
+	 */
+	public GUIMenu getMenu() {
+		return menu;
+	}
+	
+	
+	/**
+	 * @return the modelo
+	 */
+	public MailUam getModelo() {
+		return modelo;
+	}
+
+	/**
+	 * @param modelo the modelo to set
+	 */
+	public void setModelo(MailUam modelo) {
+		this.modelo = modelo;
+	}
+
+	/**
+	 * @return the menuGrupos
+	 */
+	public GUIMenuGrupos getMenuGrupos() {
+		return menuGrupos;
+	}
+
+	/**
+	 * @param menuGrupos the menuGrupos to set
+	 */
+	public void setMenuGrupos(GUIMenuGrupos menuGrupos) {
+		this.menuGrupos = menuGrupos;
+	}
+
+	/**
+	 * @return the perfil
+	 */
+	public GUIVerPerfil getPerfil() {
+		return perfil;
+	}
+
+	/**
+	 * @param perfil the perfil to set
+	 */
+	public void setPerfil(GUIVerPerfil perfil) {
+		this.perfil = perfil;
+	}
+
+	/**
+	 * @return the mensajes
+	 */
+	public GUIMensajes getMensajes() {
+		return mensajes;
+	}
+
+	/**
+	 * @param mensajes the mensajes to set
+	 */
+	public void setMensajes(GUIMensajes mensajes) {
+		this.mensajes = mensajes;
+	}
+
+	/**
+	 * @return the verGrupos
+	 */
+	public GUIVerGrupos getVerGrupos() {
+		return verGrupos;
+	}
+
+	/**
+	 * @param verGrupos the verGrupos to set
+	 */
+	public void setVerGrupos(GUIVerGrupos verGrupos) {
+		this.verGrupos = verGrupos;
+	}
+
+	/**
+	 * @return the crearGrupo
+	 */
+	public GUICrearGrupo getCrearGrupo() {
+		return crearGrupo;
+	}
+
+	/**
+	 * @param crearGrupo the crearGrupo to set
+	 */
+	public void setCrearGrupo(GUICrearGrupo crearGrupo) {
+		this.crearGrupo = crearGrupo;
+	}
+
+	/**
+	 * @return the buscarGrupo
+	 */
+	public GUIBuscarGrupos getBuscarGrupo() {
+		return buscarGrupo;
+	}
+
+	/**
+	 * @param buscarGrupo the buscarGrupo to set
+	 */
+	public void setBuscarGrupo(GUIBuscarGrupos buscarGrupo) {
+		this.buscarGrupo = buscarGrupo;
+	}
+
+	/**
+	 * @return the verMensaje
+	 */
+	public GUIVerMensaje getVerMensaje() {
+		return verMensaje;
+	}
+
+	/**
+	 * @param verMensaje the verMensaje to set
+	 */
+	public void setVerMensaje(GUIVerMensaje verMensaje) {
+		this.verMensaje = verMensaje;
+	}
+
+	/**
+	 * @return the salirGrupo
+	 */
+	public GUISalirGrupo getSalirGrupo() {
+		return salirGrupo;
+	}
+
+	/**
+	 * @param salirGrupo the salirGrupo to set
+	 */
+	public void setSalirGrupo(GUISalirGrupo salirGrupo) {
+		this.salirGrupo = salirGrupo;
+	}
+
+	/**
+	 * @return the anadirParticipante
+	 */
+	public GUIAnadirParticipante getAnadirParticipante() {
+		return anadirParticipante;
+	}
+
+	/**
+	 * @param anadirParticipante the anadirParticipante to set
+	 */
+	public void setAnadirParticipante(GUIAnadirParticipante anadirParticipante) {
+		this.anadirParticipante = anadirParticipante;
+	}
+
+	/**
+	 * @return the buscarUsuarios
+	 */
+	public GUIBuscarUsuarios getBuscarUsuarios() {
+		return buscarUsuarios;
+	}
+
+	/**
+	 * @param buscarUsuarios the buscarUsuarios to set
+	 */
+	public void setBuscarUsuarios(GUIBuscarUsuarios buscarUsuarios) {
+		this.buscarUsuarios = buscarUsuarios;
+	}
+
+	/**
+	 * @return the crearMensaje
+	 */
+	public GUICrearMensaje getCrearMensaje() {
+		return crearMensaje;
+	}
+
+	/**
+	 * @param crearMensaje the crearMensaje to set
+	 */
+	public void setCrearMensaje(GUICrearMensaje crearMensaje) {
+		this.crearMensaje = crearMensaje;
+	}
+
+	/**
+	 * @return the crearPregunta
+	 */
+	public GUICrearPregunta getCrearPregunta() {
+		return crearPregunta;
+	}
+
+	/**
+	 * @param crearPregunta the crearPregunta to set
+	 */
+	public void setCrearPregunta(GUICrearPregunta crearPregunta) {
+		this.crearPregunta = crearPregunta;
+	}
+
+	/**
+	 * @return the crearRespuesta
+	 */
+	public GUICrearRespuesta getCrearRespuesta() {
+		return crearRespuesta;
+	}
+
+	/**
+	 * @param crearRespuesta the crearRespuesta to set
+	 */
+	public void setCrearRespuesta(GUICrearRespuesta crearRespuesta) {
+		this.crearRespuesta = crearRespuesta;
+	}
+
+	/**
+	 * @return the listarPreguntas
+	 */
+	public GUIListarPreguntas getListarPreguntas() {
+		return listarPreguntas;
+	}
+
+	/**
+	 * @param listarPreguntas the listarPreguntas to set
+	 */
+	public void setListarPreguntas(GUIListarPreguntas listarPreguntas) {
+		this.listarPreguntas = listarPreguntas;
+	}
+
+	/**
+	 * @return the verRespuesta
+	 */
+	public GUIVerRespuesta getVerRespuesta() {
+		return verRespuesta;
+	}
+
+	/**
+	 * @param verRespuesta the verRespuesta to set
+	 */
+	public void setVerRespuesta(GUIVerRespuesta verRespuesta) {
+		this.verRespuesta = verRespuesta;
+	}
+
+	/**
+	 * @param login the login to set
+	 */
+	public void setLogin(GUILogin login) {
+		this.login = login;
+	}
+
+	/**
+	 * @param menu the menu to set
+	 */
+	public void setMenu(GUIMenu menu) {
+		this.menu = menu;
+	}
+
+	public void cambiarPanelLogin(){
+		cards.show(principal, nombresGUI[1]);
+	}
+	public void cambiarPanelMenu(){
+		cards.show(principal, nombresGUI[2]);
+	}
+	public void cambiarPanelVisistante(){
+		cards.show(principal, nombresGUI[3]);
+	}
+	
+	
+	
+	
+	
+}

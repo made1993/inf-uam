@@ -1,0 +1,43 @@
+mkdir slow_dir
+mkdir fast_dir
+chmod 0777 slow_dir
+chmod 0777 fast_dirvalgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/1024\_1.dat ./slow 1
+valgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/1024\_1.dat ./fast 1
+valgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/1024\_513.dat ./slow 513
+valgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/1024\_513.dat ./fast 513
+valgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/1024\_1025.dat ./slow 1025
+valgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/1024\_1025.dat ./fast 1025
+valgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/1024\_1537.dat ./slow 1537
+valgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/1024\_1537.dat ./fast 1537
+valgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/1024\_2049.dat ./slow 2049
+valgrind --tool=callgrind --I1=1024,1,64 --D1=1024,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/1024\_2049.dat ./fast 2049
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/2048\_1.dat ./slow 1
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/2048\_1.dat ./fast 1
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/2048\_513.dat ./slow 513
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/2048\_513.dat ./fast 513
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/2048\_1025.dat ./slow 1025
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/2048\_1025.dat ./fast 1025
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/2048\_1537.dat ./slow 1537
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/2048\_1537.dat ./fast 1537
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/2048\_2049.dat ./slow 2049
+valgrind --tool=callgrind --I1=2048,1,64 --D1=2048,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/2048\_2049.dat ./fast 2049
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/4096\_1.dat ./slow 1
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/4096\_1.dat ./fast 1
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/4096\_513.dat ./slow 513
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/4096\_513.dat ./fast 513
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/4096\_1025.dat ./slow 1025
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/4096\_1025.dat ./fast 1025
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/4096\_1537.dat ./slow 1537
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/4096\_1537.dat ./fast 1537
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/4096\_2049.dat ./slow 2049
+valgrind --tool=callgrind --I1=4096,1,64 --D1=4096,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/4096\_2049.dat ./fast 2049
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/8192\_1.dat ./slow 1
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/8192\_1.dat ./fast 1
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/8192\_513.dat ./slow 513
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/8192\_513.dat ./fast 513
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/8192\_1025.dat ./slow 1025
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/8192\_1025.dat ./fast 1025
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/8192\_1537.dat ./slow 1537
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/8192\_1537.dat ./fast 1537
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=slow_dir/8192\_2049.dat ./slow 2049
+valgrind --tool=callgrind --I1=8192,1,64 --D1=8192,1,64 --LL=8388608,1,64 --callgrind-out-file=fast_dir/8192\_2049.dat ./fast 2049

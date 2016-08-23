@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<generated_project xmlns="http://www.xilinx.com/XMLSchema" xmlns:xil_pn="http://www.xilinx.com/XMLSchema">
+
+  <!--                                                          -->
+
+  <!--             For tool use only. Do not edit.              -->
+
+  <!--                                                          -->
+
+  <!-- ProjectNavigator created generated project file.         -->
+
+  <!-- For use in tracking generated file and other information -->
+
+  <!-- allowing preservation of process status.                 -->
+
+  <!--                                                          -->
+
+  <!-- Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved. -->
+
+  <version xmlns="http://www.xilinx.com/XMLSchema">11.1</version>
+
+  <sourceproject xmlns="http://www.xilinx.com/XMLSchema" xil_pn:fileType="FILE_XISE" xil_pn:name="practica5.xise"/>
+
+  <files xmlns="http://www.xilinx.com/XMLSchema">
+    <file xil_pn:fileType="FILE_LSO" xil_pn:name=".lso"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="AluMIPS.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="AluMIPS.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="AluMIPS.xst"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_MODELSIM_CMD" xil_pn:name="MicroMIPSTb.fdo"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="MicroMIPSTb.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="MicroMIPSTb.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="MicroMIPSTb.xst"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="RegsMIPS.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="RegsMIPS.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="RegsMIPS.xst"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="UnidadControlMIPS.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="UnidadControlMIPS.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="UnidadControlMIPS.xst"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="compxlib.log"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_MODELSIM_CMD" xil_pn:name="microMIPS.fdo"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="microMIPS.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="microMIPS.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="microMIPS.xst"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_MODELSIM_LOG" xil_pn:name="vsim.wlf"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="work"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xst"/>
+  </files>
+
+  <transforms xmlns="http://www.xilinx.com/XMLSchema">
+    <transform xil_pn:end_ts="1365403434" xil_pn:name="TRANEXT_compLibraries_FPGA" xil_pn:prop_ck="6110131682614020042" xil_pn:start_ts="1365403388">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForProperties"/>
+      <outfile xil_pn:name="compxlib.log"/>
+    </transform>
+    <transform xil_pn:end_ts="1365964776" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1365964776">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1366010759" xil_pn:in_ck="102129949666287917" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1366010759">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="ALUMIPS.vhd"/>
+      <outfile xil_pn:name="MemDataVectores.vhd"/>
+      <outfile xil_pn:name="MemProgVectores.vhd"/>
+      <outfile xil_pn:name="MicroMIPSTb.vhd"/>
+      <outfile xil_pn:name="RegsMIPS.vhd"/>
+      <outfile xil_pn:name="UnidadControl.vhd"/>
+      <outfile xil_pn:name="microMIPS.vhd"/>
+    </transform>
+    <transform xil_pn:end_ts="1366010462" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-3180823279035464913" xil_pn:start_ts="1366010462">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1366010462" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-3096056682078851097" xil_pn:start_ts="1366010462">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1365964776" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="329233801842941439" xil_pn:start_ts="1365964776">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1366010759" xil_pn:in_ck="102129949666287917" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1366010759">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="ALUMIPS.vhd"/>
+      <outfile xil_pn:name="MemDataVectores.vhd"/>
+      <outfile xil_pn:name="MemProgVectores.vhd"/>
+      <outfile xil_pn:name="MicroMIPSTb.vhd"/>
+      <outfile xil_pn:name="RegsMIPS.vhd"/>
+      <outfile xil_pn:name="UnidadControl.vhd"/>
+      <outfile xil_pn:name="microMIPS.vhd"/>
+    </transform>
+    <transform xil_pn:end_ts="1366010760" xil_pn:in_ck="102129949666287917" xil_pn:name="TRAN_MSimulateBehavioralModel" xil_pn:prop_ck="-8594805940964579263" xil_pn:start_ts="1366010759">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForProperties"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
+      <outfile xil_pn:name="MicroMIPSTb.fdo"/>
+      <outfile xil_pn:name="vsim.wlf"/>
+      <outfile xil_pn:name="work"/>
+    </transform>
+  </transforms>
+
+</generated_project>

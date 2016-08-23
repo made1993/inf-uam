@@ -1,0 +1,18 @@
+#ifndef _TYPES_H_
+#define _TYPES_H_
+#include <stdio.h>
+#include "y.tab.h"
+#define ESCALAR 1
+#define VECTOR 2
+#define BOOL 1
+#define INT 2
+#define MAX_TAMANIO_VECTOR 64
+FILE * nasm;
+typedef struct{
+	char *lexema;
+	int tipo;
+	int valor_entero;
+	int es_direccion;
+	int etiqueta;
+}ATRIBUTOS;
+#endif

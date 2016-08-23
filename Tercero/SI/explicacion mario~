@@ -1,0 +1,5 @@
+descripcion del funcionamiento e implemntacion:
+
+registro de un usuario: para registrar a un usuaraio lo que hemos hecho es un vez pasados todos los datos y validados con funcinones javascript, lo que hemos hecho es comprobar si existe la carpeta usuarios y si existe que no exista el usuario con el que vamos a registrarnos. Basicamente hemos creado las carpetas oportunas, usuarios (si no existe) y una carpeta para el nuevo usuario. Dentro de la carpeta del nuevos usuario, que llevara su nombre existen 2 archivos, datos.dat e hitorial.xml (no se crea aqui). En datos.dat guardaremos toda la informacion correspondiente al nuevo usuario, id, contraseña (cifrada en md5), correo y tarjeta de credito.
+
+En caso de que no se halla creado el usuario mandaremos un mensaje especial a la pagina de error.php que indicara que el usuario ya existe.

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>P0_test1</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">P0_test1</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Practica0/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fullName</td>
+	<td>Carlos</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@name='progLang'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=progLang</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=li</td>
+	<td>Java</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//li[2]</td>
+	<td>Groovy</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

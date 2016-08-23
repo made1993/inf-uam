@@ -1,0 +1,25 @@
+package es.uam.eps.bmi.crawling;
+
+import java.io.*;
+import java.net.Socket;
+import java.sql.Date;
+
+public class GenericCrawler {
+	public static void main (String args[]){
+		String host = new String("www.google.es");
+		try {
+			Socket s= new Socket(host, 80);
+			System.out.println(s.isConnected());
+			   BufferedReader entrada = new BufferedReader(
+				        new InputStreamReader( s.getInputStream() ) );
+
+				      System.out.println( "Hora actual en localhost:" );
+				      System.out.println( "\t"+entrada.readLine() );
+				      System.out.println( "Hora actual con la clase date:" );
+				      System.out.println( "\t" + new Date() );
+			s.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}
+}

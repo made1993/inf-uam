@@ -1,0 +1,74 @@
+Te entrego este fichero donde se encuentran todas las diferencias entre el fichero original y el que te entrego,
+de todos me gustaria hacer una apunte al control de una regla que habeis hecho mal, aunque seguramente otros
+compañeros te lo habran puesto ya, bueno en estas 2 reglas 
+	;R50:\t<condicional> ::= if ( <exp> ) { <sentencias> }\n
+	;R51:\t<condicional> ::= if ( <exp> ) { <sentencias> } else { <sentencias> }\n
+
+vosotros habeis puesto que <exp> va sin <>
+	
+A continuacion te comento todo lo que he modificado con ayuda de la herramienta diff:
+
+He añadido esto ya que sino no hacer correctamente algunos casos en los que se quiere que el valor de 
+TOK_MENOS represente que el valor es negativo y no una resta
+
+52d51
+< %left UMINUS
+
+149c148
+< 	|TOK_MENOS exp %prec UMINUS
+---
+> 	|TOK_MENOS exp 
+
+
+
+
+77c76
+< 		{fprintf(yyout,";R15:\t<clase_vector> ::= array <tipo> [ <constante_entera> ]\n");}
+-----------------------------------------------------------------------> como se ve faltan espacios 
+> 		{fprintf(yyout,";R15:\t<clase_vector> ::= array <tipo> [<constante_entera>]\n");}
+
+
+
+
+86c85
+< funcion: TOK_FUNCTION tipo identificador TOK_PARENTESISIZQUIERDO parametros_funcion TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA declaraciones_funcion sentencias TOK_LLAVEDERECHA
+----------------------> en vez de sentencias puse sentecia (es que tengo algo de dislexia y esto me suele ocurrir)
+> funcion: TOK_FUNCTION tipo identificador TOK_PARENTESISIZQUIERDO parametros_funcion TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA declaraciones_funcion sentencia TOK_LLAVEDERECHA
+
+
+
+93c92
+< 		{fprintf(yyout,";R25:\t<resto_parametros_funcion> ::= ; <parametro_funcion> <resto_parametros_funcion>\n");}
+--------------------------------------------------------------------->copie mal lo que tenia que imprimir
+> 		{fprintf(yyout,";R25:\t<resto_parametros_funcion> ::= <funcion> <funciones>\n");}
+
+
+
+99c98
+< 		{fprintf(yyout,";R28:\t<declaraciones_funcion> ::= <declaraciones>\n");}
+------------------------------------------------------------------->decalraciones en vez de declaraciones
+> 		{fprintf(yyout,";R28:\t<declaraciones_funcion> ::= <decalraciones>\n");}
+
+
+
+101c100
+< 		{fprintf(yyout,";R29:\t<declaraciones_funcion> ::= \n");}
+------------------------------------------------------------------> se me olvido poner declaraciones
+> 		{fprintf(yyout,";R29:\t<declaraciones_funcion> ::= <declaraciones>\n");}
+
+
+
+
+
+192c191
+< 		{fprintf(yyout,";R100:\t<constante> ::= <constante_entera>\n");}
+------------------------------------------------------------------->etera en vez de entera
+> 		{fprintf(yyout,";R100:\t<constante> ::= <constante_etera>\n");}
+
+
+
+
+198c197
+< 		{fprintf(yyout,";R104:\t<constante_entera> ::= TOK_CONSTANTE_ENTERA\n");}
+------------------------------------------------------------->esta se ve claramentes
+> 		{fprintf(yyout,";R104:\t<constante_entera> ::= <numero>\n");}

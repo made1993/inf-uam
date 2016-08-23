@@ -1,0 +1,84 @@
+package es.uam.eps.bmi.recomendacion;
+
+import java.util.*;
+import java.util.Map.Entry;
+
+public class Evaluacion {
+
+	private double train;
+
+	private HashMap<Integer, HashMap<Integer, Double>> datosTrain = new HashMap<>();
+	private HashMap<Integer, HashMap<Integer, Double>> datosTest = new HashMap<>();
+	private Recomendador recomendador;
+
+	public void particion(double part) {
+		
+		int size = recomendador.getUrm().getSizeDatos();
+		int sizeTrain = (size * (int) train);
+		int sizeTest = size - sizeTrain;
+		Random r = new Random();
+		UserRatedMovies urm= recomendador.getUrm();
+		for(Entry<Integer, HashMap<Integer,Double>> peliculas: urm.getDatos().entrySet()){
+			for(Entry<Integer,Double> pelicula: peliculas.getValue().entrySet()){
+				if (r.nextDouble()<part){
+					HashMap<Integer, Double> peliculasTrain = datosTest.get(peliculas.getKey());
+					
+					if(peliculasTrain ==null){
+						peliculasTrain = new HashMap<>();
+						peliculasTrain.put(pelicula.getKey(), pelicula.getValue());
+						datosTrain.put(peliculas.getKey(), peliculasTrain);
+					}
+					else{
+						peliculas2.put(pelicula.getKey(),pelicula.getValue());
+					}
+						
+				}
+			}
+		}
+		
+		
+	}
+
+	public double MAE(List<Recomendacion> listatest) {
+
+		double mae = 0;
+
+		HashMap<Integer, Double> rating = null;
+		HashMap<Integer, Double> recomendacion = null;
+
+		for (Recomendacion r : listatest) {
+			rating = r.getRating();
+			recomendacion = r.getRecomendacion();
+			for (Integer i : recomendacion.keySet())
+				mae += Math.abs(recomendacion.get(i) - rating.get(i));
+
+		}
+		mae /= listatest.size();
+
+		return mae;
+	}
+
+	public double RMSE(List<Recomendacion> listatest) {
+
+		double rmse = 0;
+
+		HashMap<Integer, Double> rating = null;
+		HashMap<Integer, Double> recomendacion = null;
+
+		for (Recomendacion r : listatest) {
+			rating = r.getRating();
+			recomendacion = r.getRecomendacion();
+			for (Integer i : recomendacion.keySet())
+				rmse += Math.pow(Math.abs(recomendacion.get(i) - rating.get(i)), 2.0);
+		}
+
+		rmse = Math.sqrt(rmse);
+		rmse /= listatest.size();
+
+		return rmse;
+	}
+
+	public static void main(String[] args) {
+
+	}
+}

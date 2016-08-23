@@ -1,0 +1,278 @@
+package es.uam.eps.bmi.search.indexing;
+
+import java.io.*;
+import java.util.*;
+import java.util.zip.*;
+
+import javax.swing.plaf.SliderUI;
+
+import org.apache.lucene.util.IOUtils;
+
+import es.uam.eps.bmi.search.*;
+import es.uam.eps.bmi.search.indexing.thread.ThreadInsert;
+import es.uam.eps.bmi.search.parsing.*;
+
+public class BasicIndexing implements Index{
+	private Set<String> vocabulario;
+	private HashMap<String, List<Posting>> indices;
+	
+
+	public BasicIndexing() {
+		super();
+		this.indices= new HashMap<>();
+	}
+
+
+	/**
+	 * @return the vocabulario
+	 */
+	public Set<String> getVocabulario() {
+		return vocabulario;
+	}
+
+
+	/**
+	 * @param vocabulario the vocabulario to set
+	 */
+	public void setVocabulario(Set<String> vocabulario) {
+		this.vocabulario = vocabulario;
+	}
+
+
+	/** Leemos los zips sin necesidad de extraerlos
+	 * 
+	 * @param zipIn ZipInputStream que hace referencia a un elemento dentro del zip para leerlo
+	 * @return string tokenizada y sin stopwords para meter en el indice
+	 */
+	private String readZips(ZipInputStream zipIn){
+		String linea = null;
+		String texto = new String();
+		try {
+			File f = new File ("doc.txt");
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("doc.txt"));
+			BufferedReader br = new BufferedReader(new FileReader(f));
+			byte[] bytesIn = new byte[4096];
+			int read = 0;
+	        while ((read = zipIn.read(bytesIn)) != -1) 
+	            bos.write(bytesIn, 0, read);
+	        bos.close();
+	        while((linea=br.readLine())!=null){
+	        	texto = texto.concat(linea+"\n");
+	        }
+	        br.close();
+	        f.delete();
+	        return texto;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String[] readZips2(String input){
+		File f = new File(input);
+		String[] docs= null;
+		try {
+			ZipFile zf= new ZipFile(f);
+			Enumeration<? extends ZipEntry> zs = zf.entries();
+			
+			System.out.println("size:"+zf.size());
+			docs= new String[zf.size()];
+			int i=0;
+			while(zs.hasMoreElements()){
+				ZipEntry z=zs.nextElement();
+				BufferedReader br= new BufferedReader(new InputStreamReader(zf.getInputStream(z)));
+				String line;
+				String doc= new String();
+				int ln=0;
+				while( (line=br.readLine()) !=null ){
+					if(ln>14){
+						doc=doc.concat(line+"\n");
+					}
+					ln++;
+				}
+				docs[i]=doc;
+				i++;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return docs;
+	}
+	
+	
+
+	public static String normalizar(String s){
+		
+		String[] car= {",",".","-","[","]","{","}","?","¿","%","\"","(",")","#","$","`","´", "“",";",":", "\\", "/", "@",
+				"¡", "!", "=", "<", ">","'","&"};
+	    for (int i=0; i<car.length; i++) {
+	        s = s.replace(car[i], "");
+	    }
+	    return s.toLowerCase();
+	}
+	public void creaPosting(String palabra, ArrayList<String> docs){
+		String[] palabras=null;
+		Integer i=0;
+		long j=0;
+		ArrayList<Posting> posts= new ArrayList<>();
+		for(String s: docs){
+			palabras=s.split(" |\n|\r|\t");
+			j=0;
+			Posting p= new Posting(i.toString());
+			List<Long> posiciones= new ArrayList<>();
+			for(String s2: palabras){
+				
+				if(s2.length()>0 && palabra.equals(normalizar(s2))){
+					posiciones.add(j);
+				}
+				j++;
+			}
+			p.setTermFrequency(posiciones.size());
+			p.setTermPositions(posiciones);
+			
+			if(p.getTermFrequency()>0)
+				posts.add(p);
+			i++;
+		}
+		indices.put(palabra, posts);
+	}
+	
+	@Override
+	public void build(String inputCollectionPath, String outputIndexPath, TextParser textParser) {
+		
+		String [] docs= null;
+ 		long time=0;
+		try {
+			time=System.nanoTime();
+			docs=readZips2(inputCollectionPath);
+			time= System.nanoTime()-time;
+			System.out.println("se leen los documentos en:"+time/Math.pow(10, 9));
+			
+			for (int i=0; i<docs.length; i++){
+				docs[i]=textParser.parse(docs[i]);				
+			}
+
+			time=System.nanoTime();
+			for (int i=0; i<docs.length; i++){
+				docs[i]=normalizar(docs[i]);				
+			}
+			time= System.nanoTime()-time;
+			
+			
+			System.out.println("Se normalizo la entrada en:"+time/Math.pow(10, 9));
+			time=System.nanoTime();
+			for (Integer i=0; i<docs.length; i++){
+				String [] tokens=docs[i].split(" |\n|\r|\t");	
+				//System.out.println("se tokeniza la entrada para el documento:"+i);
+				//System.out.println("Contiene "+tokens.length+" palabras");
+				long pos=0;
+				for (String token: tokens){
+					Lis<String, Posting> lposts=indices.get(token);
+					if(lposts==null){
+						lposts= new HashMap<>();
+						Posting post= new Posting(i.toString());
+						post.insertPos(pos);
+						lposts.put(i.toString(), post);
+						indices.put(token, lposts);
+					}
+					else{
+						Posting post=lposts.get(i.toString());
+						if(post==null){
+							post= new Posting(i.toString());
+							post.insertPos(pos);
+							
+						}else{
+							post.insertPos(pos);
+						}
+							
+					}
+					pos++;
+				}
+				//System.out.println("Se crean los indices para el documento:"+i);
+			}
+			docs=null;
+			time= System.nanoTime()-time;
+			System.out.println("Se crean los indices en:"+time/Math.pow(10, 9));
+			/*for (String s: palabros){
+				if(s.length()>0)
+					vocabulario.add(s);
+			}*/
+			
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		System.out.println("Numero de indices:"+indices.size());
+		System.out.println("tiempo norm:"+time/Math.pow(10, 9));
+		
+		return;
+	}
+	
+	
+	@Override
+	public void load(String indexPath) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getDocIds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TextDocument getDocument(String docId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getTerms() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Posting> getTermPostings(String term) {
+		
+		return this.indices.get(term);
+	}
+	public static void main (String[] args){
+		BasicIndexing i= new BasicIndexing();
+		//i.readZips2("/home/tron/Descargas/clueweb-1K/docs.zip");
+		
+		long time=0;
+		Runtime r=Runtime.getRuntime();
+		Set<String> voc=null;
+		time=System.nanoTime();
+		i.build("/home/tron/Descargas/clueweb-1K/docs.zip", "", new HTMLSimpleParser());
+		time= System.nanoTime()-time;
+		System.out.println("tiempo:"+time/Math.pow(10, 9));
+		
+		System.out.println("Ocupada:"+r.totalMemory()/Math.pow(2,20)+" MB");
+		System.out.println("Libre:"+r.freeMemory()/Math.pow(2,20)+" MB");
+		/*long time=0;
+		Runtime r=Runtime.getRuntime();
+		Set<String> voc=null;
+		time=System.nanoTime();
+		i.build("/home/flyn/Descargas/clueweb-1K/docs.zip","", new HTMLSimpleParser());
+		time= System.nanoTime()-time;
+		System.out.println("tiempo:"+time/Math.pow(10, 9));
+		System.out.println("Ocupada:"+r.totalMemory()/Math.pow(2,20)+" MB");
+		System.out.println("Libre:"+r.freeMemory()/Math.pow(2,20)+" MB");
+		System.out.println("Vocabulario: "+i.getVocabulario().size());
+		for(String s: i.getVocabulario()){
+			System.out.println("palabra:["+s+"]"+" size:"+s.length());
+			System.out.println("Posts:"+ i.getTermPostings(s));
+			break;
+		}*/
+	}
+
+}

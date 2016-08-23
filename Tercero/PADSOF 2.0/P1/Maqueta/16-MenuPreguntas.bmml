@@ -1,0 +1,90 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="792" measuredH="449" mockupW="604" mockupH="400">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="188" y="49" w="600" h="400" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::CallOut" x="752" y="49" w="-1" h="-1" measuredW="40" measuredH="39" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>16</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::MenuBar" x="188" y="49" w="-1" h="-1" measuredW="189" measuredH="29" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>File%2C%20Edit%2C%20View%2C%20Help</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Button" x="203" y="210" w="89" h="27" measuredW="80" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Mensajes</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Button" x="203" y="244" w="-1" h="-1" measuredW="89" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Mis%20Grupos</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Button" x="203" y="278" w="88" h="27" measuredW="77" measuredH="27" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Ver%20Perfil</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="333" y="118" w="-1" h="-1" measuredW="62" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Preguntas</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="203" y="314" w="89" h="27" measuredW="50" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Salir</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::CallOut" x="297" y="314" w="-1" h="-1" measuredW="36" measuredH="37" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>1</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::CallOut" x="292" y="272" w="-1" h="-1" measuredW="39" measuredH="39" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>4</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::CallOut" x="292" y="237" w="-1" h="-1" measuredW="45" measuredH="40" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>3</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::CallOut" x="292" y="199" w="-1" h="-1" measuredW="37" measuredH="39" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>5</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Button" x="377" y="351" w="-1" h="-1" measuredW="122" measuredH="27" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Crear%20Preguntas</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Link" x="377" y="199" w="-1" h="-1" measuredW="64" measuredH="19" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Pregunta%201</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::Link" x="377" y="225" w="-1" h="-1" measuredW="67" measuredH="19" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Pregunta%202</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Link" x="377" y="282" w="-1" h="-1" measuredW="66" measuredH="19" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Pregunta%20n</text>
+      </controlProperties>
+    </control>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::CallOut" x="514" y="345" w="-1" h="-1" measuredW="40" measuredH="39" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>14</text>
+      </controlProperties>
+    </control>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::CallOut" x="456" y="189" w="-1" h="-1" measuredW="39" measuredH="39" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>17</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -1,0 +1,1 @@
+para ejecutar el crwaler hay que entrar en el main y especificar la pagina, http y https, esto generara un directorio en la zona donde se ejecute la pagina llamado coleccion, donde se encuentran todas las paginas exploradas

@@ -1,0 +1,1 @@
+http://10.5.7.1:8080/P1-ws-ws/VisaDAO?wsdl

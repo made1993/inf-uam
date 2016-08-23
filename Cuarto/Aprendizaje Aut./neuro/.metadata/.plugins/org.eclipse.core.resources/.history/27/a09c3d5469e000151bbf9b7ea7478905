@@ -1,0 +1,105 @@
+package redNeuronal;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class RedNeuronal {
+	private ArrayList<Neurona> neuronas;
+	private ArrayList<Integer> capas;
+	public RedNeuronal( ArrayList<Integer> capas) {
+		this.neuronas = new ArrayList<>();
+		int i=0;
+		for(i=0; i<capas.size()-1;i++){
+			capas.set(i, capas.get(i)+1);
+		}
+
+		capas.set(i, capas.get(i));
+		this.capas=capas;
+	}
+	
+	
+	public void iniRed(){
+		//System.out.println("Se inicializa la entrada");
+		for(int i=0 ;i<this.capas.get(0)-1; i++){
+			//System.out.println("Neurona:"+i);
+			this.neuronas.add(new Neurona(null, 0));
+		}
+		//System.out.println("neurona de sesgo entrada");
+		this.neuronas.add(new Neurona( null, 1));
+		int i=0;
+		for( i=1; i<this.capas.size()-1; i++){
+			//System.out.println("Capa"+i);
+			ArrayList<Neurona> entradas= new ArrayList<>();
+			/*Obtenemos las neuronas de entrada*/
+			for(int j=0; j<this.capas.get(i-1)-1;j++){
+				entradas.add(this.neuronas.get(j+neuronasAnteriores(i-1)));
+			}
+			/*Creamos las neuronas para una capa*/
+			for(int j=0; j<this.capas.get(i)-1;j++){
+				//System.out.println("Neurpna:"+j);
+				this.neuronas.add(new Neurona(entradas, 0));
+			}
+			/*Neurona de sesgo*/
+			//System.out.println("Neurona de sesgo");
+			this.neuronas.add(new Neurona(null, 0));
+		}
+		//System.out.println("Capa"+i);
+		ArrayList<Neurona> entradas= new ArrayList<>();
+		/*Obtenemos las neuronas de entrada*/
+		for(int j=0; j<this.capas.get(i-1)-1;j++){
+			entradas.add(this.neuronas.get(j+neuronasAnteriores(i-1)));
+		}
+		/*Creamos las neuronas para una capa*/
+		for(int j=0; j<this.capas.get(i);j++){
+			//System.out.println("Neurpna:"+j);
+			this.neuronas.add(new Neurona(entradas, 0));
+		}
+		
+		
+	}
+	
+	public void actualizaRed(ArrayList<Double> entrada){
+		if(this.capas.get(0)-1!=entrada.size()){
+			System.out.println("Error:El tamaño de la entrada y de las neurona de etrada es distitno");
+			return;
+		}
+		for(int i=0; i<this.capas.get(0)-1; i++){
+			this.neuronas.get(i).setSalida(entrada.get(i));
+		}
+		for(int i=1; i<this.capas.size(); i++){
+			for(int j=0; j<this.capas; j++){
+				
+			}
+		}
+	}
+	
+	public int neuronasAnteriores(int i){
+		int n=0;
+		for (int j=0; j<i; j++){
+			n+=this.capas.get(j);
+		}
+		return n;
+		
+	}
+	public void actualizaPesos(){
+		
+	}
+	
+	public boolean parada(){
+		return false;
+	}
+	public void actualizaSalida(){
+		
+	}
+	
+	
+	public static void main(String [] args){
+		ArrayList<Integer> capas = new ArrayList<>();
+		capas.add(2);
+		capas.add(3);
+		capas.add(2);
+		RedNeuronal rn= new RedNeuronal(capas);
+		rn.iniRed();
+	}
+
+}

@@ -1,0 +1,42 @@
+package es.uam.eps.bmi.search;
+
+/**
+ * Clase que asociada a un documento, que nos indica la puntuación del mismo dada una consulta
+ * 
+ * @author Mario Valdemaro Garcia Roque <mariov.garcia@estudiante.uam.es> y
+ * Angel Fuente Ortega <angel.fuente@estudiante.uam.es>
+ *
+ */
+public class ScoredTextDocument implements Comparable<ScoredTextDocument>{
+
+	private String id;
+	private double score;
+	
+	public ScoredTextDocument(String id,float score){
+		this.id = id;
+		this.score = score;
+	}
+	
+	/**
+	 * Compara el documento con otro dado
+	 * @param el 
+	 */
+	@Override
+	public int compareTo(ScoredTextDocument scoreddoc) {
+		if(this.score < scoreddoc.getScore()) return -1;
+		else if(this.score > scoreddoc.getScore()) return 1;
+		else return 0;
+	}
+	
+	public String getDocId(){
+		return this.id;
+	}
+	
+	public double getScore(){
+		return this.score;
+	}
+	
+	public void setScore(double score){
+		this.score = score;
+	}
+}

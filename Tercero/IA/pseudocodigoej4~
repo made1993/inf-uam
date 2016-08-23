@@ -1,0 +1,16 @@
+Funcion: genera-lista-interpretaciones (lst)
+Entrada: una lista
+Salida: una lista de listas con las psoibles combinaciones
+	con T y NIL en grupos de n, donde n es el numero de
+	elementos de la lista.
+	
+Pseudocodigo:
+
+
+
+
+
+Comentarios: para dejarlo mas claro la salida seria como
+	si la parte izquierda fuese la posicion de un bit y la
+	parte derecha un bit de 0 o 1 y se tuviese que sacar una lista 
+	decremental de valores en binario.

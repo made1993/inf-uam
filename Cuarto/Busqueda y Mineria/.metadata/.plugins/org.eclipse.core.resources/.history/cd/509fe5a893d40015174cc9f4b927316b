@@ -1,0 +1,7 @@
+package es.uam.eps.bmi.search.parsing;
+
+public interface TextParser{
+	String parse(String text);
+	
+}
+

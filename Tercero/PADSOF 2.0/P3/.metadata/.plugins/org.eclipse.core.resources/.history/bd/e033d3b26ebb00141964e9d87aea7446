@@ -1,0 +1,4 @@
+
+public class Pregunta extends Mensaje{
+	private ArrayList<Respuesta> listaRespuestas;
+}

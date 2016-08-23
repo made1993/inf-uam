@@ -1,0 +1,5 @@
+select nombre, pass from jugadores;
+
+select * from movimientos as m, (select * from partidas where id = 1) as p where m.usuario = p.jugador1;
+
+

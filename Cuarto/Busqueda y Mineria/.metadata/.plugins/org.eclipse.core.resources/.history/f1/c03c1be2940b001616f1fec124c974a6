@@ -1,0 +1,210 @@
+package es.uam.eps.bmi.recomendacion;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class Recomendador {
+	private UserRatedMovies urm;
+	private MovieTags mt;
+	private int k;
+	public Recomendador(String path, int k){
+		urm = new UserRatedMovies();
+		mt=new MovieTags();
+		this.k=k;
+		urm.leerDatos(path+"/user_ratedmovies.dat");
+		mt.leerDatos(path+"/movie_tags.dat");
+	}
+	
+	public void pearsonColaborativo(){
+		urm.similitudPearson();
+	}
+	public void cosenoColaborativo(){
+		urm.similitudCoseno();
+	}
+	/***
+	 * TODO: esto no es jaccard, es pearson.
+	 */
+	public void pearsonContenido(){
+		mt.similitudBinJaccard();
+	}
+	public void cosenoContenido(){
+		mt.similitudCoseno();
+	}
+	public double knnColaborativo(int userId, int movieId){
+
+		int col=0;
+		int ln =urm.getUserIds().get(userId);
+		ArrayList<Integer> maxSimKey= new ArrayList<>();
+		ArrayList<Double> maxSimValue= new ArrayList<>();
+		for(int i=0; i<k; i++){
+			maxSimKey.add(0);
+			maxSimValue.add(0.0);
+		}
+		
+		/**
+		 * Este bucle mierdoso de abajo es para
+		 * oredenar los k vecinos mas proximos.
+		 * */
+		double val;
+		int keyAux;
+		for(Integer key :urm.getUserIds().keySet()){
+			//Si vamos a evaluarnos a nosotros mismos, o a un usuario que no ha visto la peli, saltamos
+			if(key.equals(userId) || !urm.getDatos().get(key).containsKey(movieId))
+				continue;
+			//Cogemos la simulitud
+			val=urm.getSimilitudes()[ln][urm.getUserIds().get(key)];
+			
+			//Si el valor de la similitud que acabamos de obtener es mayor que el peor, lo metemos y
+			//reordenamos la lista
+			if(maxSimValue.get(k-1) < val ){
+				maxSimValue.set(k-1, val);
+				maxSimKey.set(k-1, key);
+				for(int i= k-1; i>0; i--){
+					if(maxSimValue.get(i-1) > maxSimValue.get(i)){
+						break;
+					}
+					val=maxSimValue.get(i-1);
+					maxSimValue.set(i-1, maxSimValue.get(i));
+					maxSimValue.set(i, val);
+					
+					keyAux=maxSimKey.get(i-1);
+					maxSimKey.set(i-1, maxSimKey.get(i));
+					maxSimKey.set(i, keyAux);
+				}
+			}
+		}
+		
+		/**
+		 * Ahora es cuando se calcula el valor de 
+		 * knn para la recomnedacion de la peli esta
+		 */
+		
+		double rating=0;
+		double simTot=0;
+		double media=0;
+		int size=0; 
+		
+		for(int i=0; i< maxSimKey.size(); i++, media =0){
+			/**
+			 * Si el usuraio no existe hacemos la media para esa pelicula
+			 * Importante porque esto puede ocurrir en algunos casos
+			 * */
+			if(urm.getDatos().get(maxSimKey.get(i))==null){
+				for(Entry<Integer, HashMap<Integer, Double>> peliculas: urm.getDatos().entrySet()){
+					
+					Double rate= peliculas.getValue().get(movieId);
+					if(rate==null){
+						continue;
+					}
+					media +=rate;
+					size++;
+				}
+			}
+			else{
+				//Calculamos la recomendación.
+				if(urm.getDatos().get(maxSimKey.get(i)).containsKey(movieId))
+					rating+=urm.getDatos().get(maxSimKey.get(i)).get(movieId) * maxSimValue.get(i);
+			}
+			simTot+= maxSimValue.get(i);
+		}
+		return rating/simTot;
+	}
+
+	
+	
+	//TODO: probar que funcione
+	public double knnContenido(int userId, int movieId){
+
+		int col=0;
+		int ln =mt.getMovieIds().get(movieId);
+		ArrayList<Integer> maxSimKey= new ArrayList<>();
+		ArrayList<Double> maxSimValue= new ArrayList<>();
+		for(int i=0; i<k; i++){
+			maxSimKey.add(0);
+			maxSimValue.add(0.0);
+		}
+		
+		/**
+		 * Este bucle mierdoso de abajo es para
+		 * oredenar los k vecinos mas proximos.
+		 * */
+		double val;
+		int keyAux;
+		for(Integer key :mt.getMovieIds().keySet()){
+			if(key.equals(movieId) || !urm.getDatos().get(userId).containsKey(key))
+				continue;
+			val=mt.getSimilitudes()[ln][mt.getMovieIds().get(key)];
+			//System.out.println(maxSimValue.get(k-1)+"<"+val+":"+(maxSimValue.get(k-1) < val));
+			if(maxSimValue.get(k-1) < val ){
+				maxSimValue.set(k-1, val);
+				maxSimKey.set(k-1, key);
+				for(int i= k-1; i>0; i--){
+					if(maxSimValue.get(i-1) > maxSimValue.get(i)){
+						break;
+					}
+					val=maxSimValue.get(i-1);
+					maxSimValue.set(i-1, maxSimValue.get(i));
+					maxSimValue.set(i, val);
+					
+					keyAux=maxSimKey.get(i-1);
+					maxSimKey.set(i-1, maxSimKey.get(i));
+					maxSimKey.set(i, keyAux);
+				}
+			}
+		}
+		
+		/**
+		 * Ahora es cuando se calcula el valor de 
+		 * knn para la recomnedacion de la peli esta
+		 */
+		
+		double rating=0;
+		double simTot=0;
+		//System.out.println(maxSimKey.size());
+		for(int i=0; i< maxSimKey.size(); i++){
+			//System.out.println(i);
+			
+			ln=mt.getMovieIds().get(movieId);
+			//System.out.println(maxSimKey.get(i)+" "+mt.getMovieIds().containsKey(maxSimKey.get(i)) );
+			//System.out.println(urm.getDatos().get(userId).get(maxSimKey.get(i)) +"*"+maxSimValue.get(i));
+			if(urm.getDatos().get(userId).containsKey(maxSimKey.get(i)))
+				rating+=  urm.getDatos().get(userId).get(maxSimKey.get(i)) * maxSimValue.get(i);
+			simTot+= maxSimValue.get(i);
+		}
+		//System.out.println(rating+"/"+simTot);
+		return rating/simTot;
+	}
+
+	
+	public UserRatedMovies getUrm() {
+		return urm;
+	}
+
+	public void setUrm(UserRatedMovies urm) {
+		this.urm = urm;
+	}
+
+	public MovieTags getMt() {
+		return mt;
+	}
+
+	public void setMt(MovieTags mt) {
+		this.mt = mt;
+	}
+
+	public int getK() {
+		return k;
+	}
+
+	public void setK(int k) {
+		this.k = k;
+	}
+
+	public static void main(String [] args){
+		Recomendador r= new Recomendador("hetrec2011-movielens-2k-v2", 200);
+		r.cosenoColaborativo();
+		System.out.println(r.knnContenido(75, 420));
+	}
+}

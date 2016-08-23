@@ -1,0 +1,5 @@
+set -tmpdir "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/xst/projnav.tmp"
+set -xsthdpdir "C:/Documents and Settings/e283096/Escritorio/Dropbox/Estructura de Computadores/P5-EC/practica5/xst"
+elaborate
+-ifn MicroMIPSTb.prj
+-ifmt mixed

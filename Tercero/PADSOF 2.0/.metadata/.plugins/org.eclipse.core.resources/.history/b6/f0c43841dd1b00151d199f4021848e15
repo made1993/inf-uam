@@ -1,0 +1,26 @@
+package pruebasJUnit;
+
+import static org.junit.Assert.*;
+import mensaje.*;
+import buzon.*;
+import org.junit.Test;
+
+public class testBuzon {
+
+	@Test
+	public void testAddMensajeBuzon() {
+		Buzon b = new Buzon();
+		Mensaje m= new Mensaje("testAddMensajeBuzon", null);
+	}
+
+	@Test
+	public void testGetMensajesNoLeidos() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testRemoveMensaje() {
+		fail("Not yet implemented");
+	}
+
+}

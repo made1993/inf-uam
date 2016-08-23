@@ -1,0 +1,11 @@
+package test;
+import java.io.File;
+import mailUam.MailUam;
+public class testUsuario {
+	public static void main(String[] args) {
+		MailUam m= new MailUam();
+		m.cargarDatos("alumnos.txt", "PROFESORES.TXT");
+		m.crearDirectorios();
+		m.cargarGrupos();
+	}
+}

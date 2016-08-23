@@ -1,0 +1,79 @@
+import java.util.ArrayList;
+
+
+public abstract class Usuario {
+	private int idUsuario;
+	private String nombre;
+	private String correo;
+	private String password;
+	private ArrayList<Grupo> listaGrupos;
+	private ArrayList<Usuario> contactos;
+	private Buzon buzon;
+	/**
+	 * @return the idUsuario
+	 */
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+	/**
+	 * @param idUsuario the idUsuario to set
+	 */
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	/**
+	 * @return the correo
+	 */
+	public String getCorreo() {
+		return correo;
+	}
+	/**
+	 * @param correo the correo to set
+	 */
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String verPerfil(){
+		return null;/*TODO*/
+	}
+	public boolean enviarMensajeGrupo(int idGurupo, String mensaje, boolean enviarBuzon){
+		return false; /*TODO*/
+	}
+	public boolean salirGrupo(int idGrupo){
+		return false; /*TODO*/
+	}
+	public Mensaje verMensajes(int idMensaje){
+		return null;/*TODO*/
+	}
+	public ArrayList<Mensaje> listarMensajes(){
+		return null;/*TODO*/
+	}
+	public boolean moderarMensaje(int idMensaje, boolean aceptar){
+		return false;/*TODO*/
+	}
+}
